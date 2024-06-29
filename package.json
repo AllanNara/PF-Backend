@@ -1,7 +1,7 @@
 {
-	"name": "primera-entrega",
+	"name": "pf-backend-course",
 	"version": "1.2.1",
-	"description": "",
+	"description": "E-commerce proyect for CoderHouse",
 	"main": "src/app.js",
 	"type": "module",
 	"engines": {
@@ -19,8 +19,8 @@
 		"release": "commit-and-tag-version"
 	},
 	"keywords": [],
-	"author": "",
-	"license": "ISC",
+	"author": "AllanNara",
+	"license": "MIT",
 	"dependencies": {
 		"express": "^4.19.2",
 		"express-routemap": "^1.6.0",
