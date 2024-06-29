@@ -1,3 +1,9 @@
+# Changelog
+
+All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
+
+## [1.2.1](https://github.com/AllanNara/PF-Backend/compare/v1.2.0...v1.2.1) (2024-06-29)
+
 ## [1.2.0](https://github.com/AllanNara/PF-Backend/compare/43be6dae3647fb626a479df6356fcfb63b37944e...v1.2.0) (2024-06-29)
 
 ### Features
