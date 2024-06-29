@@ -15,7 +15,7 @@
 		"prepare": "husky",
 		"commitlint": "commitlint --edit",
 		"commit": "cz",
-		"version": "conventional-changelog -p conventionalcommits -i CHANGELOG.md -s -r 0",
+		"version": "conventional-changelog -p conventionalcommits -i CHANGELOG.md -s --config .versionrc.json",
 		"release": "commit-and-tag-version"
 	},
 	"keywords": [],

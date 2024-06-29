@@ -1,10 +1,13 @@
-# Changelog
-
-All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
-
 ## [1.2.1](https://github.com/AllanNara/PF-Backend/compare/v1.2.0...v1.2.1) (2024-06-29)
 
-## [1.2.0](https://github.com/AllanNara/PF-Backend/compare/43be6dae3647fb626a479df6356fcfb63b37944e...v1.2.0) (2024-06-29)
+### Chores
+
+* **release:** 1.2.1 ([976ac74](https://github.com/AllanNara/PF-Backend/commit/976ac7432fd06273a1b1d545db9654f44cde05c1))
+
+### Continuous Integration
+
+* **config:** add differents scripts on package.json ([a302511](https://github.com/AllanNara/PF-Backend/commit/a30251184c2de7c9c137bb7aafae52b4ce49e390))
+## [1.2.0](https://github.com/AllanNara/PF-Backend/compare/ba105706d5f8b4166e0538ed0758e65d9c1531dc...v1.2.0) (2024-06-29)
 
 ### Features
 
@@ -14,3 +17,8 @@ All notable changes to this project will be documented in this file. See [commit
 ### Bug Fixes
 
 * remove script test ([f599321](https://github.com/AllanNara/PF-Backend/commit/f5993212995851f83b0b04234fc42314ec97ec78))
+
+### Chores
+
+* :memo: add README.md ([ba10570](https://github.com/AllanNara/PF-Backend/commit/ba105706d5f8b4166e0538ed0758e65d9c1531dc))
+* **release:** 1.2.0 ([bb7464e](https://github.com/AllanNara/PF-Backend/commit/bb7464e9af4520c9176c79dcfb6a3a390aebe549))
