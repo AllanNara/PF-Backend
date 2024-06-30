@@ -6,6 +6,7 @@ import {
 	updateProduct
 } from "../managers/ProductManager.js";
 import { Router } from "express";
+import { upload } from "../utils/multer.js";
 import validateProductFields from "../middlewares/validateProductFields.js";
 
 const router = Router();
@@ -17,26 +18,34 @@ router.get("/", async (req, res) => {
 	res.json({ limit: limit || null, products });
 });
 
-router.post("/", validateProductFields, async (req, res) => {
-	const newProduct = {
-		title: req.body.title,
-		description: req.body.description,
-		code: req.body.code,
-		price: req.body.price,
-		stock: req.body.stock,
-		category: req.body.category,
-		status: req.body.status,
-		thumbnails: req.body.thumbnails
-	};
-	const response = await addProduct(newProduct);
+router.post(
+	"/",
+	validateProductFields,
+	upload.array("files"),
+	async (req, res) => {
+		const newProduct = {
+			title: req.body.title,
+			description: req.body.description,
+			code: req.body.code,
+			price: req.body.price,
+			stock: req.body.stock,
+			category: req.body.category,
+			status: req.body.status,
+			thumbnails: req.files
+				? req.files.map((file) => `/uploads/products/${file.filename}`)
+				: []
+		};
 
-	if (!response) {
-		return res
-			.status(400)
-			.json({ status: "error", message: "Code alredy exists" });
+		const response = await addProduct(newProduct);
+
+		if (!response) {
+			return res
+				.status(400)
+				.json({ status: "error", message: "Code alredy exists" });
+		}
+		res.json({ status: "success", payload: response });
 	}
-	res.json({ status: "success", payload: response });
-});
+);
 
 router.get("/:pid", async (req, res) => {
 	const { pid } = req.params;
