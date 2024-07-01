@@ -1,14 +1,10 @@
 import { Router } from "express";
-import cartRouter from "./carts.routes.js";
-import productRouter from "./products.routes.js";
+import apiRoutes from "./api/index.js";
+import webRoutes from "./web/index.js";
 
 const router = Router();
 
-router.use("/products", productRouter);
-router.use("/carts", cartRouter);
-
-router.use("*", (req, res) => {
-	res.json({ error: "route not found" });
-});
+router.use("/api", apiRoutes);
+router.use("/", webRoutes);
 
 export default router;

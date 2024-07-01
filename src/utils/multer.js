@@ -1,4 +1,4 @@
-import { _dirname } from "../../dirname";
+import { _dirname } from "../../dirname.js";
 import multer from "multer";
 import path from "path";
 

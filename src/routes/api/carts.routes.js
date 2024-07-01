@@ -2,9 +2,9 @@ import {
 	addCart,
 	addProductToCart,
 	getCartById
-} from "../managers/CartManager.js";
+} from "../../managers/CartManager.js";
 import { Router } from "express";
-import checkProductExists from "../middlewares/checkProductExists.js";
+import checkProductExists from "../../middlewares/checkProductExists.js";
 
 const router = Router();
 

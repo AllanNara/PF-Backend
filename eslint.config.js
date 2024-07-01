@@ -13,7 +13,7 @@ export default [
 			"no-empty-function": "error",
 			"no-implicit-coercion": "error",
 			"no-duplicate-imports": "error",
-			"no-console": ["error", { allow: ["warn", "error"] }],
+			"no-console": ["error", { allow: ["warn", "error", "info"] }],
 			"no-undefined": "warn",
 			"sort-imports": "warn"
 		}

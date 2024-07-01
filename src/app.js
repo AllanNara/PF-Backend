@@ -1,11 +1,17 @@
+import { Server } from "socket.io";
 import { _dirname } from "../dirname.js";
 import allRoutes from "./routes/index.js";
+import { createServer } from "http";
 import displayRoutes from "express-routemap";
 import { engine } from "express-handlebars";
+import errorHandler from "./middlewares/errorHandler.js";
 import express from "express";
 import path from "path";
+import websockets from "./websockets.js";
 
 const app = express();
+const httpServer = createServer(app);
+const io = new Server(httpServer);
 
 app.engine("handlebars", engine());
 app.set("view engine", "handlebars");
@@ -15,17 +21,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.resolve(_dirname, "src", "public")));
 
-app.use("/api", allRoutes);
+app.use("/", allRoutes);
+app.use(errorHandler);
 
-// eslint-disable-next-line -- 'next' param is needed for middleware errors
-app.use((err, req, res, next) => {
-	const status = err.status || 500;
-	const message = err.message || err;
-	console.error(err);
-	res.status(status).send(message);
-});
+websockets(io);
 
-app.listen(8080, () => {
+httpServer.listen(8080, () => {
 	displayRoutes(app);
 	console.log("listening on port 8080"); // eslint-disable-line
 });
