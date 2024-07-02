@@ -22,5 +22,16 @@ export default (io) => {
 				socket.emit("error", { error: true, message: "Something went wrong" });
 			}
 		});
+
+		socket.on("delete-product", async (data) => {
+			try {
+				await productManager.deleteProduct(data.id);
+				const products = await productManager.getProducts();
+				io.emit("products", { products });
+			} catch (error) {
+				console.error(error);
+				socket.emit("error", { error: true, message: "Something went wrong" });
+			}
+		});
 	});
 };

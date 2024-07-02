@@ -16,5 +16,13 @@
 	"requirePragma": false,
 	"tabWidth": 2,
 	"useTabs": true,
-	"embeddedLanguageFormatting": "auto"
+	"embeddedLanguageFormatting": "auto",
+	"overrides": [
+		{
+			"files": ["**/*.html", "**/*.handlebars"],
+			"options": {
+				"printWidth": 150
+			}
+		}
+	]
 }
