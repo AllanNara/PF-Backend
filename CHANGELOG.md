@@ -10,6 +10,7 @@
 ### Chores
 
 * **release:** 1.3.0 ([aedcc9d](https://github.com/AllanNara/PF-Backend/commit/aedcc9d841408c10afc1be779b8e2193ff711ddb))
+* **release:** 1.4.0 ([1479171](https://github.com/AllanNara/PF-Backend/commit/14791713ee595573aea5d77c81414ac2d7290a0f))
 
 ### Documentation
 
@@ -19,68 +20,6 @@
 ### Code Refactoring
 
 * **web:** add form and connect with hbs ([a959146](https://github.com/AllanNara/PF-Backend/commit/a9591465c437353e87e88d9bf3d4da7d99537b6d))
-## [1.3.0](https://github.com/AllanNara/PF-Backend/compare/v1.2.1...v1.3.0) (2024-07-02)
-
-### Features
-
-* **client:** add express-handlebars and config ([412fde7](https://github.com/AllanNara/PF-Backend/commit/412fde75dea2027c5426fc83f59dd9d8164953f9))
-* **client:** add websockets ([7bb6478](https://github.com/AllanNara/PF-Backend/commit/7bb64783c6910d5d7098e980072cb28829f1dd45))
-* **client:** all realtimeproducts file ([04d0d19](https://github.com/AllanNara/PF-Backend/commit/04d0d19d52dfeccb1e807bf3e44d92b198e29d0d))
-* **statics:** add multer middleware in products ([a52ddd0](https://github.com/AllanNara/PF-Backend/commit/a52ddd0d512165241746e968faad8ae5f8f31b42))
-
-### Documentation
-
-* **config:** add changelog ([10bd7e4](https://github.com/AllanNara/PF-Backend/commit/10bd7e4f4e35617d00a96a7186c7ba8edd447963))
-* **root:** add license and more description on package.json ([167be0d](https://github.com/AllanNara/PF-Backend/commit/167be0d480de7129144dc23adac667ee2c7dbf34))
-
-### Code Refactoring
-
-* **web:** add form and connect with hbs ([a959146](https://github.com/AllanNara/PF-Backend/commit/a9591465c437353e87e88d9bf3d4da7d99537b6d))
-# Changelog
-
-All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
-
-## [1.4.0](https://github.com/AllanNara/PF-Backend/compare/v1.2.1...v1.4.0) (2024-07-02)
-
-
-### Features
-
-* **client:** add express-handlebars and config ([412fde7](https://github.com/AllanNara/PF-Backend/commit/412fde75dea2027c5426fc83f59dd9d8164953f9))
-* **client:** add websockets ([7bb6478](https://github.com/AllanNara/PF-Backend/commit/7bb64783c6910d5d7098e980072cb28829f1dd45))
-* **client:** all realtimeproducts file ([04d0d19](https://github.com/AllanNara/PF-Backend/commit/04d0d19d52dfeccb1e807bf3e44d92b198e29d0d))
-* **statics:** add multer middleware in products ([a52ddd0](https://github.com/AllanNara/PF-Backend/commit/a52ddd0d512165241746e968faad8ae5f8f31b42))
-
-## [1.3.0](https://github.com/AllanNara/PF-Backend/compare/v1.2.1...v1.3.0) (2024-07-02)
-
-### Features
-
-* **client:** add express-handlebars and config ([412fde7](https://github.com/AllanNara/PF-Backend/commit/412fde75dea2027c5426fc83f59dd9d8164953f9))
-* **client:** add websockets ([7bb6478](https://github.com/AllanNara/PF-Backend/commit/7bb64783c6910d5d7098e980072cb28829f1dd45))
-* **client:** all realtimeproducts file ([04d0d19](https://github.com/AllanNara/PF-Backend/commit/04d0d19d52dfeccb1e807bf3e44d92b198e29d0d))
-* **statics:** add multer middleware in products ([a52ddd0](https://github.com/AllanNara/PF-Backend/commit/a52ddd0d512165241746e968faad8ae5f8f31b42))
-
-### Documentation
-
-* **config:** add changelog ([10bd7e4](https://github.com/AllanNara/PF-Backend/commit/10bd7e4f4e35617d00a96a7186c7ba8edd447963))
-* **root:** add license and more description on package.json ([167be0d](https://github.com/AllanNara/PF-Backend/commit/167be0d480de7129144dc23adac667ee2c7dbf34))
-
-### Code Refactoring
-
-* **web:** add form and connect with hbs ([a959146](https://github.com/AllanNara/PF-Backend/commit/a9591465c437353e87e88d9bf3d4da7d99537b6d))
-# Changelog
-
-All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
-
-## [1.3.0](https://github.com/AllanNara/PF-Backend/compare/v1.2.1...v1.3.0) (2024-07-02)
-
-
-### Features
-
-* **client:** add express-handlebars and config ([412fde7](https://github.com/AllanNara/PF-Backend/commit/412fde75dea2027c5426fc83f59dd9d8164953f9))
-* **client:** add websockets ([7bb6478](https://github.com/AllanNara/PF-Backend/commit/7bb64783c6910d5d7098e980072cb28829f1dd45))
-* **client:** all realtimeproducts file ([04d0d19](https://github.com/AllanNara/PF-Backend/commit/04d0d19d52dfeccb1e807bf3e44d92b198e29d0d))
-* **statics:** add multer middleware in products ([a52ddd0](https://github.com/AllanNara/PF-Backend/commit/a52ddd0d512165241746e968faad8ae5f8f31b42))
-
 ## [1.2.1](https://github.com/AllanNara/PF-Backend/compare/v1.2.0...v1.2.1) (2024-06-29)
 
 ### Chores
