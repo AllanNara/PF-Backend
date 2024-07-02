@@ -1,3 +1,17 @@
+# Changelog
+
+All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
+
+## [1.3.0](https://github.com/AllanNara/PF-Backend/compare/v1.2.1...v1.3.0) (2024-07-02)
+
+
+### Features
+
+* **client:** add express-handlebars and config ([412fde7](https://github.com/AllanNara/PF-Backend/commit/412fde75dea2027c5426fc83f59dd9d8164953f9))
+* **client:** add websockets ([7bb6478](https://github.com/AllanNara/PF-Backend/commit/7bb64783c6910d5d7098e980072cb28829f1dd45))
+* **client:** all realtimeproducts file ([04d0d19](https://github.com/AllanNara/PF-Backend/commit/04d0d19d52dfeccb1e807bf3e44d92b198e29d0d))
+* **statics:** add multer middleware in products ([a52ddd0](https://github.com/AllanNara/PF-Backend/commit/a52ddd0d512165241746e968faad8ae5f8f31b42))
+
 ## [1.2.1](https://github.com/AllanNara/PF-Backend/compare/v1.2.0...v1.2.1) (2024-06-29)
 
 ### Chores
