@@ -1,12 +1,14 @@
-/* eslint-disable */
+/* eslint-disable-next-line */
 const socket = io();
 
 // Upload all products
+/* eslint-disable-next-line */
 const productsList = document.getElementById("products-list");
 
 socket.on("products", (data) => {
 	const html = data.products.reduce(generateCardProduct, "");
 	productsList.innerHTML = `<div class="row">` + html + `</div>`;
+	addDeleteEventListeners();
 });
 
 function generateCardProduct(prev, product) {
@@ -21,7 +23,7 @@ function generateCardProduct(prev, product) {
 					<p class="card-text">${product.description}</p>
 					<p class="card-text">$ ${product.price}</p>
 					<p class="card-text">Stock: ${product.stock}</p>
-					<button class="btn btn-danger">Delete product</button>
+					<button class="btn btn-danger delete-product" id=${product.id}>Delete product</button>
 				</div>
 			</div>
 		</div>
@@ -94,6 +96,65 @@ function generateThumbnail(result, thumbnail, index) {
 	return result + thumbnailsHtml;
 }
 
+// Add delete product functionality
+function addDeleteEventListeners() {
+	/* eslint-disable-next-line */
+	const deleteButtons = document.querySelectorAll(".delete-product");
+	deleteButtons.forEach((button) => {
+		button.addEventListener("click", (e) => {
+			e.preventDefault();
+			socket.emit("delete-product", { id: e.target.id });
+		});
+	});
+}
+
 // Add new product
+/* eslint-disable-next-line */
 const formProduct = document.getElementById("form-product");
-console.log({ form: new FormData(formProduct) });
+formProduct.addEventListener("submit", (e) => {
+	e.preventDefault();
+
+	const formData = new FormData(formProduct);
+	const formValues = {};
+
+	// Iterar sobre los pares clave-valor del objeto FormData
+	for (const [key, value] of formData.entries()) {
+		formValues[key] = value;
+	}
+
+	socket.emit("new-product", { product: formValues });
+});
+
+// Show errors
+/* eslint-disable-next-line */
+const toastyError = document.getElementById("toasty-error");
+
+socket.on("error", (error) => {
+	/* eslint-disable-next-line */
+	const toast = document.createElement("div");
+	toast.classList.add("toast");
+	toast.setAttribute("role", "alert");
+	toast.setAttribute("aria-live", "assertive");
+	toast.setAttribute("aria-atomic", "true");
+
+	toast.innerHTML = `
+    <div class="toast-header">
+      <strong class="rounded me-2">*</strong>
+      <strong class="me-auto">Error al cargar producto</strong>
+      <small>now</small>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+      ${error.message} !!
+    </div>
+  `;
+
+	toastyError.appendChild(toast);
+	/* eslint-disable-next-line */
+	const bootstrapToast = new bootstrap.Toast(toast);
+	bootstrapToast.show();
+
+	setTimeout(() => {
+		toastyError.removeChild(toast);
+	}, 6000);
+});

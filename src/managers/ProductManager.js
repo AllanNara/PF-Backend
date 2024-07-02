@@ -13,8 +13,12 @@ export async function addProduct(product) {
 	const products = await readProductsFile();
 
 	const { title, description, code, price, stock, category } = product;
+	if (isNaN(parseInt(stock)) || isNaN(parseInt(price))) {
+		throw new Error("Invalid values");
+	}
+
 	const status = product.status || true;
-	const thumbnails = product.thumbnails;
+	const thumbnails = product.thumbnails || [];
 
 	if (!title || !description || !code || !price || !stock || !category) {
 		console.error("Missing fields");
