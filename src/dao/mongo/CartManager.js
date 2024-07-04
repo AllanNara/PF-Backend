@@ -12,6 +12,10 @@ export async function getCartById(cid) {
 
 export async function addProductToCart(cid, pid) {
 	const cartDoc = await cartModel.findById(cid);
+	if (!cartDoc) {
+		console.error("Cart	not found");
+		return null;
+	}
 	const productFound = cartDoc.products.find(
 		(pr) => pr.product.toString() === pid
 	);

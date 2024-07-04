@@ -8,7 +8,7 @@ import { engine } from "express-handlebars";
 import errorHandler from "./middlewares/errorHandler.js";
 import express from "express";
 import path from "path";
-import websockets from "./websockets.js";
+import websockets from "./utils/websockets.js";
 
 const app = express();
 const httpServer = createServer(app);

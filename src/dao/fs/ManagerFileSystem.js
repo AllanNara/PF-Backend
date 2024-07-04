@@ -2,7 +2,7 @@ import { _dirname } from "../../../dirname.js";
 import fs from "fs/promises";
 import { resolve } from "path";
 
-const PATH_BASE = resolve(_dirname, "src", "data");
+const PATH_BASE = resolve(_dirname, "src", "dao", "fs", "data");
 
 export function readFile(filename) {
 	const path = resolve(PATH_BASE, filename);

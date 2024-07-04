@@ -3,6 +3,12 @@ import mongoose from "mongoose";
 const productCollection = "products";
 
 const productSchema = new mongoose.Schema({
+	id: {
+		type: mongoose.Schema.Types.ObjectId,
+		default: function () {
+			return this._id;
+		}
+	},
 	title: {
 		type: String,
 		required: true
@@ -17,8 +23,16 @@ const productSchema = new mongoose.Schema({
 	},
 	code: {
 		type: String,
-		required: true
-		// :: Crear validacion para code repedido
+		required: true,
+		validate: {
+			validator: async function (value) {
+				const result = await mongoose.models.products.countDocuments({
+					code: value
+				});
+				return !result;
+			},
+			message: ({ value }) => `Code '${value}' is alredy in use`
+		}
 	},
 	price: {
 		type: Number,

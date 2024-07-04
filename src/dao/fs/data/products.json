@@ -1,0 +1,28 @@
+[
+  {
+    "id": 1,
+    "title": "Cliff Goldenbush v2",
+    "description": "V2 Drainage of Lower Tooth with Drainage Device, Open Approach, All",
+    "code": "as2f4",
+    "price": "1627.26",
+    "stock": "352",
+    "category": "Ericameria",
+    "status": "true",
+    "thumbnails": [
+      "/uploads/products/thumbnails-1720136534154-809841615.jpg",
+      "/uploads/products/thumbnails-1720136534155-498486607.jpg",
+      "/uploads/products/thumbnails-1720136534155-190595448.jpg"
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Hypnum updated v3",
+    "description": "Updated: Hypnum updated v3",
+    "code": "as2f4",
+    "price": 1627.26,
+    "stock": 234,
+    "category": "Ericameria",
+    "status": true,
+    "thumbnails": []
+  }
+]

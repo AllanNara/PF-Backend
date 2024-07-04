@@ -1,13 +1,23 @@
 import { productModel } from "./models/product.model.js";
 
-export async function getProducts() {
+export async function checkCodeExists(code) {
+	const doc = await productModel.findOne({ code });
+	if (doc) console.error("Code alredy in use");
+	return Boolean(doc);
+}
+
+export async function getProducts(lean) {
+	if (lean) {
+		return await productModel.find({}).lean();
+	}
 	const docs = await productModel.find({});
 	return docs;
 }
 
 export async function addProduct(product) {
-	const codeExists = await productModel.findOne({ code: product.code });
-	if (codeExists) return null;
+	/* La validación del codigo fue agregada al Schema de Product */
+	// const codeExists = await productModel.findOne({ code: product.code });
+	// if (codeExists) return null;
 	const response = await productModel.create(product);
 	return response;
 }

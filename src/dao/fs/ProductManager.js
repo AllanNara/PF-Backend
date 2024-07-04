@@ -5,6 +5,16 @@ const FILE_NAME = "products.json";
 const readProductsFile = readFile(FILE_NAME);
 const saveProducts = writeFile(FILE_NAME);
 
+export async function checkCodeExists(code, data = []) {
+	let products = data;
+	if (!products.length) {
+		products = await readProductsFile();
+	}
+	const findCode = products.find((pr) => pr.code === code);
+	if (findCode) console.error("Code alredy in use");
+	return Boolean(findCode);
+}
+
 export async function getProducts() {
 	return await readProductsFile();
 }
@@ -25,11 +35,7 @@ export async function addProduct(product) {
 		return null;
 	}
 
-	const findCode = products.find((pr) => pr.code === code);
-	if (findCode) {
-		console.error("Code alredy in use");
-		return null;
-	}
+	if (!checkCodeExists(code, products)) return null;
 
 	const id = products.length ? products[products.length - 1].id + 1 : 1;
 

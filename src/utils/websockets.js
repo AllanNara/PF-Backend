@@ -1,11 +1,11 @@
-import * as productManager from "./dao/fs/ProductManager.js";
+import { ProductManager } from "../dao/factory.js";
 
 export default (io) => {
 	io.on("connection", async (socket) => {
 		console.info(`New client connected: ${socket.id}`);
 
 		try {
-			const products = await productManager.getProducts();
+			const products = await ProductManager.getProducts();
 			socket.emit("products", { products });
 		} catch (error) {
 			console.error(error);
@@ -14,14 +14,14 @@ export default (io) => {
 
 		socket.on("new-product", async (data) => {
 			try {
-				const result = await productManager.addProduct(data.product);
+				const result = await ProductManager.addProduct(data.product);
 				if (!result) {
 					socket.emit("error", {
 						error: true,
 						message: "Missing fields or code alredy in use"
 					});
 				}
-				const products = await productManager.getProducts();
+				const products = await ProductManager.getProducts();
 				io.emit("products", { products });
 			} catch (error) {
 				console.error(error);
@@ -31,11 +31,11 @@ export default (io) => {
 
 		socket.on("delete-product", async (data) => {
 			try {
-				const result = await productManager.deleteProduct(data.id);
+				const result = await ProductManager.deleteProduct(data.id);
 				if (!result) {
 					socket.emit("error", { error: true, message: "Product not found" });
 				}
-				const products = await productManager.getProducts();
+				const products = await ProductManager.getProducts();
 				io.emit("products", { products });
 			} catch (error) {
 				console.error(error);
