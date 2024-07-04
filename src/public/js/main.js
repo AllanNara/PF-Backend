@@ -12,7 +12,7 @@ socket.on("products", (data) => {
 });
 
 function generateCardProduct(prev, product) {
-	const gallery = generateGallery(product.thumbnails);
+	const gallery = generateGallery(product.thumbnails, product.id);
 	const card = `
 		<div class="col-md-4">
 			<div class="card">
@@ -32,7 +32,7 @@ function generateCardProduct(prev, product) {
 	return prev + card;
 }
 
-function generateGallery(thumbnails) {
+function generateGallery(thumbnails, pid) {
 	if (!thumbnails.length) {
 		return `
 			<img
@@ -46,7 +46,7 @@ function generateGallery(thumbnails) {
 
 	const gallery = `
 	<div
-		id="thumbnails"
+		id="${pid}"
 		class="carousel slide"
 	>
 		<div class="carousel-inner">
@@ -66,7 +66,7 @@ function generateGallery(thumbnails) {
 			<button
 				class="carousel-control-next"
 				type="button"
-				data-bs-target="#thumbnails"
+				data-bs-target="#${pid}"
 				data-bs-slide="next"
 			>
 				<span
@@ -85,7 +85,7 @@ function generateThumbnail(result, thumbnail, index) {
 	let thumbnailsHtml = `
 	<div class="carousel-item ${index === 0 ? "active" : ""}">
 		<img
-			src="uploads/products/${thumbnail}"
+			src="${thumbnail}"
 			class="card-img-top object-fit-cover mb-3"
 			alt="images"
 			style="height: 13.7rem"
