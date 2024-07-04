@@ -1,12 +1,9 @@
-import {
-	addCart,
-	addProductToCart,
-	getCartById
-} from "../../managers/CartManager.js";
+import { CartManager } from "../../dao/factory.js";
 import { Router } from "express";
 import checkProductExists from "../../middlewares/checkProductExists.js";
 
 const router = Router();
+const { addCart, getCartById, addProductToCart } = CartManager;
 
 router.post("/", async (req, res) => {
 	const newCart = await addCart();

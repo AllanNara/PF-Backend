@@ -1,8 +1,8 @@
-import { getProductById } from "../managers/ProductManager.js";
+import { ProductManager } from "../dao/factory.js";
 
 const checkProductExists = async (req, res, next) => {
 	const pid = req.params.pid;
-	const productFound = await getProductById(pid);
+	const productFound = await ProductManager.getProductById(pid);
 
 	if (!productFound) {
 		return res

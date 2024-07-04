@@ -1,4 +1,4 @@
-import * as productManager from "./managers/ProductManager.js";
+import * as productManager from "./dao/fs/ProductManager.js";
 
 export default (io) => {
 	io.on("connection", async (socket) => {

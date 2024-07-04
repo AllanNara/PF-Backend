@@ -1,15 +1,16 @@
-import {
-	addProduct,
-	deleteProduct,
-	getProductById,
-	getProducts,
-	updateProduct
-} from "../../managers/ProductManager.js";
+import { ProductManager } from "../../dao/factory.js";
 import { Router } from "express";
 import { upload } from "../../utils/multer.js";
 import validateProductFields from "../../middlewares/validateProductFields.js";
 
 const router = Router();
+const {
+	addProduct,
+	deleteProduct,
+	getProductById,
+	getProducts,
+	updateProduct
+} = ProductManager;
 
 router.get("/", async (req, res) => {
 	const { limit } = req.query;
