@@ -1,16 +1,34 @@
+import { ProductManager } from "../dao/factory.js";
 import { _dirname } from "../../dirname.js";
 import multer from "multer";
 import path from "path";
 
-const storage = multer.diskStorage({
-	destination: function (req, file, cb) {
-		cb(null, path.resolve(_dirname, "public", "upload"));
-	},
-	filename: function (req, file, cb) {
-		const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-		const ext = path.extname(file.originalname);
-		cb(null, file.fieldname + "-" + uniqueSuffix + ext);
-	}
-});
+const createStorage = (dir) => {
+	return multer.diskStorage({
+		destination: async function (req, file, cb) {
+			if (dir === "products") {
+				const productCode = req.body.code;
+				const codeRepeat = await ProductManager.checkCodeExists(productCode);
+				if (codeRepeat)
+					return cb({ message: `Code ${productCode} alredy exists` });
+			}
 
-export const upload = multer({ storage });
+			const uploadPath = path.resolve(
+				_dirname,
+				"src",
+				"public",
+				"uploads",
+				dir
+			);
+
+			cb(null, uploadPath);
+		},
+		filename: function (req, file, cb) {
+			const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+			const ext = path.extname(file.originalname).toLowerCase();
+			cb(null, file.fieldname + "-" + uniqueSuffix + ext);
+		}
+	});
+};
+
+export const productUpload = multer({ storage: createStorage("products") });
