@@ -1,4 +1,5 @@
 import { readFile, writeFile } from "./ManagerFileSystem.js";
+import paginateDocs from "./lib/paginate.js";
 
 const FILE_NAME = "products.json";
 
@@ -15,8 +16,9 @@ export async function checkCodeExists(code, data = []) {
 	return Boolean(findCode);
 }
 
-export async function getProducts() {
-	return await readProductsFile();
+export async function getProducts(query) {
+	const products = await readProductsFile();
+	return paginateDocs(products, query);
 }
 
 export async function addProduct(product) {

@@ -12,12 +12,26 @@ const {
 	updateProduct
 } = ProductManager;
 
+const ROOT_PATH = "http://localhost:8080";
+
 router.get("/", async (req, res, next) => {
 	try {
-		const { limit } = req.query;
-		let products = await getProducts();
-		if (limit) products = products.slice(0, parseInt(limit));
-		res.json({ limit: limit || null, products });
+		const { query } = req;
+		query.page = query.page ? parseInt(query.page) : 1;
+		query.limit = query.limit ? parseInt(query.limit) : 10;
+
+		let response = await getProducts(query);
+
+		const buildLink = (page) => {
+			const url = new URL(`${ROOT_PATH}${req.originalUrl}`);
+			url.searchParams.set("page", page);
+			return url.href;
+		};
+
+		response.prevLink = response.hasPrevPage ? buildLink(query.page - 1) : null;
+		response.nextLink = response.hasNextPage ? buildLink(query.page + 1) : null;
+
+		res.json({ status: "success", ...response });
 	} catch (error) {
 		next(error);
 	}

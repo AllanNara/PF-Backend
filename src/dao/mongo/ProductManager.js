@@ -1,3 +1,4 @@
+import { PaginationParameters } from "mongoose-paginate-v2";
 import { productModel } from "./models/product.model.js";
 
 export async function checkCodeExists(code) {
@@ -6,11 +7,11 @@ export async function checkCodeExists(code) {
 	return Boolean(doc);
 }
 
-export async function getProducts(lean) {
-	if (lean) {
-		return await productModel.find({}).lean();
-	}
-	const docs = await productModel.find({});
+export async function getProducts(query) {
+	if (query.sort) query.sort = { price: `${query.sort}` };
+	const parameters = new PaginationParameters({ query });
+	const docs = await productModel.paginate(...parameters.get());
+	Object.prototype.hasOwnProperty.call(docs, "offset") && delete docs.offset;
 	return docs;
 }
 

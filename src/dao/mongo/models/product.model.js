@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import mongoosePaginate from "mongoose-paginate-v2";
 
 const productCollection = "products";
 
@@ -51,5 +52,17 @@ const productSchema = new mongoose.Schema({
 		default: []
 	}
 });
+
+mongoosePaginate.paginate.options = {
+	customLabels: {
+		docs: "payload",
+		limit: false,
+		totalDocs: false,
+		pagingCounter: false
+	},
+	lean: true
+};
+
+productSchema.plugin(mongoosePaginate);
 
 export const productModel = mongoose.model(productCollection, productSchema);

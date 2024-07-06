@@ -1,7 +1,6 @@
 import { Server } from "socket.io";
 import { _dirname } from "../dirname.js";
 import allRoutes from "./routes/index.js";
-import { connectMongoDB } from "./utils/mongoose.js";
 import { createServer } from "http";
 import displayRoutes from "express-routemap";
 import { engine } from "express-handlebars";
@@ -25,7 +24,6 @@ app.use(express.static(path.resolve(_dirname, "src", "public")));
 app.use("/", allRoutes);
 app.use(errorHandler);
 
-connectMongoDB();
 websockets(io);
 
 httpServer.listen(8080, () => {

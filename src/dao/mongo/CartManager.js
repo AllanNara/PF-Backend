@@ -6,7 +6,7 @@ export async function addCart() {
 }
 
 export async function getCartById(cid) {
-	const doc = await cartModel.findById(cid);
+	const doc = await cartModel.findById(cid).lean();
 	return doc;
 }
 
