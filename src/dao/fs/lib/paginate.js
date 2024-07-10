@@ -1,15 +1,17 @@
 export default function paginateDocs(data, options) {
 	const { page, limit, sort } = options;
-	const query = JSON.parse(options.query);
 	const offset = limit * (page - 1);
 	let payload, totalPages, hasPrevPage, hasNextPage, prevPage, nextPage;
 
-	data = data.filter((doc) => {
-		return (
-			(typeof query.status !== "boolean" || query.status === doc.status) &&
-			(!query.category || query.category === doc.category)
-		);
-	});
+	if (options.query) {
+		const query = JSON.parse(options.query);
+		data = data.filter((doc) => {
+			return (
+				(typeof query.status !== "boolean" || query.status === doc.status) &&
+				(!query.category || query.category === doc.category)
+			);
+		});
+	}
 
 	payload = data.slice(offset, offset + limit);
 	if (sort) {

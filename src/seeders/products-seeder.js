@@ -1,4 +1,5 @@
 import { _dirname } from "../../dirname.js";
+import { addProduct } from "../dao/fs/ProductManager.js";
 import { cartModel } from "../dao/mongo/models/cart.model.js";
 import { connectMongoDB } from "../utils/mongoose.js";
 import fs from "fs/promises";
@@ -32,7 +33,9 @@ export const seedProductsFile = async () => {
 	console.info("Running seeders on files...");
 	try {
 		const data = await readMockFile();
-		await writeFileProducts(data);
+		for (let i = 0; i < data.length; i++) {
+			await addProduct(data[i]);
+		}
 		console.info("FS: Products seeding completed!");
 	} catch (err) {
 		console.error("FS: Seeding products failed\n", err);

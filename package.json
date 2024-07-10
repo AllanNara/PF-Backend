@@ -17,7 +17,8 @@
 		"commitlint": "commitlint --edit",
 		"commit": "cz",
 		"version": "conventional-changelog -p conventionalcommits -i CHANGELOG.md -s --config .versionrc.json",
-		"release": "commit-and-tag-version"
+		"release": "commit-and-tag-version",
+		"seeders": "node src/seeders"
 	},
 	"keywords": [],
 	"author": "AllanNara",

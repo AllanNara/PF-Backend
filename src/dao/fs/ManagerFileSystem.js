@@ -8,11 +8,12 @@ export function readFile(filename) {
 	const path = resolve(PATH_BASE, filename);
 	return async function () {
 		try {
-			const data = await fs.readFile(path, "utf-8");
+			let data = await fs.readFile(path, "utf-8");
 			const json = JSON.parse(data);
 			return json;
 		} catch (error) {
 			console.warn(error);
+			await fs.writeFile(path, "[]", "utf-8");
 			return [];
 		}
 	};

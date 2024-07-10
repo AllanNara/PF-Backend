@@ -16,9 +16,9 @@ export async function checkCodeExists(code, data = []) {
 	return Boolean(findCode);
 }
 
-export async function getProducts(query) {
+export async function getProducts(options) {
 	const products = await readProductsFile();
-	return paginateDocs(products, query);
+	return paginateDocs(products, options);
 }
 
 export async function addProduct(product) {
@@ -32,13 +32,19 @@ export async function addProduct(product) {
 	const status = product.status || true;
 	const thumbnails = product.thumbnails || [];
 
-	if (!title || !description || !code || !price || !stock || !category) {
+	if (
+		!title ||
+		!description ||
+		!code ||
+		!price ||
+		isNaN(Number(stock)) ||
+		!category
+	) {
 		console.error("Missing fields");
 		return null;
 	}
 
-	if (!checkCodeExists(code, products)) return null;
-
+	if (await checkCodeExists(code, products)) return null;
 	const id = products.length ? products[products.length - 1].id + 1 : 1;
 
 	const newProduct = {

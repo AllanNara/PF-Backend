@@ -16,11 +16,11 @@ const ROOT_PATH = "http://localhost:8080";
 
 router.get("/", async (req, res, next) => {
 	try {
-		const { query } = req;
-		query.page = query.page ? parseInt(query.page) : 1;
-		query.limit = query.limit ? parseInt(query.limit) : 10;
+		const { query: options } = req;
+		options.page = options.page ? parseInt(options.page) : 1;
+		options.limit = options.limit ? parseInt(options.limit) : 10;
 
-		let response = await getProducts(query);
+		let response = await getProducts(options);
 
 		const buildLink = (page) => {
 			const url = new URL(`${ROOT_PATH}${req.originalUrl}`);
@@ -28,8 +28,12 @@ router.get("/", async (req, res, next) => {
 			return url.href;
 		};
 
-		response.prevLink = response.hasPrevPage ? buildLink(query.page - 1) : null;
-		response.nextLink = response.hasNextPage ? buildLink(query.page + 1) : null;
+		response.prevLink = response.hasPrevPage
+			? buildLink(response.prevPage)
+			: null;
+		response.nextLink = response.hasNextPage
+			? buildLink(response.nextPage)
+			: null;
 
 		res.json({ status: "success", ...response });
 	} catch (error) {
@@ -72,7 +76,7 @@ router.post(
 
 router.get("/:pid", async (req, res, next) => {
 	try {
-		const { pid } = req.params;
+		const pid = req.params.pid;
 		const product = await getProductById(pid);
 		if (!product) {
 			return res.status(404).json({
