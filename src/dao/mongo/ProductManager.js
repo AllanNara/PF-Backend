@@ -29,7 +29,11 @@ export async function getProductById(pid) {
 }
 
 export async function updateProduct(pid, obj) {
-	const updated = await productModel.findByIdAndUpdate(pid, { $set: obj });
+	const updated = await productModel.findByIdAndUpdate(
+		pid,
+		{ $set: obj },
+		{ new: true }
+	);
 	return updated;
 }
 

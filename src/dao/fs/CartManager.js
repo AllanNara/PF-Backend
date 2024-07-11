@@ -93,9 +93,17 @@ export async function updateCartProduct(cid, pid, quantity) {
 		return null;
 	}
 
+	let success = false;
 	carts[cartIndex].products.forEach((pr) => {
-		if (pr.product === parseInt(pid)) pr.quantity = quantity;
+		if (pr.product === parseInt(pid)) {
+			pr.quantity = quantity;
+			success = true;
+		}
 	});
+
+	if (!success) {
+		carts[cartIndex].products.push({ product: pid, quantity });
+	}
 
 	await saveCarts(carts);
 	return carts[cartIndex];

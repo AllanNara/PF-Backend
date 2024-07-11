@@ -1,6 +1,9 @@
+import {
+	checkMultiProducts,
+	checkProductExists
+} from "../../middlewares/checkProductExists.js";
 import { CartManager } from "../../dao/factory.js";
 import { Router } from "express";
-import checkProductExists from "../../middlewares/checkProductExists.js";
 
 const router = Router();
 const {
@@ -39,7 +42,7 @@ router.get("/:cid", async (req, res, next) => {
 	}
 });
 
-router.put("/:cid", async (req, res, next) => {
+router.put("/:cid", checkMultiProducts, async (req, res, next) => {
 	try {
 		const cid = req.params.cid;
 		const products = req.body.products;

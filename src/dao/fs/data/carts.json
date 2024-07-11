@@ -15,5 +15,9 @@
         "quantity": 6
       }
     ]
+  },
+  {
+    "id": 2,
+    "products": []
   }
 ]
