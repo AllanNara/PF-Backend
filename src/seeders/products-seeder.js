@@ -1,4 +1,3 @@
-import { _dirname } from "../../dirname.js";
 import { addProduct } from "../dao/fs/ProductManager.js";
 import { cartModel } from "../dao/mongo/models/cart.model.js";
 import { connectMongoDB } from "../utils/mongoose.js";
@@ -12,13 +11,7 @@ const writeFileProducts = writeFile("products.json");
 
 const readMockFile = async () => {
 	try {
-		const pathFile = join(
-			_dirname,
-			"src",
-			"seeders",
-			"json",
-			"MOCK_PRODUCTS.json"
-		);
+		const pathFile = join(import.meta.dirname, "json", "MOCK_PRODUCTS.json");
 		const json = await fs.readFile(pathFile, "utf-8");
 		const data = JSON.parse(json);
 		return data;

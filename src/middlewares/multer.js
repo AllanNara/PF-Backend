@@ -1,5 +1,4 @@
 import { ProductManager } from "../dao/factory.js";
-import { _dirname } from "../../dirname.js";
 import multer from "multer";
 import path from "path";
 
@@ -14,8 +13,8 @@ const createStorage = (dir) => {
 			}
 
 			const uploadPath = path.resolve(
-				_dirname,
-				"src",
+				import.meta.dirname,
+				"...",
 				"public",
 				"uploads",
 				dir

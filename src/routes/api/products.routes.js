@@ -1,6 +1,6 @@
 import { ProductManager } from "../../dao/factory.js";
 import { Router } from "express";
-import { productUpload } from "../../utils/multer.js";
+import { productUpload } from "../../middlewares/multer.js";
 import validateProductFields from "../../middlewares/validateProductFields.js";
 
 const router = Router();
