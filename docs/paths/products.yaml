@@ -1,0 +1,37 @@
+get:
+  tags:
+    - products
+  operationId: getProducts
+  summary: Get products
+  description: Retun all products
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/Pagination.yaml'
+    '400':
+      description: Page not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                default: error
+              message:
+                type: string
+                default: Query 'page' is not valid
+    '500':
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+              message:
+                type: string

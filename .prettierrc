@@ -23,6 +23,18 @@
 			"options": {
 				"printWidth": 150
 			}
+		},
+		{
+			"files": ["**/*.json"],
+			"options": {
+				"useTabs": false
+			}
+		},
+		{
+			"files": ["**/*.yaml", "**/*.yml"],
+			"options": {
+				"singleQuote": true
+			}
 		}
 	]
 }

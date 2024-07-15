@@ -1,0 +1,39 @@
+openapi: 3.0.3
+info:
+  title: E-ComMercy API
+  version: beta 1.4.0
+  description: |-
+    Generic ecommerce API design for Backend course on Coderhouse
+    _create by Allan Reynoso_
+    [Github /AllanNara](https://github.com/AllanNara)
+  contact:
+    email: allannara@outlook.com
+    name: Contact me
+    url: https://www.linkedin.com/in/allannara
+  license:
+    name: MIT License
+    url: https://github.com/AllanNara/PF-Backend/blob/main/LICENSE.txt
+servers:
+  - url: http://localhost:8080/api
+    description: Local development API
+tags:
+  - name: carts
+    description: CRUD operations of the user carts
+  - name: products
+    description: CRUD operations of products
+security: []
+
+paths:
+  /products:
+    $ref: './paths/products.yaml'
+  /carts:
+    $ref: './paths/carts.yaml'
+
+components:
+  schemas:
+    Product:
+      $ref: './components/schemas/Product.yaml'
+    Pagination:
+      $ref: './components/schemas/Pagination.yaml'
+    Cart:
+      $ref: './components/schemas/Cart.yaml'

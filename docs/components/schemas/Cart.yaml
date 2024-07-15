@@ -1,0 +1,9 @@
+type: object
+properties:
+  id:
+    anyOf:
+      - type: string
+      - type: integer
+  products:
+    type: array
+    default: []

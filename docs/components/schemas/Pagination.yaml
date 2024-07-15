@@ -1,0 +1,28 @@
+type: object
+properties:
+  status:
+    type: string
+  payload:
+    type: array
+    items:
+      $ref: './Product.yaml'
+  totalPages:
+    type: integer
+  page:
+    type: integer
+  hasPrevPage:
+    type: boolean
+  hasNextPage:
+    type: boolean
+  prevPage:
+    type: string
+    nullable: true
+  nextPage:
+    type: string
+    nullable: true
+  prevLink:
+    type: string
+    nullable: true
+  nextLink:
+    type: string
+    nullable: true

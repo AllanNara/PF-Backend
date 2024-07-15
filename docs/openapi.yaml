@@ -1,0 +1,173 @@
+openapi: 3.0.3
+info:
+  title: E-ComMercy API
+  version: beta 1.4.0
+  description: |-
+    Generic ecommerce API design for Backend course on Coderhouse
+    _create by Allan Reynoso_
+    [Github /AllanNara](https://github.com/AllanNara)
+  contact:
+    email: allannara@outlook.com
+    name: Contact me
+    url: https://www.linkedin.com/in/allannara
+  license:
+    name: MIT License
+    url: https://github.com/AllanNara/PF-Backend/blob/main/LICENSE.txt
+servers:
+  - url: http://localhost:8080/api
+    description: Local development API
+security: []
+tags:
+  - name: carts
+    description: CRUD operations of the user carts
+  - name: products
+    description: CRUD operations of products
+paths:
+  /products:
+    get:
+      tags:
+        - products
+      operationId: getProducts
+      summary: Get products
+      description: Retun all products
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pagination'
+        '400':
+          description: Page not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: error
+                  message:
+                    type: string
+                    default: Query 'page' is not valid
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+  /carts:
+    post:
+      tags:
+        - carts
+      operationId: addCart
+      summary: Post new cart
+      description: Add new cart for user
+      responses:
+        '200':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  payload:
+                    $ref: '#/components/schemas/Cart'
+        '400':
+          description: UserID not provided
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: error
+                  message:
+                    type: string
+                    default: UserID is required
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: error
+                  message:
+                    type: string
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        id:
+          oneOf:
+            - type: string
+            - type: integer
+        title:
+          type: string
+        description:
+          type: string
+        code:
+          type: string
+        price:
+          type: number
+        stock:
+          type: integer
+        category:
+          type: string
+        status:
+          type: boolean
+        thumbnails:
+          type: array
+          items:
+            type: string
+    Pagination:
+      type: object
+      properties:
+        status:
+          type: string
+        payload:
+          type: array
+          items:
+            $ref: '#/components/schemas/Product'
+        totalPages:
+          type: integer
+        page:
+          type: integer
+        hasPrevPage:
+          type: boolean
+        hasNextPage:
+          type: boolean
+        prevPage:
+          type: string
+          nullable: true
+        nextPage:
+          type: string
+          nullable: true
+        prevLink:
+          type: string
+          nullable: true
+        nextLink:
+          type: string
+          nullable: true
+    Cart:
+      type: object
+      properties:
+        id:
+          anyOf:
+            - type: string
+            - type: integer
+        products:
+          type: array
+          default: []

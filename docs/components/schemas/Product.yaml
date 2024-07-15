@@ -1,0 +1,24 @@
+type: object
+properties:
+  id:
+    oneOf:
+      - type: string
+      - type: integer
+  title:
+    type: string
+  description:
+    type: string
+  code:
+    type: string
+  price:
+    type: number
+  stock:
+    type: integer
+  category:
+    type: string
+  status:
+    type: boolean
+  thumbnails:
+    type: array
+    items:
+      type: string
