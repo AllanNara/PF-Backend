@@ -1,0 +1,105 @@
+parameters:
+  - name: pid
+    in: path
+    description: Product ID
+    required: true
+    schema:
+      anyOf:
+        - type: string
+        - type: number
+get:
+  tags:
+    - products
+  operationId: getProductById
+  summary: Get product by ID
+  description: Return one product, find by ID
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                default: success
+              payload:
+                $ref: ../../components/schemas/Product.yaml
+    '404':
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                default: error
+              message:
+                type: string
+                example: Product with id 14 not found
+put:
+  tags:
+    - products
+  operationId: updateProduct
+  summary: Update product
+  description: Update properties of product, find by ID
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                default: success
+              payload:
+                $ref: ../../components/schemas/Product.yaml
+    '404':
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                default: error
+              message:
+                type: string
+                example: Product with id 14 not found
+delete:
+  tags:
+    - products
+  operationId: deleteProduct
+  summary: Delete product
+  description: Delete product by ID
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                default: success
+              payload:
+                $ref: ../../components/schemas/Product.yaml
+    '404':
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                default: error
+              message:
+                type: string
+                example: Product with id 14 not found

@@ -25,15 +25,21 @@ security: []
 
 paths:
   /products:
-    $ref: './paths/products.yaml'
+    $ref: paths/products/products.yaml
+  /products/{pid}:
+    $ref: paths/products/products-by-id.yaml
   /carts:
-    $ref: './paths/carts.yaml'
+    $ref: paths/carts/carts.yaml
+  /carts/{cid}:
+    $ref: paths/carts/carts-by-id.yaml
+  # /carts/{cid}/product/{pid}:
+  # $ref: paths/carts/products-in-cart.yaml
 
 components:
   schemas:
     Product:
-      $ref: './components/schemas/Product.yaml'
+      $ref: components/schemas/Product.yaml
     Pagination:
-      $ref: './components/schemas/Pagination.yaml'
+      $ref: components/schemas/Pagination.yaml
     Cart:
-      $ref: './components/schemas/Cart.yaml'
+      $ref: components/schemas/Cart.yaml

@@ -61,6 +61,164 @@ paths:
                     type: string
                   message:
                     type: string
+    post:
+      tags:
+        - products
+      operationId: addProduct
+      summary: Add product
+      description: Add new product with unique code
+      requestBody:
+        required: true
+        description: Fields to complete for new product, code must unique
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: success
+                  payload:
+                    $ref: '#/components/schemas/Product'
+        '400':
+          description: Missing fields
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: error
+                  message:
+                    type: string
+                    example: Missing fields
+        '409':
+          description: Code alredy in use
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: error
+                  message:
+                    type: string
+                    example: Code alredy exists
+  /products/{pid}:
+    parameters:
+      - name: pid
+        in: path
+        description: Product ID
+        required: true
+        schema:
+          anyOf:
+            - type: string
+            - type: number
+    get:
+      tags:
+        - products
+      operationId: getProductById
+      summary: Get product by ID
+      description: Return one product, find by ID
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: success
+                  payload:
+                    $ref: '#/components/schemas/Product'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: error
+                  message:
+                    type: string
+                    example: Product with id 14 not found
+    put:
+      tags:
+        - products
+      operationId: updateProduct
+      summary: Update product
+      description: Update properties of product, find by ID
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: success
+                  payload:
+                    $ref: '#/components/schemas/Product'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: error
+                  message:
+                    type: string
+                    example: Product with id 14 not found
+    delete:
+      tags:
+        - products
+      operationId: deleteProduct
+      summary: Delete product
+      description: Delete product by ID
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: success
+                  payload:
+                    $ref: '#/components/schemas/Product'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: error
+                  message:
+                    type: string
+                    example: Product with id 14 not found
   /carts:
     post:
       tags:
@@ -105,6 +263,48 @@ paths:
                     default: error
                   message:
                     type: string
+  /carts/{cid}:
+    parameters:
+      - name: cid
+        in: path
+        required: true
+        description: Cart ID
+        schema:
+          anyOf:
+            - type: string
+            - type: number
+    get:
+      tags:
+        - carts
+      operationId: getCartById
+      summary: Get cart
+      description: Get user cart by ID
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: success
+                  payload:
+                    $ref: '#/components/schemas/Cart'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: error
+                  message:
+                    type: string
+                    example: Cart with id 3 not found
 components:
   schemas:
     Product:
@@ -170,4 +370,6 @@ components:
             - type: integer
         products:
           type: array
+          items:
+            $ref: '#/components/schemas/Product'
           default: []

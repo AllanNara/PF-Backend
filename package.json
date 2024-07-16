@@ -15,7 +15,8 @@
     "commit": "cz",
     "version": "conventional-changelog -p conventionalcommits -i CHANGELOG.md -s --config .versionrc.json",
     "release": "commit-and-tag-version",
-    "seeders": "node src/seeders"
+    "seeders": "node src/seeders",
+    "oas:bundle": "scripts/generate-oa-docs.sh"
   },
   "engines": {
     "node": ">=20.0.0",
@@ -43,6 +44,7 @@
     "@commitlint/config-conventional": "^19.2.2",
     "@commitlint/cz-commitlint": "^19.2.0",
     "@eslint/js": "^9.6.0",
+    "@redocly/cli": "^1.18.0",
     "commit-and-tag-version": "^12.4.1",
     "commitizen": "^4.3.0",
     "conventional-changelog-cli": "^5.0.0",

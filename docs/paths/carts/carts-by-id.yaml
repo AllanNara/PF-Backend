@@ -1,0 +1,41 @@
+parameters:
+  - name: cid
+    in: path
+    required: true
+    description: Cart ID
+    schema:
+      anyOf:
+        - type: string
+        - type: number
+get:
+  tags:
+    - carts
+  operationId: getCartById
+  summary: Get cart
+  description: Get user cart by ID
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                default: success
+              payload:
+                $ref: ../../components/schemas/Cart.yaml
+    '404':
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                default: error
+              message:
+                type: string
+                example: Cart with id 3 not found

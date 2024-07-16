@@ -26,6 +26,17 @@ app.use(express.static(path.resolve(import.meta.dirname, "public")));
 app.use("/api", swaggerUi.serve);
 app.get("/api", swaggerUi.setup(swaggerSpec));
 
+// Documentation with Redocly
+app.get("/redoc", (req, res) => {
+	const redocFile = path.resolve(
+		import.meta.dirname,
+		"..",
+		"docs",
+		"redoc-static.html"
+	);
+	res.sendFile(redocFile);
+});
+
 app.use("/", allRoutes);
 app.use(errorHandler);
 

@@ -15,7 +15,7 @@ post:
               status:
                 type: string
               payload:
-                $ref: '../components/schemas/Cart.yaml'
+                $ref: '../../components/schemas/Cart.yaml'
     '400':
       description: UserID not provided
       content:

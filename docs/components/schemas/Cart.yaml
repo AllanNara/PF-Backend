@@ -6,4 +6,6 @@ properties:
       - type: integer
   products:
     type: array
+    items:
+      $ref: Product.yaml
     default: []
