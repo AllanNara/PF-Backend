@@ -1,0 +1,115 @@
+parameters:
+  - $ref: '../../components/parameters/paths.yaml#/cartID'
+  - $ref: '../../components/parameters/paths.yaml#/productID'
+post:
+  tags:
+    - carts
+  operationId: addProductoToCart
+  summary: Add product to cart
+  description: Add existing product to user cart
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                default: success
+              payload:
+                $ref: ../../components/schemas/Cart.yaml
+    '404':
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                default: error
+              message:
+                type: string
+                anyOf:
+                  - example: Cart with id 3 not found
+                  - example: Product with id 14 not found
+put:
+  tags:
+    - carts
+  operationId: updateCartProduct
+  summary: Update cart product
+  description: Update quantity of specific cart product
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            quantity:
+              type: integer
+          required:
+            - quantity
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                default: success
+              payload:
+                $ref: ../../components/schemas/Cart.yaml
+    '404':
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                default: error
+              message:
+                type: string
+                anyOf:
+                  - example: Cart with id 3 not found
+                  - example: Product with id 14 not found
+delete:
+  tags:
+    - carts
+  operationId: deleteCartProduct
+  summary: Delete cart product
+  description: Delete specific product from user cart
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                default: success
+              payload:
+                $ref: ../../components/schemas/Cart.yaml
+    '404':
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                default: error
+              message:
+                type: string
+                anyOf:
+                  - example: Cart with id 3 not found
+                  - example: Product with id 14 not found

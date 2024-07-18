@@ -1,0 +1,19 @@
+productID:
+  name: pid
+  in: path
+  schema:
+    anyOf:
+      - type: string
+      - type: number
+  required: true
+  description: Product ID
+
+cartID:
+  name: cid
+  in: path
+  schema:
+    anyOf:
+      - type: string
+      - type: number
+  required: true
+  description: Cart ID

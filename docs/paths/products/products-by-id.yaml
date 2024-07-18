@@ -1,12 +1,5 @@
 parameters:
-  - name: pid
-    in: path
-    description: Product ID
-    required: true
-    schema:
-      anyOf:
-        - type: string
-        - type: number
+  - $ref: '../../components/parameters/paths.yaml#/productID'
 get:
   tags:
     - products
@@ -45,6 +38,8 @@ put:
   operationId: updateProduct
   summary: Update product
   description: Update properties of product, find by ID
+  requestBody:
+    $ref: ../../components/requestBodies/update-product.yaml
   responses:
     '200':
       description: OK
@@ -57,7 +52,14 @@ put:
                 type: string
                 default: success
               payload:
-                $ref: ../../components/schemas/Product.yaml
+                allOf:
+                  - $ref: ../../components/schemas/Product.yaml
+                  - type: object
+                    properties:
+                      id:
+                        anyOf:
+                          - type: string
+                          - type: integer
     '404':
       description: Not Found
       content:

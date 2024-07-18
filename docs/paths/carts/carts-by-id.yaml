@@ -1,18 +1,91 @@
 parameters:
-  - name: cid
-    in: path
-    required: true
-    description: Cart ID
-    schema:
-      anyOf:
-        - type: string
-        - type: number
+  - $ref: '../../components/parameters/paths.yaml#/cartID'
 get:
   tags:
     - carts
   operationId: getCartById
   summary: Get cart
   description: Get user cart by ID
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                default: success
+              payload:
+                $ref: ../../components/schemas/Cart.yaml
+    '404':
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                default: error
+              message:
+                type: string
+                example: Cart with id 3 not found
+put:
+  tags:
+    - carts
+  operationId: updateEntireCart
+  summary: Update entire cart
+  description: Update entire user cart, with products in body
+  requestBody:
+    description: Array of products and quantities
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            products:
+              type: array
+              items:
+                type: object
+                properties:
+                  product:
+                    type: string
+                  quantity:
+                    type: integer
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                default: success
+              payload:
+                $ref: ../../components/schemas/Cart.yaml
+    '404':
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                default: error
+              message:
+                type: string
+                example: Cart with id 3 not found
+delete:
+  tags:
+    - carts
+  operationId: emptyCart
+  summary: Empty user cart
+  description: Clean all products from cart with a specific id
   responses:
     '200':
       description: OK

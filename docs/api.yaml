@@ -32,8 +32,8 @@ paths:
     $ref: paths/carts/carts.yaml
   /carts/{cid}:
     $ref: paths/carts/carts-by-id.yaml
-  # /carts/{cid}/product/{pid}:
-  # $ref: paths/carts/products-in-cart.yaml
+  /carts/{cid}/product/{pid}:
+    $ref: paths/carts/products-in-cart.yaml
 
 components:
   schemas:
@@ -43,3 +43,27 @@ components:
       $ref: components/schemas/Pagination.yaml
     Cart:
       $ref: components/schemas/Cart.yaml
+  requestBodies:
+    new-product:
+      $ref: components/requestBodies/new-product.yaml
+    update-product:
+      $ref: components/requestBodies/update-product.yaml
+  parameters:
+    paginationLimitQuery:
+      $ref: components/parameters/queries.yaml#/paginationLimitQuery
+    paginationPageQuery:
+      $ref: components/parameters/queries.yaml#/paginationPageQuery
+    paginationSortQuery:
+      $ref: components/parameters/queries.yaml#/paginationSortQuery
+    paginationQueryQuery:
+      $ref: components/parameters/queries.yaml#/paginationQueryQuery
+    cartID:
+      $ref: components/parameters/paths.yaml#/cartID
+    productID:
+      $ref: components/parameters/paths.yaml#/productID
+  # responses:
+  #   propertyName:
+  #     $ref: components/responses/
+  # examples:
+  #   propertyName:
+  #     $ref: components/examples/

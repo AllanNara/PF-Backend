@@ -1,0 +1,35 @@
+paginationLimitQuery:
+  name: limit
+  in: query
+  schema:
+    type: integer
+  description: Limit of products per page
+
+paginationPageQuery:
+  name: page
+  in: query
+  schema:
+    type: integer
+  description: Get specific page
+
+paginationSortQuery:
+  name: sort
+  in: query
+  schema:
+    type: string
+    enum:
+      - asc
+      - desc
+  description: Sort results by price
+
+paginationQueryQuery:
+  name: query
+  in: query
+  schema:
+    type: string
+  description: Applied filters
+  examples:
+    byCategory:
+      value: '{"category": "n/a"}'
+    byAvailability:
+      value: '{"status": true}'

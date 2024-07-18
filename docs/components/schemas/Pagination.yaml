@@ -5,7 +5,7 @@ properties:
   payload:
     type: array
     items:
-      $ref: './Product.yaml'
+      $ref: ./Product.yaml
   totalPages:
     type: integer
   page:

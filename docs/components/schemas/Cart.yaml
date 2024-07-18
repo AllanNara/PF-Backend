@@ -1,6 +1,7 @@
 type: object
 properties:
   id:
+    readOnly: true
     anyOf:
       - type: string
       - type: integer
@@ -8,4 +9,3 @@ properties:
     type: array
     items:
       $ref: Product.yaml
-    default: []

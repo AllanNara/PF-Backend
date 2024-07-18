@@ -25,6 +25,11 @@ tags:
 paths:
   /products:
     get:
+      parameters:
+        - $ref: '#/components/parameters/paginationLimitQuery'
+        - $ref: '#/components/parameters/paginationPageQuery'
+        - $ref: '#/components/parameters/paginationSortQuery'
+        - $ref: '#/components/parameters/paginationQueryQuery'
       tags:
         - products
       operationId: getProducts
@@ -68,12 +73,7 @@ paths:
       summary: Add product
       description: Add new product with unique code
       requestBody:
-        required: true
-        description: Fields to complete for new product, code must unique
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Product'
+        $ref: '#/components/requestBodies/new-product'
       responses:
         '200':
           description: OK
@@ -86,7 +86,14 @@ paths:
                     type: string
                     default: success
                   payload:
-                    $ref: '#/components/schemas/Product'
+                    allOf:
+                      - $ref: '#/components/schemas/Product'
+                      - type: object
+                        properties:
+                          id:
+                            anyOf:
+                              - type: string
+                              - type: integer
         '400':
           description: Missing fields
           content:
@@ -115,14 +122,7 @@ paths:
                     example: Code alredy exists
   /products/{pid}:
     parameters:
-      - name: pid
-        in: path
-        description: Product ID
-        required: true
-        schema:
-          anyOf:
-            - type: string
-            - type: number
+      - $ref: '#/components/parameters/productID'
     get:
       tags:
         - products
@@ -161,6 +161,8 @@ paths:
       operationId: updateProduct
       summary: Update product
       description: Update properties of product, find by ID
+      requestBody:
+        $ref: '#/components/requestBodies/update-product'
       responses:
         '200':
           description: OK
@@ -173,7 +175,14 @@ paths:
                     type: string
                     default: success
                   payload:
-                    $ref: '#/components/schemas/Product'
+                    allOf:
+                      - $ref: '#/components/schemas/Product'
+                      - type: object
+                        properties:
+                          id:
+                            anyOf:
+                              - type: string
+                              - type: integer
         '404':
           description: Not Found
           content:
@@ -265,14 +274,7 @@ paths:
                     type: string
   /carts/{cid}:
     parameters:
-      - name: cid
-        in: path
-        required: true
-        description: Cart ID
-        schema:
-          anyOf:
-            - type: string
-            - type: number
+      - $ref: '#/components/parameters/cartID'
     get:
       tags:
         - carts
@@ -305,13 +307,210 @@ paths:
                   message:
                     type: string
                     example: Cart with id 3 not found
+    put:
+      tags:
+        - carts
+      operationId: updateEntireCart
+      summary: Update entire cart
+      description: Update entire user cart, with products in body
+      requestBody:
+        description: Array of products and quantities
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                products:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      product:
+                        type: string
+                      quantity:
+                        type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: success
+                  payload:
+                    $ref: '#/components/schemas/Cart'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: error
+                  message:
+                    type: string
+                    example: Cart with id 3 not found
+    delete:
+      tags:
+        - carts
+      operationId: emptyCart
+      summary: Empty user cart
+      description: Clean all products from cart with a specific id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: success
+                  payload:
+                    $ref: '#/components/schemas/Cart'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: error
+                  message:
+                    type: string
+                    example: Cart with id 3 not found
+  /carts/{cid}/product/{pid}:
+    parameters:
+      - $ref: '#/components/parameters/cartID'
+      - $ref: '#/components/parameters/productID'
+    post:
+      tags:
+        - carts
+      operationId: addProductoToCart
+      summary: Add product to cart
+      description: Add existing product to user cart
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: success
+                  payload:
+                    $ref: '#/components/schemas/Cart'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: error
+                  message:
+                    type: string
+                    anyOf:
+                      - example: Cart with id 3 not found
+                      - example: Product with id 14 not found
+    put:
+      tags:
+        - carts
+      operationId: updateCartProduct
+      summary: Update cart product
+      description: Update quantity of specific cart product
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                quantity:
+                  type: integer
+              required:
+                - quantity
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: success
+                  payload:
+                    $ref: '#/components/schemas/Cart'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: error
+                  message:
+                    type: string
+                    anyOf:
+                      - example: Cart with id 3 not found
+                      - example: Product with id 14 not found
+    delete:
+      tags:
+        - carts
+      operationId: deleteCartProduct
+      summary: Delete cart product
+      description: Delete specific product from user cart
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: success
+                  payload:
+                    $ref: '#/components/schemas/Cart'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: error
+                  message:
+                    type: string
+                    anyOf:
+                      - example: Cart with id 3 not found
+                      - example: Product with id 14 not found
 components:
   schemas:
     Product:
       type: object
       properties:
         id:
-          oneOf:
+          readOnly: true
+          anyOf:
             - type: string
             - type: integer
         title:
@@ -365,6 +564,7 @@ components:
       type: object
       properties:
         id:
+          readOnly: true
           anyOf:
             - type: string
             - type: integer
@@ -372,4 +572,76 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Product'
-          default: []
+  requestBodies:
+    new-product:
+      required: true
+      description: Fields to complete for new product, code must unique
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Product'
+            required:
+              - title
+              - description
+              - code
+              - price
+              - stock
+              - category
+    update-product:
+      required: true
+      description: Fields to update
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Product'
+  parameters:
+    paginationLimitQuery:
+      name: limit
+      in: query
+      schema:
+        type: integer
+      description: Limit of products per page
+    paginationPageQuery:
+      name: page
+      in: query
+      schema:
+        type: integer
+      description: Get specific page
+    paginationSortQuery:
+      name: sort
+      in: query
+      schema:
+        type: string
+        enum:
+          - asc
+          - desc
+      description: Sort results by price
+    paginationQueryQuery:
+      name: query
+      in: query
+      schema:
+        type: string
+      description: Applied filters
+      examples:
+        byCategory:
+          value: '{"category": "n/a"}'
+        byAvailability:
+          value: '{"status": true}'
+    cartID:
+      name: cid
+      in: path
+      schema:
+        anyOf:
+          - type: string
+          - type: number
+      required: true
+      description: Cart ID
+    productID:
+      name: pid
+      in: path
+      schema:
+        anyOf:
+          - type: string
+          - type: number
+      required: true
+      description: Product ID

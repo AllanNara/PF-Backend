@@ -1,0 +1,6 @@
+required: true
+description: Fields to update
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/Product.yaml
