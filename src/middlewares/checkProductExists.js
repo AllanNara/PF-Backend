@@ -8,7 +8,7 @@ export const checkProductExists = async (req, res, next) => {
 		if (!productFound) {
 			return res
 				.status(404)
-				.json({ status: "error", message: "Product not found" });
+				.json({ status: "error", message: `Product with id ${pid} not found` });
 		}
 
 		next();
