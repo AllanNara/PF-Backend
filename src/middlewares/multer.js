@@ -9,7 +9,7 @@ const createStorage = (dir) => {
 				const productCode = req.body.code;
 				const codeRepeat = await ProductManager.checkCodeExists(productCode);
 				if (codeRepeat)
-					return cb({ message: `Code ${productCode} alredy exists` });
+					return cb({ message: `Code ${productCode} already exists` });
 			}
 
 			const uploadPath = path.resolve(

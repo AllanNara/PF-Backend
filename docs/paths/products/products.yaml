@@ -1,9 +1,10 @@
+## READ ##
 get:
   parameters:
-    - $ref: '../../components/parameters/queries.yaml#/paginationLimitQuery'
-    - $ref: '../../components/parameters/queries.yaml#/paginationPageQuery'
-    - $ref: '../../components/parameters/queries.yaml#/paginationSortQuery'
-    - $ref: '../../components/parameters/queries.yaml#/paginationQueryQuery'
+    - $ref: '../../components/parameters/Queries.yaml#/PaginationLimitQuery'
+    - $ref: '../../components/parameters/Queries.yaml#/PaginationPageQuery'
+    - $ref: '../../components/parameters/Queries.yaml#/PaginationSortQuery'
+    - $ref: '../../components/parameters/Queries.yaml#/PaginationQueryQuery'
   tags:
     - products
   operationId: getProducts
@@ -11,36 +12,11 @@ get:
   description: Retun all products
   responses:
     '200':
-      description: OK
-      content:
-        application/json:
-          schema:
-            $ref: '../../components/schemas/Pagination.yaml'
-    '400':
-      description: Page not found
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              status:
-                type: string
-                default: error
-              message:
-                type: string
-                default: Query 'page' is not valid
+      $ref: ../../components/responses/PaginationRes.yaml
     '500':
-      description: Internal Server Error
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              status:
-                type: string
-              message:
-                type: string
+      $ref: ../../components/responses/Default.yaml
 
+## CREATE ##
 post:
   tags:
     - products
@@ -48,50 +24,11 @@ post:
   summary: Add product
   description: Add new product with unique code
   requestBody:
-    $ref: ../../components/requestBodies/new-product.yaml
+    $ref: ../../components/requestBodies/NewProduct.yaml
   responses:
     '200':
-      description: OK
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              status:
-                type: string
-                default: success
-              payload:
-                allOf:
-                  - $ref: ../../components/schemas/Product.yaml
-                  - type: object
-                    properties:
-                      id:
-                        anyOf:
-                          - type: string
-                          - type: integer
+      $ref: ../../components/responses/SuccessfulOperation.yaml#/SuccessfulProductOperation
     '400':
-      description: Missing fields
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              status:
-                type: string
-                default: error
-              message:
-                type: string
-                example: Missing fields
+      $ref: ../../components/responses/ErrorProductOperation.yaml#/MissingFieldsInProduct
     '409':
-      description: Code alredy in use
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              status:
-                type: string
-                default: error
-              message:
-                type: string
-                example: Code alredy exists
+      $ref: ../../components/responses/ErrorProductOperation.yaml#/CodeAlreadyInUse

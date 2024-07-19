@@ -17,10 +17,10 @@ servers:
   - url: http://localhost:8080/api
     description: Local development API
 tags:
-  - name: carts
-    description: CRUD operations of the user carts
   - name: products
     description: CRUD operations of products
+  - name: carts
+    description: CRUD operations of the user carts
 security: []
 
 paths:
@@ -33,7 +33,7 @@ paths:
   /carts/{cid}:
     $ref: paths/carts/carts-by-id.yaml
   /carts/{cid}/product/{pid}:
-    $ref: paths/carts/products-in-cart.yaml
+    $ref: paths/carts/cart-product.yaml
 
 components:
   schemas:
@@ -43,27 +43,51 @@ components:
       $ref: components/schemas/Pagination.yaml
     Cart:
       $ref: components/schemas/Cart.yaml
+    ErrorRequest:
+      $ref: components/schemas/ErrorRequest.yaml
+    SuccessRequest:
+      $ref: components/schemas/SuccessRequest.yaml
   requestBodies:
-    new-product:
-      $ref: components/requestBodies/new-product.yaml
-    update-product:
-      $ref: components/requestBodies/update-product.yaml
+    NewProduct:
+      $ref: components/requestBodies/NewProduct.yaml
+    UpdateProduct:
+      $ref: components/requestBodies/UpdateProduct.yaml
+    UpdateCart:
+      $ref: components/requestBodies/UpdateCart.yaml
+    UpdateCartProduct:
+      $ref: components/requestBodies/UpdateCartProduct.yaml
   parameters:
-    paginationLimitQuery:
-      $ref: components/parameters/queries.yaml#/paginationLimitQuery
-    paginationPageQuery:
-      $ref: components/parameters/queries.yaml#/paginationPageQuery
-    paginationSortQuery:
-      $ref: components/parameters/queries.yaml#/paginationSortQuery
-    paginationQueryQuery:
-      $ref: components/parameters/queries.yaml#/paginationQueryQuery
-    cartID:
-      $ref: components/parameters/paths.yaml#/cartID
-    productID:
-      $ref: components/parameters/paths.yaml#/productID
-  # responses:
-  #   propertyName:
-  #     $ref: components/responses/
-  # examples:
-  #   propertyName:
-  #     $ref: components/examples/
+    PaginationLimitQuery:
+      $ref: components/parameters/Queries.yaml#/PaginationLimitQuery
+    PaginationPageQuery:
+      $ref: components/parameters/Queries.yaml#/PaginationPageQuery
+    PaginationSortQuery:
+      $ref: components/parameters/Queries.yaml#/PaginationSortQuery
+    PaginationQueryQuery:
+      $ref: components/parameters/Queries.yaml#/PaginationQueryQuery
+    CartID:
+      $ref: components/parameters/Params.yaml#/CartID
+    ProductID:
+      $ref: components/parameters/Params.yaml#/ProductID
+  responses:
+    PaginationRes:
+      $ref: components/responses/PaginationRes.yaml
+    SuccessfulCartOperation:
+      $ref: components/responses/SuccessfulOperation.yaml#/SuccessfulCartOperation
+    SuccessfulProductOperation:
+      $ref: components/responses/SuccessfulOperation.yaml#/SuccessfulProductOperation
+    CartOrProductNotFound:
+      $ref: components/responses/ResourseNotFound.yaml#/CartOrProductNotFound
+    CartNotFound:
+      $ref: components/responses/ResourseNotFound.yaml#/CartNotFound
+    ProductNotFound:
+      $ref: components/responses/ResourseNotFound.yaml#/ProductNotFound
+    MissingFieldsInProduct:
+      $ref: components/responses/ErrorProductOperation.yaml#/MissingFieldsInProduct
+    CodeAlreadyInUse:
+      $ref: components/responses/ErrorProductOperation.yaml#/CodeAlreadyInUse
+  examples:
+    PaginationExample:
+      $ref: components/examples/PaginationExample.yaml#/PaginationExample
+    PaginationExampleMongo:
+      $ref: components/examples/PaginationExample.yaml#/PaginationExampleMongo

@@ -23,12 +23,12 @@
   "security": [],
   "tags": [
     {
-      "name": "carts",
-      "description": "CRUD operations of the user carts"
-    },
-    {
       "name": "products",
       "description": "CRUD operations of products"
+    },
+    {
+      "name": "carts",
+      "description": "CRUD operations of the user carts"
     }
   ],
   "paths": {
@@ -36,16 +36,16 @@
       "get": {
         "parameters": [
           {
-            "$ref": "#/components/parameters/paginationLimitQuery"
+            "$ref": "#/components/parameters/PaginationLimitQuery"
           },
           {
-            "$ref": "#/components/parameters/paginationPageQuery"
+            "$ref": "#/components/parameters/PaginationPageQuery"
           },
           {
-            "$ref": "#/components/parameters/paginationSortQuery"
+            "$ref": "#/components/parameters/PaginationSortQuery"
           },
           {
-            "$ref": "#/components/parameters/paginationQueryQuery"
+            "$ref": "#/components/parameters/PaginationQueryQuery"
           }
         ],
         "tags": [
@@ -56,52 +56,10 @@
         "description": "Retun all products",
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Pagination"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Page not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "default": "error"
-                    },
-                    "message": {
-                      "type": "string",
-                      "default": "Query 'page' is not valid"
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/PaginationRes"
           },
           "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/Default"
           }
         }
       },
@@ -113,86 +71,17 @@
         "summary": "Add product",
         "description": "Add new product with unique code",
         "requestBody": {
-          "$ref": "#/components/requestBodies/new-product"
+          "$ref": "#/components/requestBodies/NewProduct"
         },
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "default": "success"
-                    },
-                    "payload": {
-                      "allOf": [
-                        {
-                          "$ref": "#/components/schemas/Product"
-                        },
-                        {
-                          "type": "object",
-                          "properties": {
-                            "id": {
-                              "anyOf": [
-                                {
-                                  "type": "string"
-                                },
-                                {
-                                  "type": "integer"
-                                }
-                              ]
-                            }
-                          }
-                        }
-                      ]
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/SuccessfulProductOperation"
           },
           "400": {
-            "description": "Missing fields",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "default": "error"
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Missing fields"
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/MissingFieldsInProduct"
           },
           "409": {
-            "description": "Code alredy in use",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "default": "error"
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Code alredy exists"
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/CodeAlreadyInUse"
           }
         }
       }
@@ -200,7 +89,7 @@
     "/products/{pid}": {
       "parameters": [
         {
-          "$ref": "#/components/parameters/productID"
+          "$ref": "#/components/parameters/ProductID"
         }
       ],
       "get": {
@@ -212,43 +101,10 @@
         "description": "Return one product, find by ID",
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "default": "success"
-                    },
-                    "payload": {
-                      "$ref": "#/components/schemas/Product"
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/SuccessfulProductOperation"
           },
           "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "default": "error"
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Product with id 14 not found"
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/ProductNotFound"
           }
         }
       },
@@ -260,66 +116,14 @@
         "summary": "Update product",
         "description": "Update properties of product, find by ID",
         "requestBody": {
-          "$ref": "#/components/requestBodies/update-product"
+          "$ref": "#/components/requestBodies/UpdateProduct"
         },
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "default": "success"
-                    },
-                    "payload": {
-                      "allOf": [
-                        {
-                          "$ref": "#/components/schemas/Product"
-                        },
-                        {
-                          "type": "object",
-                          "properties": {
-                            "id": {
-                              "anyOf": [
-                                {
-                                  "type": "string"
-                                },
-                                {
-                                  "type": "integer"
-                                }
-                              ]
-                            }
-                          }
-                        }
-                      ]
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/SuccessfulProductOperation"
           },
           "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "default": "error"
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Product with id 14 not found"
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/ProductNotFound"
           }
         }
       },
@@ -332,43 +136,10 @@
         "description": "Delete product by ID",
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "default": "success"
-                    },
-                    "payload": {
-                      "$ref": "#/components/schemas/Product"
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/SuccessfulProductOperation"
           },
           "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "default": "error"
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Product with id 14 not found"
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/ProductNotFound"
           }
         }
       }
@@ -383,61 +154,10 @@
         "description": "Add new cart for user",
         "responses": {
           "200": {
-            "description": "Created",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string"
-                    },
-                    "payload": {
-                      "$ref": "#/components/schemas/Cart"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "UserID not provided",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "default": "error"
-                    },
-                    "message": {
-                      "type": "string",
-                      "default": "UserID is required"
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/SuccessfulCartOperation"
           },
           "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "default": "error"
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/Default"
           }
         }
       }
@@ -445,7 +165,7 @@
     "/carts/{cid}": {
       "parameters": [
         {
-          "$ref": "#/components/parameters/cartID"
+          "$ref": "#/components/parameters/CartID"
         }
       ],
       "get": {
@@ -457,43 +177,10 @@
         "description": "Get user cart by ID",
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "default": "success"
-                    },
-                    "payload": {
-                      "$ref": "#/components/schemas/Cart"
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/SuccessfulCartOperation"
           },
           "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "default": "error"
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Cart with id 3 not found"
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/CartNotFound"
           }
         }
       },
@@ -505,70 +192,14 @@
         "summary": "Update entire cart",
         "description": "Update entire user cart, with products in body",
         "requestBody": {
-          "description": "Array of products and quantities",
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "products": {
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "product": {
-                          "type": "string"
-                        },
-                        "quantity": {
-                          "type": "integer"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
+          "$ref": "#/components/requestBodies/UpdateCart"
         },
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "default": "success"
-                    },
-                    "payload": {
-                      "$ref": "#/components/schemas/Cart"
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/SuccessfulCartOperation"
           },
           "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "default": "error"
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Cart with id 3 not found"
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/CartNotFound"
           }
         }
       },
@@ -581,43 +212,10 @@
         "description": "Clean all products from cart with a specific id",
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "default": "success"
-                    },
-                    "payload": {
-                      "$ref": "#/components/schemas/Cart"
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/SuccessfulCartOperation"
           },
           "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "default": "error"
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Cart with id 3 not found"
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/CartNotFound"
           }
         }
       }
@@ -625,10 +223,10 @@
     "/carts/{cid}/product/{pid}": {
       "parameters": [
         {
-          "$ref": "#/components/parameters/cartID"
+          "$ref": "#/components/parameters/CartID"
         },
         {
-          "$ref": "#/components/parameters/productID"
+          "$ref": "#/components/parameters/ProductID"
         }
       ],
       "post": {
@@ -640,50 +238,10 @@
         "description": "Add existing product to user cart",
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "default": "success"
-                    },
-                    "payload": {
-                      "$ref": "#/components/schemas/Cart"
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/SuccessfulCartOperation"
           },
           "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "default": "error"
-                    },
-                    "message": {
-                      "type": "string",
-                      "anyOf": [
-                        {
-                          "example": "Cart with id 3 not found"
-                        },
-                        {
-                          "example": "Product with id 14 not found"
-                        }
-                      ]
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/CartOrProductNotFound"
           }
         }
       },
@@ -695,68 +253,14 @@
         "summary": "Update cart product",
         "description": "Update quantity of specific cart product",
         "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "quantity": {
-                    "type": "integer"
-                  }
-                },
-                "required": [
-                  "quantity"
-                ]
-              }
-            }
-          }
+          "$ref": "#/components/requestBodies/UpdateCartProduct"
         },
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "default": "success"
-                    },
-                    "payload": {
-                      "$ref": "#/components/schemas/Cart"
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/SuccessfulCartOperation"
           },
           "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "default": "error"
-                    },
-                    "message": {
-                      "type": "string",
-                      "anyOf": [
-                        {
-                          "example": "Cart with id 3 not found"
-                        },
-                        {
-                          "example": "Product with id 14 not found"
-                        }
-                      ]
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/CartOrProductNotFound"
           }
         }
       },
@@ -769,50 +273,10 @@
         "description": "Delete specific product from user cart",
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "default": "success"
-                    },
-                    "payload": {
-                      "$ref": "#/components/schemas/Cart"
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/SuccessfulCartOperation"
           },
           "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "default": "error"
-                    },
-                    "message": {
-                      "type": "string",
-                      "anyOf": [
-                        {
-                          "example": "Cart with id 3 not found"
-                        },
-                        {
-                          "example": "Product with id 14 not found"
-                        }
-                      ]
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/CartOrProductNotFound"
           }
         }
       }
@@ -888,11 +352,11 @@
             "type": "boolean"
           },
           "prevPage": {
-            "type": "string",
+            "type": "integer",
             "nullable": true
           },
           "nextPage": {
-            "type": "string",
+            "type": "integer",
             "nullable": true
           },
           "prevLink": {
@@ -922,14 +386,49 @@
           "products": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/Product"
-            }
+              "type": "object",
+              "properties": {
+                "product": {
+                  "$ref": "#/components/schemas/Product"
+                },
+                "quantity": {
+                  "type": "integer",
+                  "default": 1
+                }
+              }
+            },
+            "default": []
+          }
+        }
+      },
+      "ErrorRequest": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "default": "error"
+          },
+          "message": {
+            "type": "string",
+            "default": "Internal Server Error"
+          }
+        }
+      },
+      "SuccessRequest": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "default": "success"
+          },
+          "payload": {
+            "type": "object"
           }
         }
       }
     },
     "requestBodies": {
-      "new-product": {
+      "NewProduct": {
         "required": true,
         "description": "Fields to complete for new product, code must unique",
         "content": {
@@ -944,11 +443,16 @@
                 "stock",
                 "category"
               ]
+            },
+            "examples": {
+              "ValuesForm": {
+                "$ref": "#/components/examples/FormAddProduct"
+              }
             }
           }
         }
       },
-      "update-product": {
+      "UpdateProduct": {
         "required": true,
         "description": "Fields to update",
         "content": {
@@ -958,10 +462,63 @@
             }
           }
         }
+      },
+      "UpdateCart": {
+        "required": true,
+        "description": "Array of products and quantities",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "products": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "product": {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "integer"
+                          }
+                        ]
+                      },
+                      "quantity": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "UpdateCartProduct": {
+        "required": true,
+        "description": "Update quantity of cart product",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "quantity": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "quantity"
+              ]
+            }
+          }
+        }
       }
     },
     "parameters": {
-      "paginationLimitQuery": {
+      "PaginationLimitQuery": {
         "name": "limit",
         "in": "query",
         "schema": {
@@ -969,7 +526,7 @@
         },
         "description": "Limit of products per page"
       },
-      "paginationPageQuery": {
+      "PaginationPageQuery": {
         "name": "page",
         "in": "query",
         "schema": {
@@ -977,7 +534,7 @@
         },
         "description": "Get specific page"
       },
-      "paginationSortQuery": {
+      "PaginationSortQuery": {
         "name": "sort",
         "in": "query",
         "schema": {
@@ -989,7 +546,7 @@
         },
         "description": "Sort results by price"
       },
-      "paginationQueryQuery": {
+      "PaginationQueryQuery": {
         "name": "query",
         "in": "query",
         "schema": {
@@ -1005,7 +562,7 @@
           }
         }
       },
-      "cartID": {
+      "CartID": {
         "name": "cid",
         "in": "path",
         "schema": {
@@ -1021,7 +578,7 @@
         "required": true,
         "description": "Cart ID"
       },
-      "productID": {
+      "ProductID": {
         "name": "pid",
         "in": "path",
         "schema": {
@@ -1036,6 +593,336 @@
         },
         "required": true,
         "description": "Product ID"
+      }
+    },
+    "responses": {
+      "PaginationRes": {
+        "description": "Get all products with pagination system",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Pagination"
+            },
+            "examples": {
+              "AutoInc": {
+                "$ref": "#/components/examples/PaginationExample"
+              },
+              "ObjectId": {
+                "$ref": "#/components/examples/PaginationExampleMongo"
+              }
+            }
+          }
+        }
+      },
+      "SuccessfulCartOperation": {
+        "description": "Successful Cart Operation",
+        "content": {
+          "application/json": {
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/SuccessRequest"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "payload": {
+                      "$ref": "#/components/schemas/Cart"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "SuccessfulProductOperation": {
+        "description": "Successful Product Operation",
+        "content": {
+          "application/json": {
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/SuccessRequest"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "payload": {
+                      "$ref": "#/components/schemas/Product"
+                    }
+                  }
+                }
+              ]
+            },
+            "examples": {
+              "AutoincID": {
+                "$ref": "#/components/examples/Product_AutoincID"
+              },
+              "MongoID": {
+                "$ref": "#/components/examples/Product_MongoID"
+              }
+            }
+          }
+        }
+      },
+      "CartOrProductNotFound": {
+        "description": "The specified resource was not found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorRequest"
+            },
+            "examples": {
+              "CartNotFound": {
+                "summary": "Cart not found",
+                "value": {
+                  "status": "error",
+                  "message": "Cart with id {cid} not found"
+                }
+              },
+              "ProductNotFound": {
+                "summary": "Product not found",
+                "value": {
+                  "status": "error",
+                  "message": "Product with id {pid} not found"
+                }
+              }
+            }
+          }
+        }
+      },
+      "CartNotFound": {
+        "description": "The specified cart was not found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorRequest"
+            },
+            "example": {
+              "status": "error",
+              "message": "Cart with id {cid} not found"
+            }
+          }
+        }
+      },
+      "ProductNotFound": {
+        "description": "The specified product was not found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorRequest"
+            },
+            "example": {
+              "status": "error",
+              "message": "Product with id {pid} not found"
+            }
+          }
+        }
+      },
+      "MissingFieldsInProduct": {
+        "description": "Missing fields in product",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorRequest"
+            },
+            "example": {
+              "status": "error",
+              "message": "Missing fields"
+            }
+          }
+        }
+      },
+      "CodeAlreadyInUse": {
+        "description": "Code already in use",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorRequest"
+            },
+            "example": {
+              "status": "error",
+              "message": "Code alredy exists"
+            }
+          }
+        }
+      },
+      "Default": {
+        "description": "Internal Server Error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorRequest"
+            }
+          }
+        }
+      }
+    },
+    "examples": {
+      "PaginationExample": {
+        "description": "Pagination with queries",
+        "summary": "Pagination Example",
+        "value": {
+          "status": "success",
+          "payload": [
+            {
+              "id": 9,
+              "title": "Scallops - 10/20",
+              "description": "Maecenas tristique, est et tempus semper, est quam pharetra magna, ac consequat metus sapien ut nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris viverra diam vitae quam. Suspendisse potenti.Nullam porttitor lacus at turpis. Donec posuere metus vitae ipsum. Aliquam non mauris.",
+              "category": "Technology",
+              "code": "77-0114118",
+              "price": 4925.3,
+              "stock": 99,
+              "status": true,
+              "thumbnails": [
+                "thumbnails-1720136534154-809841615.jpg",
+                "thumbnails-1720136534155-190595448.jpg"
+              ]
+            },
+            {
+              "id": 7,
+              "title": "Jam - Apricot",
+              "description": "Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat.",
+              "category": "Consumer Services",
+              "code": "81-5776409",
+              "price": 4915.82,
+              "stock": 62,
+              "status": true,
+              "thumbnails": [
+                "thumbnails-1720136534154-809841515.jpg"
+              ]
+            },
+            {
+              "id": 8,
+              "title": "Beef - Kobe Striploin",
+              "description": "Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi. Integer ac neque.Duis bibendum. Morbi non quam nec dui luctus rutrum. Nulla tellus.",
+              "category": "Basic Industries",
+              "code": "99-5624896",
+              "price": 4914.9,
+              "stock": 40,
+              "status": true,
+              "thumbnails": []
+            }
+          ],
+          "totalPages": 168,
+          "page": 3,
+          "hasPrevPage": true,
+          "hasNextPage": true,
+          "prevPage": 2,
+          "nextPage": 4,
+          "prevLink": "http://localhost:8080/api/products?page=2&limit=3&sort=desc",
+          "nextLink": "http://localhost:8080/api/products?page=4&limit=3&sort=desc"
+        }
+      },
+      "PaginationExampleMongo": {
+        "description": "Pagination with queries and ObjectId from Mongo",
+        "summary": "Pagination Example (MongoDB)",
+        "value": {
+          "status": "success",
+          "payload": [
+            {
+              "title": "Scallops - 10/20",
+              "description": "Maecenas tristique, est et tempus semper, est quam pharetra magna, ac consequat metus sapien ut nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris viverra diam vitae quam. Suspendisse potenti.Nullam porttitor lacus at turpis. Donec posuere metus vitae ipsum. Aliquam non mauris.",
+              "category": "Technology",
+              "code": "77-0114118",
+              "price": 4925.3,
+              "stock": 99,
+              "status": true,
+              "thumbnails": [
+                "thumbnails-1720136534154-809841615.jpg",
+                "thumbnails-1720136534155-190595448.jpg"
+              ],
+              "id": "668f8aee828c67e10cff50f9"
+            },
+            {
+              "title": "Jam - Apricot",
+              "description": "Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat.",
+              "category": "Consumer Services",
+              "code": "81-5776409",
+              "price": 4915.82,
+              "stock": 62,
+              "status": true,
+              "thumbnails": [
+                "thumbnails-1720136534154-809841515.jpg"
+              ],
+              "id": "668f8aee828c67e10cff5054"
+            },
+            {
+              "title": "Beef - Kobe Striploin",
+              "description": "Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi. Integer ac neque.Duis bibendum. Morbi non quam nec dui luctus rutrum. Nulla tellus.",
+              "category": "Basic Industries",
+              "code": "99-5624896",
+              "price": 4914.9,
+              "stock": 40,
+              "status": true,
+              "thumbnails": [],
+              "id": "668f8aee828c67e10cff50af"
+            }
+          ],
+          "totalPages": 168,
+          "page": 3,
+          "hasPrevPage": true,
+          "hasNextPage": true,
+          "prevPage": 2,
+          "nextPage": 4,
+          "prevLink": "http://localhost:8080/api/products?page=2&limit=3&sort=desc",
+          "nextLink": "http://localhost:8080/api/products?page=4&limit=3&sort=desc"
+        }
+      },
+      "FormAddProduct": {
+        "description": "Values from form",
+        "summary": "body add product",
+        "value": {
+          "title": "Banana",
+          "description": "Velit aliqua quis ut et quis officia pariatur voluptate ad dolore. Veniam labore anim velit proident nisi. Commodo officia consequat eiusmod laborum sit dolor.Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices.",
+          "code": "87-1589139",
+          "price": 5,
+          "stock": 25,
+          "category": "Fruit"
+        }
+      },
+      "Product_AutoincID": {
+        "description": "Example response with auto-increment Id",
+        "summary": "Autoinc ID",
+        "value": {
+          "status": "success",
+          "payload": {
+            "id": 3,
+            "title": "Banana",
+            "description": "Velit aliqua quis ut et quis officia pariatur voluptate ad dolore. Veniam labore anim velit proident nisi. Commodo officia consequat eiusmod laborum sit dolor.Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices.",
+            "code": "87-1589139",
+            "price": 5,
+            "stock": 25,
+            "category": "Fruit",
+            "status": true,
+            "thumbnails": [
+              "thumbnails-1720136434155-190595448.jpg",
+              "thumbnails-1720136134155-498486607.jpg"
+            ]
+          }
+        }
+      },
+      "Product_MongoID": {
+        "description": "Example response with ObjectId from Mongo",
+        "summary": "ObjectId(MongoDB)",
+        "value": {
+          "status": "success",
+          "payload": {
+            "title": "Banana",
+            "description": "Velit aliqua quis ut et quis officia pariatur voluptate ad dolore. Veniam labore anim velit proident nisi. Commodo officia consequat eiusmod laborum sit dolor.Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices.",
+            "code": "87-1589139",
+            "price": 5,
+            "stock": 25,
+            "category": "Fruit",
+            "status": true,
+            "thumbnails": [
+              "thumbnails-1720136434155-190595448.jpg",
+              "thumbnails-1720136134155-498486607.jpg"
+            ],
+            "id": "668f8aee822c67e10cff4f7f"
+          }
+        }
       }
     }
   }

@@ -1,0 +1,107 @@
+PaginationExample:
+  description: Pagination with queries
+  summary: Pagination Example
+  value:
+    status: success
+    payload:
+      [
+        {
+          id: 9,
+          title: Scallops - 10/20,
+          description: 'Maecenas tristique, est et tempus semper, est quam pharetra magna, ac consequat metus sapien ut nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris viverra diam vitae quam. Suspendisse potenti.Nullam porttitor lacus at turpis. Donec posuere metus vitae ipsum. Aliquam non mauris.',
+          category: Technology,
+          code: 77-0114118,
+          price: 4925.3,
+          stock: 99,
+          status: true,
+          thumbnails:
+            [
+              thumbnails-1720136534154-809841615.jpg,
+              thumbnails-1720136534155-190595448.jpg
+            ]
+        },
+        {
+          id: 7,
+          title: Jam - Apricot,
+          description: 'Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat.',
+          category: Consumer Services,
+          code: 81-5776409,
+          price: 4915.82,
+          stock: 62,
+          status: true,
+          thumbnails: [thumbnails-1720136534154-809841515.jpg]
+        },
+        {
+          id: 8,
+          title: Beef - Kobe Striploin,
+          description: 'Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi. Integer ac neque.Duis bibendum. Morbi non quam nec dui luctus rutrum. Nulla tellus.',
+          category: Basic Industries,
+          code: 99-5624896,
+          price: 4914.9,
+          stock: 40,
+          status: true,
+          thumbnails: []
+        }
+      ]
+    totalPages: 168
+    page: 3
+    hasPrevPage: true
+    hasNextPage: true
+    prevPage: 2
+    nextPage: 4
+    prevLink: http://localhost:8080/api/products?page=2&limit=3&sort=desc
+    nextLink: http://localhost:8080/api/products?page=4&limit=3&sort=desc
+
+PaginationExampleMongo:
+  description: Pagination with queries and ObjectId from Mongo
+  summary: Pagination Example (MongoDB)
+  value:
+    status: success
+    payload:
+      [
+        {
+          title: Scallops - 10/20,
+          description: 'Maecenas tristique, est et tempus semper, est quam pharetra magna, ac consequat metus sapien ut nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris viverra diam vitae quam. Suspendisse potenti.Nullam porttitor lacus at turpis. Donec posuere metus vitae ipsum. Aliquam non mauris.',
+          category: Technology,
+          code: 77-0114118,
+          price: 4925.3,
+          stock: 99,
+          status: true,
+          thumbnails:
+            [
+              thumbnails-1720136534154-809841615.jpg,
+              thumbnails-1720136534155-190595448.jpg
+            ],
+          id: 668f8aee828c67e10cff50f9
+        },
+        {
+          title: Jam - Apricot,
+          description: 'Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat.',
+          category: Consumer Services,
+          code: 81-5776409,
+          price: 4915.82,
+          stock: 62,
+          status: true,
+          thumbnails: [thumbnails-1720136534154-809841515.jpg],
+          id: 668f8aee828c67e10cff5054
+        },
+        {
+          title: Beef - Kobe Striploin,
+          description: 'Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi. Integer ac neque.Duis bibendum. Morbi non quam nec dui luctus rutrum. Nulla tellus.',
+          category: Basic Industries,
+          code: 99-5624896,
+          price: 4914.9,
+          stock: 40,
+          status: true,
+          thumbnails: [],
+          id: 668f8aee828c67e10cff50af
+        }
+      ]
+    totalPages: 168
+    page: 3
+    hasPrevPage: true
+    hasNextPage: true
+    prevPage: 2
+    nextPage: 4
+    prevLink: http://localhost:8080/api/products?page=2&limit=3&sort=desc
+    nextLink: http://localhost:8080/api/products?page=4&limit=3&sort=desc

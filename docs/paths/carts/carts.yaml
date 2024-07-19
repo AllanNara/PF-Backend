@@ -1,3 +1,4 @@
+## CREATE ##
 post:
   tags:
     - carts
@@ -6,38 +7,6 @@ post:
   description: Add new cart for user
   responses:
     '200':
-      description: Created
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              status:
-                type: string
-              payload:
-                $ref: '../../components/schemas/Cart.yaml'
-    '400':
-      description: UserID not provided
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              status:
-                type: string
-                default: error
-              message:
-                type: string
-                default: UserID is required
+      $ref: ../../components/responses/SuccessfulOperation.yaml#/SuccessfulCartOperation
     '500':
-      description: Internal Server Error
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              status:
-                type: string
-                default: error
-              message:
-                type: string
+      $ref: ../../components/responses/Default.yaml

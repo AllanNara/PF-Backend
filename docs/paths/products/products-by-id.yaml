@@ -1,5 +1,7 @@
 parameters:
-  - $ref: '../../components/parameters/paths.yaml#/productID'
+  - $ref: '../../components/parameters/Params.yaml#/ProductID'
+
+## READ ##
 get:
   tags:
     - products
@@ -8,30 +10,11 @@ get:
   description: Return one product, find by ID
   responses:
     '200':
-      description: OK
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              status:
-                type: string
-                default: success
-              payload:
-                $ref: ../../components/schemas/Product.yaml
+      $ref: ../../components/responses/SuccessfulOperation.yaml#/SuccessfulProductOperation
     '404':
-      description: Not Found
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              status:
-                type: string
-                default: error
-              message:
-                type: string
-                example: Product with id 14 not found
+      $ref: ../../components/responses/ResourseNotFound.yaml#/ProductNotFound
+
+## UPDATE ##
 put:
   tags:
     - products
@@ -39,40 +22,14 @@ put:
   summary: Update product
   description: Update properties of product, find by ID
   requestBody:
-    $ref: ../../components/requestBodies/update-product.yaml
+    $ref: ../../components/requestBodies/UpdateProduct.yaml
   responses:
     '200':
-      description: OK
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              status:
-                type: string
-                default: success
-              payload:
-                allOf:
-                  - $ref: ../../components/schemas/Product.yaml
-                  - type: object
-                    properties:
-                      id:
-                        anyOf:
-                          - type: string
-                          - type: integer
+      $ref: ../../components/responses/SuccessfulOperation.yaml#/SuccessfulProductOperation
     '404':
-      description: Not Found
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              status:
-                type: string
-                default: error
-              message:
-                type: string
-                example: Product with id 14 not found
+      $ref: ../../components/responses/ResourseNotFound.yaml#/ProductNotFound
+
+## DELETE ##
 delete:
   tags:
     - products
@@ -81,27 +38,6 @@ delete:
   description: Delete product by ID
   responses:
     '200':
-      description: OK
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              status:
-                type: string
-                default: success
-              payload:
-                $ref: ../../components/schemas/Product.yaml
+      $ref: ../../components/responses/SuccessfulOperation.yaml#/SuccessfulProductOperation
     '404':
-      description: Not Found
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              status:
-                type: string
-                default: error
-              message:
-                type: string
-                example: Product with id 14 not found
+      $ref: ../../components/responses/ResourseNotFound.yaml#/ProductNotFound

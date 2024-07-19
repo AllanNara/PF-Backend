@@ -1,18 +1,18 @@
-paginationLimitQuery:
+PaginationLimitQuery:
   name: limit
   in: query
   schema:
     type: integer
   description: Limit of products per page
 
-paginationPageQuery:
+PaginationPageQuery:
   name: page
   in: query
   schema:
     type: integer
   description: Get specific page
 
-paginationSortQuery:
+PaginationSortQuery:
   name: sort
   in: query
   schema:
@@ -22,7 +22,7 @@ paginationSortQuery:
       - desc
   description: Sort results by price
 
-paginationQueryQuery:
+PaginationQueryQuery:
   name: query
   in: query
   schema:

@@ -1,4 +1,4 @@
-productID:
+ProductID:
   name: pid
   in: path
   schema:
@@ -8,7 +8,7 @@ productID:
   required: true
   description: Product ID
 
-cartID:
+CartID:
   name: cid
   in: path
   schema:

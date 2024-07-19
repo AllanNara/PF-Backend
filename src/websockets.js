@@ -18,7 +18,7 @@ export default (io) => {
 				if (!result) {
 					socket.emit("error", {
 						error: true,
-						message: "Missing fields or code alredy in use"
+						message: "Missing fields or code already in use"
 					});
 				}
 				const products = await ProductManager.getProducts();

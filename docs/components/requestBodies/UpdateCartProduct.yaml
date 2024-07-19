@@ -1,0 +1,11 @@
+required: true
+description: Update quantity of cart product
+content:
+  application/json:
+    schema:
+      type: object
+      properties:
+        quantity:
+          type: integer
+      required:
+        - quantity

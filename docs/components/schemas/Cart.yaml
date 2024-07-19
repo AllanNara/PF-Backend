@@ -8,4 +8,11 @@ properties:
   products:
     type: array
     items:
-      $ref: Product.yaml
+      type: object
+      properties:
+        product:
+          $ref: Product.yaml
+        quantity:
+          type: integer
+          default: 1
+    default: []

@@ -1,5 +1,7 @@
 parameters:
-  - $ref: '../../components/parameters/paths.yaml#/cartID'
+  - $ref: '../../components/parameters/Params.yaml#/CartID'
+
+## READ ##
 get:
   tags:
     - carts
@@ -8,30 +10,11 @@ get:
   description: Get user cart by ID
   responses:
     '200':
-      description: OK
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              status:
-                type: string
-                default: success
-              payload:
-                $ref: ../../components/schemas/Cart.yaml
+      $ref: ../../components/responses/SuccessfulOperation.yaml#/SuccessfulCartOperation
     '404':
-      description: Not Found
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              status:
-                type: string
-                default: error
-              message:
-                type: string
-                example: Cart with id 3 not found
+      $ref: ../../components/responses/ResourseNotFound.yaml#/CartNotFound
+
+## UPDATE ##
 put:
   tags:
     - carts
@@ -39,47 +22,14 @@ put:
   summary: Update entire cart
   description: Update entire user cart, with products in body
   requestBody:
-    description: Array of products and quantities
-    content:
-      application/json:
-        schema:
-          type: object
-          properties:
-            products:
-              type: array
-              items:
-                type: object
-                properties:
-                  product:
-                    type: string
-                  quantity:
-                    type: integer
+    $ref: ../../components/requestBodies/UpdateCart.yaml
   responses:
     '200':
-      description: OK
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              status:
-                type: string
-                default: success
-              payload:
-                $ref: ../../components/schemas/Cart.yaml
+      $ref: ../../components/responses/SuccessfulOperation.yaml#/SuccessfulCartOperation
     '404':
-      description: Not Found
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              status:
-                type: string
-                default: error
-              message:
-                type: string
-                example: Cart with id 3 not found
+      $ref: ../../components/responses/ResourseNotFound.yaml#/CartNotFound
+
+## DELETE ##
 delete:
   tags:
     - carts
@@ -88,27 +38,6 @@ delete:
   description: Clean all products from cart with a specific id
   responses:
     '200':
-      description: OK
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              status:
-                type: string
-                default: success
-              payload:
-                $ref: ../../components/schemas/Cart.yaml
+      $ref: ../../components/responses/SuccessfulOperation.yaml#/SuccessfulCartOperation
     '404':
-      description: Not Found
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              status:
-                type: string
-                default: error
-              message:
-                type: string
-                example: Cart with id 3 not found
+      $ref: ../../components/responses/ResourseNotFound.yaml#/CartNotFound

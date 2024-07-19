@@ -1,0 +1,8 @@
+type: object
+properties:
+  status:
+    type: string
+    default: error
+  message:
+    type: string
+    default: Internal Server Error

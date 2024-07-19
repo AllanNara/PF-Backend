@@ -64,8 +64,8 @@ router.post(
 
 			if (!response) {
 				return res
-					.status(400)
-					.json({ status: "error", message: "Code alredy exists" });
+					.status(409)
+					.json({ status: "error", message: "Code already exists" });
 			}
 			res.json({ status: "success", payload: response });
 		} catch (error) {

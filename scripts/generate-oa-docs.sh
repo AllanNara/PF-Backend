@@ -8,3 +8,6 @@ redocly bundle docs/api.yaml -o docs/openapi.yaml
 
 # Generar archivo HTML
 redocly build-docs ecommercy -o docs/redoc-static.html
+
+# Finalizar con estadisticas de documentación
+redocly stats docs/openapi.yaml

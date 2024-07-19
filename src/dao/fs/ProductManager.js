@@ -12,7 +12,7 @@ export async function checkCodeExists(code, data = []) {
 		products = await readProductsFile();
 	}
 	const findCode = products.find((pr) => pr.code === code);
-	if (findCode) console.error("Code alredy in use");
+	if (findCode) console.error("Code already in use");
 	return Boolean(findCode);
 }
 

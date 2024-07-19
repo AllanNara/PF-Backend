@@ -1,0 +1,50 @@
+FormAddProduct:
+  description: Values from form
+  summary: body add product
+  value:
+    title: Banana
+    description: Velit aliqua quis ut et quis officia pariatur voluptate ad dolore. Veniam labore anim velit proident nisi. Commodo officia consequat eiusmod laborum sit dolor.Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices.
+    code: 87-1589139
+    price: 5
+    stock: 25
+    category: Fruit
+
+Product_AutoincID:
+  description: Example response with auto-increment Id
+  summary: Autoinc ID
+  value:
+    status: success
+    payload:
+      id: 3
+      title: Banana
+      description: Velit aliqua quis ut et quis officia pariatur voluptate ad dolore. Veniam labore anim velit proident nisi. Commodo officia consequat eiusmod laborum sit dolor.Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices.
+      code: 87-1589139
+      price: 5
+      stock: 25
+      category: Fruit
+      status: true
+      thumbnails:
+        [
+          thumbnails-1720136434155-190595448.jpg,
+          thumbnails-1720136134155-498486607.jpg
+        ]
+
+Product_MongoID:
+  description: Example response with ObjectId from Mongo
+  summary: ObjectId(MongoDB)
+  value:
+    status: success
+    payload:
+      title: Banana
+      description: Velit aliqua quis ut et quis officia pariatur voluptate ad dolore. Veniam labore anim velit proident nisi. Commodo officia consequat eiusmod laborum sit dolor.Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices.
+      code: 87-1589139
+      price: 5
+      stock: 25
+      category: Fruit
+      status: true
+      thumbnails:
+        [
+          thumbnails-1720136434155-190595448.jpg,
+          thumbnails-1720136134155-498486607.jpg
+        ]
+      id: 668f8aee822c67e10cff4f7f

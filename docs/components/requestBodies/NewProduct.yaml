@@ -11,3 +11,6 @@ content:
         - price
         - stock
         - category
+    examples:
+      ValuesForm:
+        $ref: ../examples/ProductExample.yaml#/FormAddProduct

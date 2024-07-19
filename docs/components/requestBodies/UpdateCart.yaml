@@ -1,0 +1,18 @@
+required: true
+description: Array of products and quantities
+content:
+  application/json:
+    schema:
+      type: object
+      properties:
+        products:
+          type: array
+          items:
+            type: object
+            properties:
+              product:
+                anyOf:
+                  - type: string
+                  - type: integer
+              quantity:
+                type: integer
