@@ -1,0 +1,21 @@
+BodyUpdateCart_IntegerID:
+  description: Update cart with product array
+  summary: Update cart (Integer Id)
+  value:
+    products: [{ product: 2, quantity: 9 }, { product: 13, quantity: 50 }]
+
+BodyUpdateCart_MongoID:
+  description: Update cart with product array
+  summary: Update cart (Object Id)
+  value:
+    products:
+      [
+        { product: 669aee20fc13ae796d2344f1, quantity: 9 },
+        { product: 669aee20fc13ae796d234504, quantity: 50 }
+      ]
+
+BodyUpdateCartProduct:
+  description: Update quantity of cart product
+  summary: Update cart product
+  value:
+    quantity: 100

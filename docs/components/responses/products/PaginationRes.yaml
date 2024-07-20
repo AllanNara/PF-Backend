@@ -1,0 +1,10 @@
+description: Get all products with pagination system
+content:
+  application/json:
+    schema:
+      $ref: ../../schemas/Pagination.yaml
+    examples:
+      IntegerId:
+        $ref: ../../examples/products/PaginationExample.yaml#/PaginationExample
+      ObjectId:
+        $ref: ../../examples/products/PaginationExample.yaml#/PaginationExampleMongo

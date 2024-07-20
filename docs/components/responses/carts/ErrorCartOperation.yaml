@@ -1,0 +1,27 @@
+CartOrProductNotFound:
+  description: The specified resource was not found
+  content:
+    application/json:
+      schema:
+        $ref: ../../schemas/ErrorRequest.yaml
+      examples:
+        CartNotFound:
+          $ref: ../../examples/carts/not-found/NotFoundCartExamples.yaml#/CartNotFound
+        ProductNotFound:
+          $ref: ../../examples/products/not-found/NotFoundProductExample.yaml#/ProductNotFound
+        CartMongoNotFound:
+          $ref: ../../examples/carts/not-found/NotFoundCartExamples.yaml#/CartMongoNotFound
+        ProductMongoNotFound:
+          $ref: ../../examples/products/not-found/NotFoundProductExample.yaml#/ProductMongoNotFound
+
+CartNotFound:
+  description: The specified cart was not found
+  content:
+    application/json:
+      schema:
+        $ref: ../../schemas/ErrorRequest.yaml
+      examples:
+        CartNotFound:
+          $ref: ../../examples/carts/not-found/NotFoundCartExamples.yaml#/CartNotFound
+        CartMongoNotFound:
+          $ref: ../../examples/carts/not-found/NotFoundCartExamples.yaml#/CartMongoNotFound

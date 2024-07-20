@@ -1,0 +1,17 @@
+PutCartIntegerID:
+  description: Update entire cart
+  summary: Put Cart
+  value:
+    id: 56
+    products: [{ product: 2, quantity: 9 }, { product: 13, quantity: 50 }]
+
+PutCartMongoID:
+  description: Update entire cart
+  summary: Put Cart (Object id)
+  value:
+    id: 635981f6e40f61599e000064
+    products:
+      [
+        { product: 669aee20fc13ae796d2344f1, quantity: 9 },
+        { product: 669aee20fc13ae796d234504, quantity: 50 }
+      ]

@@ -1,0 +1,18 @@
+required: true
+description: Fields to complete for new product, code must unique
+content:
+  application/json:
+    schema:
+      allOf:
+        - $ref: ../../schemas/Product.yaml
+        - type: object
+          required:
+            - title
+            - description
+            - code
+            - price
+            - stock
+            - category
+    examples:
+      Values:
+        $ref: ../../examples/products/body-request/ReqProdExamples.yaml#/ReqAddProduct

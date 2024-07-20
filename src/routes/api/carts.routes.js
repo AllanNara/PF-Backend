@@ -33,7 +33,7 @@ router.get("/:cid", async (req, res, next) => {
 		if (!cart) {
 			return res.status(404).json({
 				status: "error",
-				message: "Cart with id " + cid + " not found"
+				message: `Cart with id '${cid}' not found`
 			});
 		}
 		res.json({ status: "success", payload: cart });
@@ -50,7 +50,7 @@ router.put("/:cid", checkMultiProducts, async (req, res, next) => {
 		if (!result) {
 			return res.status(404).json({
 				status: "error",
-				message: "Cart with id " + cid + " not found"
+				message: `Cart with id '${cid}' not found`
 			});
 		}
 		res.json({ status: "success", payload: result });
@@ -66,7 +66,7 @@ router.delete("/:cid", async (req, res, next) => {
 		if (!result) {
 			return res.status(404).json({
 				status: "error",
-				message: "Cart with id " + cid + " not found"
+				message: `Cart with id '${cid}' not found`
 			});
 		}
 		res.json({ status: "success", payload: result });
@@ -85,7 +85,7 @@ router.post("/:cid/product/:pid", async (req, res, next) => {
 		if (!response) {
 			return res.status(404).json({
 				status: "error",
-				message: "Cart with id " + cid + " not found"
+				message: `Cart with id '${cid}' not found`
 			});
 		}
 		res.json({ status: "success", payload: response });
@@ -103,7 +103,7 @@ router.put("/:cid/product/:pid", async (req, res, next) => {
 		if (!result) {
 			return res.status(404).json({
 				status: "error",
-				message: "Cart with id " + cid + " not found"
+				message: `Cart with id '${cid}' not found`
 			});
 		}
 		res.json({ status: "success", payload: result });
@@ -120,7 +120,7 @@ router.delete("/:cid/product/:pid", async (req, res, next) => {
 		if (!result) {
 			return res.status(404).json({
 				status: "error",
-				message: "Cart with id " + cid + " not found"
+				message: `Cart with id '${cid}' not found`
 			});
 		}
 		res.json({ status: "success", payload: result });

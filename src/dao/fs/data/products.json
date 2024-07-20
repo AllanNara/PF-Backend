@@ -5520,5 +5520,16 @@
     "category": "Steel",
     "status": true,
     "thumbnails": []
+  },
+  {
+    "id": 503,
+    "title": "Gorgeous Wooden Chicken v1",
+    "description": "Cassinhaven Drainage of Lower Tooth with Drainage Device, Open Approach, All",
+    "code": "176.82.223.135",
+    "price": 334.12,
+    "stock": 766,
+    "category": "Wooden",
+    "status": true,
+    "thumbnails": []
   }
 ]

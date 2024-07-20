@@ -1,0 +1,9 @@
+required: true
+description: Fields to update
+content:
+  application/json:
+    schema:
+      $ref: ../../schemas/Product.yaml
+    examples:
+      Values:
+        $ref: ../../examples/products/body-request/ReqProdExamples.yaml#/ReqUpdateProduct

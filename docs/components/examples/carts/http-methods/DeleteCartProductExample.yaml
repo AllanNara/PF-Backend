@@ -1,0 +1,13 @@
+DeleteCartProductIntegerID:
+  description: Delete specific product from cart
+  summary: Delete Cart Product
+  value:
+    id: 56
+    products: [{ product: 270, quantity: 15 }]
+
+DeleteCartProductMongoID:
+  description: Delete specific product from cart
+  summary: Delete Cart Product (Object Id)
+  value:
+    id: 635981f6e40f61599e000064
+    products: [{ product: 668f8aee828c67e10cff509c, quantity: 15 }]

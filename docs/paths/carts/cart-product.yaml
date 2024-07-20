@@ -11,9 +11,9 @@ post:
   description: Add existing product to user cart
   responses:
     '200':
-      $ref: ../../components/responses/SuccessfulOperation.yaml#/SuccessfulCartOperation
+      $ref: ../../components/responses/carts/SuccessOperationCart.yaml#/SuccessfulPostCartProduct
     '404':
-      $ref: ../../components/responses/ResourseNotFound.yaml#/CartOrProductNotFound
+      $ref: ../../components/responses/carts/ErrorCartOperation.yaml#/CartOrProductNotFound
 
 ## UPDATE ##
 put:
@@ -23,12 +23,12 @@ put:
   summary: Update cart product
   description: Update quantity of specific cart product
   requestBody:
-    $ref: ../../components/requestBodies/UpdateCartProduct.yaml
+    $ref: ../../components/requestBodies/carts/UpdateCartProduct.yaml
   responses:
     '200':
-      $ref: ../../components/responses/SuccessfulOperation.yaml#/SuccessfulCartOperation
+      $ref: ../../components/responses/carts/SuccessOperationCart.yaml#/SuccessfulPutCartProduct
     '404':
-      $ref: ../../components/responses/ResourseNotFound.yaml#/CartOrProductNotFound
+      $ref: ../../components/responses/carts/ErrorCartOperation.yaml#/CartOrProductNotFound
 
 ## DELETE ##
 delete:
@@ -39,6 +39,6 @@ delete:
   description: Delete specific product from user cart
   responses:
     '200':
-      $ref: ../../components/responses/SuccessfulOperation.yaml#/SuccessfulCartOperation
+      $ref: ../../components/responses/carts/SuccessOperationCart.yaml#/SuccessfulDeleteCartProduct
     '404':
-      $ref: ../../components/responses/ResourseNotFound.yaml#/CartOrProductNotFound
+      $ref: ../../components/responses/carts/ErrorCartOperation.yaml#/CartOrProductNotFound

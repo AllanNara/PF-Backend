@@ -9,3 +9,6 @@ content:
           type: integer
       required:
         - quantity
+    examples:
+      Value:
+        $ref: ../../examples/carts/body-request/ReqCartExamples.yaml#/BodyUpdateCartProduct

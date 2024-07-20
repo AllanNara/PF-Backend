@@ -48,7 +48,7 @@ export async function updateEntireCart(cid, products) {
 		return null;
 	}
 
-	return await cartModel.findById(cid);
+	return updatedCart;
 }
 
 export async function emptyCart(cid) {

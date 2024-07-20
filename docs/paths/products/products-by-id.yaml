@@ -10,9 +10,9 @@ get:
   description: Return one product, find by ID
   responses:
     '200':
-      $ref: ../../components/responses/SuccessfulOperation.yaml#/SuccessfulProductOperation
+      $ref: ../../components/responses/products/SuccessOperationProduct.yaml#/SuccessfulGetProduct
     '404':
-      $ref: ../../components/responses/ResourseNotFound.yaml#/ProductNotFound
+      $ref: ../../components/responses/products/ErrorProductOperation.yaml#/ProductNotFound
 
 ## UPDATE ##
 put:
@@ -22,12 +22,12 @@ put:
   summary: Update product
   description: Update properties of product, find by ID
   requestBody:
-    $ref: ../../components/requestBodies/UpdateProduct.yaml
+    $ref: ../../components/requestBodies/products/UpdateProduct.yaml
   responses:
     '200':
-      $ref: ../../components/responses/SuccessfulOperation.yaml#/SuccessfulProductOperation
+      $ref: ../../components/responses/products/SuccessOperationProduct.yaml#/SuccessfulPutProduct
     '404':
-      $ref: ../../components/responses/ResourseNotFound.yaml#/ProductNotFound
+      $ref: ../../components/responses/products/ErrorProductOperation.yaml#/ProductNotFound
 
 ## DELETE ##
 delete:
@@ -38,6 +38,6 @@ delete:
   description: Delete product by ID
   responses:
     '200':
-      $ref: ../../components/responses/SuccessfulOperation.yaml#/SuccessfulProductOperation
+      $ref: ../../components/responses/products/SuccessOperationProduct.yaml#/SuccessfulDeleteProduct
     '404':
-      $ref: ../../components/responses/ResourseNotFound.yaml#/ProductNotFound
+      $ref: ../../components/responses/products/ErrorProductOperation.yaml#/ProductNotFound

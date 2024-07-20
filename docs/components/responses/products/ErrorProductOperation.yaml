@@ -1,0 +1,31 @@
+MissingFieldsInProduct:
+  description: Missing fields in product
+  content:
+    application/json:
+      schema:
+        $ref: ../../schemas/ErrorRequest.yaml
+      example:
+        status: error
+        message: Missing fields
+
+CodeAlreadyInUse:
+  description: Code already in use
+  content:
+    application/json:
+      schema:
+        $ref: ../../schemas/ErrorRequest.yaml
+      example:
+        status: error
+        message: Code alredy exists
+
+ProductNotFound:
+  description: The specified product was not found
+  content:
+    application/json:
+      schema:
+        $ref: ../../schemas/ErrorRequest.yaml
+      examples:
+        ProductNotFound:
+          $ref: ../../examples/products/not-found/NotFoundProductExample.yaml#/ProductNotFound
+        ProductMongoNotFound:
+          $ref: ../../examples/products/not-found/NotFoundProductExample.yaml#/ProductMongoNotFound

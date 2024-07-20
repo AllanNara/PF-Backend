@@ -81,7 +81,7 @@ router.get("/:pid", async (req, res, next) => {
 		if (!product) {
 			return res.status(404).json({
 				status: "error",
-				message: "Product with id " + pid + " not found"
+				message: `Product with id '${pid}' not found`
 			});
 		}
 		res.json({ status: "success", payload: product });
@@ -98,7 +98,7 @@ router.put("/:pid", async (req, res, next) => {
 		if (!updated) {
 			return res.status(404).json({
 				status: "error",
-				message: "Product with id " + pid + " not found"
+				message: `Product with id '${pid}' not found`
 			});
 		}
 		res.json({ status: "success", payload: updated });
@@ -115,7 +115,7 @@ router.delete("/:pid", async (req, res, next) => {
 		if (!deleted) {
 			return res.status(404).json({
 				status: "error",
-				message: "Product with id " + pid + " not found"
+				message: `Product with id '${pid}' not found`
 			});
 		}
 		res.json({ status: "success", payload: deleted });

@@ -1,0 +1,11 @@
+CartNotFound:
+  summary: Cart Not Found
+  value:
+    status: error
+    message: Cart with id '56' not found
+
+CartMongoNotFound:
+  summary: Cart Mongo Not Found
+  value:
+    status: error
+    message: Cart with id '635981f6e40f61599e000064' not found

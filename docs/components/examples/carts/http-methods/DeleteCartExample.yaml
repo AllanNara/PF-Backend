@@ -1,0 +1,11 @@
+EmptyCartIntegerId:
+  summary: Empty Cart
+  value:
+    id: 56
+    products: []
+
+EmptyCartObjectId:
+  summary: Empty Cart (Object Id)
+  value:
+    id: 635981f6e40f61599e000064
+    products: []

@@ -1,0 +1,67 @@
+SuccessfulPostProduct:
+  description: Successful Product Operation POST
+  content:
+    application/json:
+      schema:
+        allOf:
+          - $ref: ../../schemas/SuccessRequest.yaml
+          - type: object
+            properties:
+              payload:
+                $ref: ../../schemas/Product.yaml
+      examples:
+        IntegerID:
+          $ref: ../../examples/products/http-methods/GetProductExample.yaml#/GetProductIntegerID
+        MongoID:
+          $ref: ../../examples/products/http-methods/GetProductExample.yaml#/GetProductMongoDB
+
+SuccessfulGetProduct:
+  description: Successful Product Operation GET
+  content:
+    application/json:
+      schema:
+        allOf:
+          - $ref: ../../schemas/SuccessRequest.yaml
+          - type: object
+            properties:
+              payload:
+                $ref: ../../schemas/Product.yaml
+      examples:
+        IntegerID:
+          $ref: ../../examples/products/http-methods/GetProductExample.yaml#/GetProductIntegerID
+        MongoID:
+          $ref: ../../examples/products/http-methods/GetProductExample.yaml#/GetProductMongoDB
+
+SuccessfulPutProduct:
+  description: Successful Product Operation PUT
+  content:
+    application/json:
+      schema:
+        allOf:
+          - $ref: ../../schemas/SuccessRequest.yaml
+          - type: object
+            properties:
+              payload:
+                $ref: ../../schemas/Product.yaml
+      examples:
+        IntegerID:
+          $ref: ../../examples/products/http-methods/PutProductExample.yaml#/PutProductIntegerID
+        MongoID:
+          $ref: ../../examples/products/http-methods/PutProductExample.yaml#/PutProductMongoID
+
+SuccessfulDeleteProduct:
+  description: Successful Product Operation DELETE
+  content:
+    application/json:
+      schema:
+        allOf:
+          - $ref: ../../schemas/SuccessRequest.yaml
+          - type: object
+            properties:
+              payload:
+                $ref: ../../schemas/Product.yaml
+      examples:
+        IntegerID:
+          $ref: ../../examples/products/http-methods/PutProductExample.yaml#/PutProductIntegerID
+        MongoID:
+          $ref: ../../examples/products/http-methods/PutProductExample.yaml#/PutProductMongoID

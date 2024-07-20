@@ -1,0 +1,101 @@
+SuccessfulGetCart:
+  description: Successful Cart Operation GET
+  content:
+    application/json:
+      schema:
+        allOf:
+          - $ref: ../../schemas/SuccessRequest.yaml
+          - type: object
+            properties:
+              payload:
+                $ref: ../../schemas/Cart.yaml
+      examples:
+        IntegerID:
+          $ref: ../../examples/carts/http-methods/GetCartExample.yaml#/GetCart
+        MongoID:
+          $ref: ../../examples/carts/http-methods/GetCartExample.yaml#/GetCartMongo
+
+SuccessfulPostOrDeleteCart:
+  description: Successful Cart Operation
+  content:
+    application/json:
+      schema:
+        allOf:
+          - $ref: ../../schemas/SuccessRequest.yaml
+          - type: object
+            properties:
+              payload:
+                $ref: ../../schemas/Cart.yaml
+      examples:
+        IntegerID:
+          $ref: ../../examples/carts/http-methods/DeleteCartExample.yaml#/EmptyCartIntegerId
+        MongoID:
+          $ref: ../../examples/carts/http-methods/DeleteCartExample.yaml#/EmptyCartObjectId
+
+SuccessfulPutCart:
+  description: Successful Cart Operation PUT
+  content:
+    application/json:
+      schema:
+        allOf:
+          - $ref: ../../schemas/SuccessRequest.yaml
+          - type: object
+            properties:
+              payload:
+                $ref: ../../schemas/Cart.yaml
+      examples:
+        IntegerID:
+          $ref: ../../examples/carts/http-methods/PutCartExample.yaml#/PutCartIntegerID
+        MongoID:
+          $ref: ../../examples/carts/http-methods/PutCartExample.yaml#/PutCartMongoID
+
+SuccessfulPostCartProduct:
+  description: Successful Cart/Product Operation POST
+  content:
+    application/json:
+      schema:
+        allOf:
+          - $ref: ../../schemas/SuccessRequest.yaml
+          - type: object
+            properties:
+              payload:
+                $ref: ../../schemas/Cart.yaml
+      examples:
+        IntegerID:
+          $ref: ../../examples/carts/http-methods/PostCartProductExample.yaml#/PostCartProductIntegerID
+        MongoID:
+          $ref: ../../examples/carts/http-methods/PostCartProductExample.yaml#/PostCartProductMongoID
+
+SuccessfulPutCartProduct:
+  description: Successful Cart/Product Operation PUT
+  content:
+    application/json:
+      schema:
+        allOf:
+          - $ref: ../../schemas/SuccessRequest.yaml
+          - type: object
+            properties:
+              payload:
+                $ref: ../../schemas/Cart.yaml
+      examples:
+        IntegerID:
+          $ref: ../../examples/carts/http-methods/PutCartProductExample.yaml#/PutCartProductIntegerID
+        MongoID:
+          $ref: ../../examples/carts/http-methods/PutCartProductExample.yaml#/PutCartProductMongoID
+
+SuccessfulDeleteCartProduct:
+  description: Successful Cart/Product Operation DELETE
+  content:
+    application/json:
+      schema:
+        allOf:
+          - $ref: ../../schemas/SuccessRequest.yaml
+          - type: object
+            properties:
+              payload:
+                $ref: ../../schemas/Cart.yaml
+      examples:
+        IntegerID:
+          $ref: ../../examples/carts/http-methods/DeleteCartProductExample.yaml#/DeleteCartProductIntegerID
+        MongoID:
+          $ref: ../../examples/carts/http-methods/DeleteCartProductExample.yaml#/DeleteCartProductMongoID

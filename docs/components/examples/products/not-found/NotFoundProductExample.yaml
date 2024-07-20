@@ -1,0 +1,11 @@
+ProductNotFound:
+  summary: Product Not Found
+  value:
+    status: error
+    message: Product with id '520' not found
+
+ProductMongoNotFound:
+  summary: Product Mongo Not Found
+  value:
+    status: error
+    message: Product with id '668f8aee822c67e10cff4f7f' not found

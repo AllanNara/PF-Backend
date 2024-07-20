@@ -1,0 +1,39 @@
+PutProductIntegerID:
+  description: Example response with integer Id
+  summary: Integer Id
+  value:
+    status: success
+    payload:
+      id: 520
+      title: Orange
+      description: Vestibulum ante ipsum primis in faucibus orci luctus et ultrices.
+      code: 87-1589139
+      price: 899.99
+      stock: 111
+      category: Fruit
+      status: true
+      thumbnails:
+        [
+          thumbnails-1720136434155-190595448.jpg,
+          thumbnails-1720136134155-498486607.jpg
+        ]
+
+PutProductMongoID:
+  description: Example response with ObjectId from Mongo
+  summary: Object Id
+  value:
+    status: success
+    payload:
+      title: Orange
+      description: Vestibulum ante ipsum primis in faucibus orci luctus et ultrices.
+      code: 87-1589139
+      price: 899.99
+      stock: 111
+      category: Fruit
+      status: true
+      thumbnails:
+        [
+          thumbnails-1720136434155-190595448.jpg,
+          thumbnails-1720136134155-498486607.jpg
+        ]
+      id: 668f8aee822c67e10cff4f7f

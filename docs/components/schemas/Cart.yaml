@@ -16,3 +16,23 @@ properties:
           type: integer
           default: 1
     default: []
+example:
+  id: 669581f6e40f61599e000771
+  products:
+    [
+      {
+        product:
+          {
+            title: Scallops - 10/20,
+            description: Maecenas tristique  est et tempus semper  est quam pharetra magna  ac consequat metus sapien ut nunc. Vestibulum Nullam porttitor lacus at turpis.,
+            category: Technology,
+            code: 77-0114118,
+            price: 4925.3,
+            stock: 99,
+            status: true,
+            thumbnails: [thumbnails-1720136534154-809841615.jpg],
+            id: 668f8aee828c67e10cff50f9
+          },
+        quantity: 6
+      }
+    ]

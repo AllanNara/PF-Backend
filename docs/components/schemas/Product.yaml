@@ -23,3 +23,16 @@ properties:
     type: array
     items:
       type: string
+example:
+  title: Scallops - 10/20
+  description: 'Maecenas tristique  est et tempus semper  est quam pharetra magna  ac consequat metus sapien ut nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris viverra diam vitae quam. Suspendisse potenti.Nullam porttitor lacus at turpis. Donec posuere metus vitae ipsum. Aliquam non mauris.'
+  category: Technology
+  code: 77-0114118
+  price: 4925.3
+  stock: 99
+  status: true
+  thumbnails: [
+      thumbnails-1720136534154-809841615.jpg
+      thumbnails-1720136534155-190595448.jpg
+    ]
+  id: 668f8aee828c67e10cff50f9

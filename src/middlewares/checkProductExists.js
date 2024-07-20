@@ -6,9 +6,10 @@ export const checkProductExists = async (req, res, next) => {
 		const productFound = await ProductManager.getProductById(pid);
 
 		if (!productFound) {
-			return res
-				.status(404)
-				.json({ status: "error", message: `Product with id ${pid} not found` });
+			return res.status(404).json({
+				status: "error",
+				message: `Product with id '${pid}' not found`
+			});
 		}
 
 		next();
@@ -27,7 +28,7 @@ export const checkMultiProducts = async (req, res, next) => {
 			if (!productFound) {
 				return res.status(404).json({
 					status: "error",
-					message: `Product with id ${identifier} not found`
+					message: `Product with id '${identifier}' not found`
 				});
 			}
 		}

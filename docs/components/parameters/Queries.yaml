@@ -1,33 +1,42 @@
 PaginationLimitQuery:
   name: limit
   in: query
+  description: Limit of products per page
   schema:
     type: integer
-  description: Limit of products per page
+    minimum: 1
+    default: 10
+  required: false
+  example: 3
 
 PaginationPageQuery:
   name: page
   in: query
+  description: Get specific page
   schema:
     type: integer
-  description: Get specific page
+  required: false
+  example: 4
 
 PaginationSortQuery:
   name: sort
   in: query
+  description: Sort results by price
   schema:
     type: string
     enum:
       - asc
       - desc
-  description: Sort results by price
+  required: false
+  example: desc
 
 PaginationQueryQuery:
   name: query
   in: query
+  description: Applied filters
   schema:
     type: string
-  description: Applied filters
+  required: false
   examples:
     byCategory:
       value: '{"category": "n/a"}'

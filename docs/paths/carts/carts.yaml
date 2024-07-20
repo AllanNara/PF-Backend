@@ -7,6 +7,6 @@ post:
   description: Add new cart for user
   responses:
     '200':
-      $ref: ../../components/responses/SuccessfulOperation.yaml#/SuccessfulCartOperation
+      $ref: ../../components/responses/carts/SuccessOperationCart.yaml#/SuccessfulPostOrDeleteCart
     '500':
       $ref: ../../components/responses/Default.yaml

@@ -49,13 +49,13 @@ components:
       $ref: components/schemas/SuccessRequest.yaml
   requestBodies:
     NewProduct:
-      $ref: components/requestBodies/NewProduct.yaml
+      $ref: components/requestBodies/products/NewProduct.yaml
     UpdateProduct:
-      $ref: components/requestBodies/UpdateProduct.yaml
+      $ref: components/requestBodies/products/UpdateProduct.yaml
     UpdateCart:
-      $ref: components/requestBodies/UpdateCart.yaml
+      $ref: components/requestBodies/carts/UpdateCart.yaml
     UpdateCartProduct:
-      $ref: components/requestBodies/UpdateCartProduct.yaml
+      $ref: components/requestBodies/carts/UpdateCartProduct.yaml
   parameters:
     PaginationLimitQuery:
       $ref: components/parameters/Queries.yaml#/PaginationLimitQuery
@@ -71,23 +71,100 @@ components:
       $ref: components/parameters/Params.yaml#/ProductID
   responses:
     PaginationRes:
-      $ref: components/responses/PaginationRes.yaml
-    SuccessfulCartOperation:
-      $ref: components/responses/SuccessfulOperation.yaml#/SuccessfulCartOperation
-    SuccessfulProductOperation:
-      $ref: components/responses/SuccessfulOperation.yaml#/SuccessfulProductOperation
+      $ref: components/responses/products/PaginationRes.yaml
+    SuccessfulGetCart:
+      $ref: components/responses/carts/SuccessOperationCart.yaml#/SuccessfulGetCart
+    SuccessfulPostOrDeleteCart:
+      $ref: components/responses/carts/SuccessOperationCart.yaml#/SuccessfulPostOrDeleteCart
+    SuccessfulPutCart:
+      $ref: components/responses/carts/SuccessOperationCart.yaml#/SuccessfulPutCart
+    SuccessfulPostCartProduct:
+      $ref: components/responses/carts/SuccessOperationCart.yaml#/SuccessfulPostCartProduct
+    SuccessfulPutCartProduct:
+      $ref: components/responses/carts/SuccessOperationCart.yaml#/SuccessfulPutCartProduct
+    SuccessfulDeleteCartProduct:
+      $ref: components/responses/carts/SuccessOperationCart.yaml#/SuccessfulDeleteCartProduct
+    SuccessfulPostProduct:
+      $ref: components/responses/products/SuccessOperationProduct.yaml#/SuccessfulPostProduct
+    SuccessfulGetProduct:
+      $ref: components/responses/products/SuccessOperationProduct.yaml#/SuccessfulGetProduct
+    SuccessfulPutProduct:
+      $ref: components/responses/products/SuccessOperationProduct.yaml#/SuccessfulPutProduct
+    SuccessfulDeleteProduct:
+      $ref: components/responses/products/SuccessOperationProduct.yaml#/SuccessfulDeleteProduct
     CartOrProductNotFound:
-      $ref: components/responses/ResourseNotFound.yaml#/CartOrProductNotFound
+      $ref: components/responses/carts/ErrorCartOperation.yaml#/CartOrProductNotFound
     CartNotFound:
-      $ref: components/responses/ResourseNotFound.yaml#/CartNotFound
+      $ref: components/responses/carts/ErrorCartOperation.yaml#/CartNotFound
     ProductNotFound:
-      $ref: components/responses/ResourseNotFound.yaml#/ProductNotFound
+      $ref: components/responses/products/ErrorProductOperation.yaml#/ProductNotFound
     MissingFieldsInProduct:
-      $ref: components/responses/ErrorProductOperation.yaml#/MissingFieldsInProduct
+      $ref: components/responses/products/ErrorProductOperation.yaml#/MissingFieldsInProduct
     CodeAlreadyInUse:
-      $ref: components/responses/ErrorProductOperation.yaml#/CodeAlreadyInUse
+      $ref: components/responses/products/ErrorProductOperation.yaml#/CodeAlreadyInUse
   examples:
+    ## PRODUCTS EXAMPLES ##
     PaginationExample:
-      $ref: components/examples/PaginationExample.yaml#/PaginationExample
-    PaginationExampleMongo:
-      $ref: components/examples/PaginationExample.yaml#/PaginationExampleMongo
+      $ref: components/examples/products/PaginationExample.yaml#/PaginationExample
+    GetProductExample:
+      $ref: components/examples/products/http-methods/GetProductExample.yaml#/GetProductIntegerID
+    UpdateProductExample:
+      $ref: components/examples/products/http-methods/PutProductExample.yaml#/PutProductIntegerID
+    ProductNotFoundExample:
+      $ref: components/examples/products/not-found/NotFoundProductExample.yaml#/ProductNotFound
+
+    PaginationMongoExample:
+      $ref: components/examples/products/PaginationExample.yaml#/PaginationExampleMongo
+    GetProductMongoExample:
+      $ref: components/examples/products/http-methods/GetProductExample.yaml#/GetProductMongoDB
+    UpdateProductMongoExample:
+      $ref: components/examples/products/http-methods/PutProductExample.yaml#/PutProductMongoID
+    ProductMongoNotFoundExample:
+      $ref: components/examples/products/not-found/NotFoundProductExample.yaml#/ProductMongoNotFound
+
+    ReqAddProductExample:
+      $ref: components/examples/products/body-request/ReqProdExamples.yaml#/ReqAddProduct
+    ReqUpdateProductExample:
+      $ref: components/examples/products/body-request/ReqProdExamples.yaml#/ReqAddProduct
+
+    ## CARTS EXAMPLES ##
+    GetCartExample:
+      $ref: components/examples/carts/http-methods/GetCartExample.yaml#/GetCart
+    UpdateCartExample:
+      $ref: components/examples/carts/http-methods/PutCartExample.yaml#/PutCartIntegerID
+    DeleteCartExample:
+      $ref: components/examples/carts/http-methods/DeleteCartExample.yaml#/EmptyCartIntegerId
+    CartNotFoundExample:
+      $ref: components/examples/carts/not-found/NotFoundCartExamples.yaml#/CartNotFound
+
+    GetCartMongoExample:
+      $ref: components/examples/carts/http-methods/GetCartExample.yaml#/GetCartMongo
+    UpdateCartMongoExample:
+      $ref: components/examples/carts/http-methods/PutCartExample.yaml#/PutCartMongoID
+    DeleteCartMongoExample:
+      $ref: components/examples/carts/http-methods/DeleteCartExample.yaml#/EmptyCartObjectId
+    CartMongoNotFoundExample:
+      $ref: components/examples/carts/not-found/NotFoundCartExamples.yaml#/CartMongoNotFound
+
+    ReqUpdateCart_IntegerIDExample:
+      $ref: components/examples/carts/body-request/ReqCartExamples.yaml#/BodyUpdateCart_IntegerID
+    ReqUpdateCart_MongoIDExample:
+      $ref: components/examples/carts/body-request/ReqCartExamples.yaml#/BodyUpdateCart_MongoID
+
+    ## CART PRODUCTS EXAMPLES ##
+    PostCartProductExample:
+      $ref: components/examples/carts/http-methods/PostCartProductExample.yaml#/PostCartProductIntegerID
+    UpdateCartProductExample:
+      $ref: components/examples/carts/http-methods/PutCartProductExample.yaml#/PutCartProductIntegerID
+    DeleteCartProductExample:
+      $ref: components/examples/carts/http-methods/DeleteCartProductExample.yaml#/DeleteCartProductIntegerID
+
+    PostCartProductMongoExample:
+      $ref: components/examples/carts/http-methods/PostCartProductExample.yaml#/PostCartProductMongoID
+    UpdateCartProductMongoExample:
+      $ref: components/examples/carts/http-methods/PutCartProductExample.yaml#/PutCartProductMongoID
+    DeleteCartProductMongoExample:
+      $ref: components/examples/carts/http-methods/DeleteCartProductExample.yaml#/DeleteCartProductMongoID
+
+    ReqUpdateCartProductExample:
+      $ref: components/examples/carts/body-request/ReqCartExamples.yaml#/BodyUpdateCartProduct

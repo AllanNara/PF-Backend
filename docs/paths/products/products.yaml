@@ -5,6 +5,7 @@ get:
     - $ref: '../../components/parameters/Queries.yaml#/PaginationPageQuery'
     - $ref: '../../components/parameters/Queries.yaml#/PaginationSortQuery'
     - $ref: '../../components/parameters/Queries.yaml#/PaginationQueryQuery'
+
   tags:
     - products
   operationId: getProducts
@@ -12,7 +13,7 @@ get:
   description: Retun all products
   responses:
     '200':
-      $ref: ../../components/responses/PaginationRes.yaml
+      $ref: ../../components/responses/products/PaginationRes.yaml
     '500':
       $ref: ../../components/responses/Default.yaml
 
@@ -24,11 +25,11 @@ post:
   summary: Add product
   description: Add new product with unique code
   requestBody:
-    $ref: ../../components/requestBodies/NewProduct.yaml
+    $ref: ../../components/requestBodies/products/NewProduct.yaml
   responses:
     '200':
-      $ref: ../../components/responses/SuccessfulOperation.yaml#/SuccessfulProductOperation
+      $ref: ../../components/responses/products/SuccessOperationProduct.yaml#/SuccessfulPostProduct
     '400':
-      $ref: ../../components/responses/ErrorProductOperation.yaml#/MissingFieldsInProduct
+      $ref: ../../components/responses/products/ErrorProductOperation.yaml#/MissingFieldsInProduct
     '409':
-      $ref: ../../components/responses/ErrorProductOperation.yaml#/CodeAlreadyInUse
+      $ref: ../../components/responses/products/ErrorProductOperation.yaml#/CodeAlreadyInUse

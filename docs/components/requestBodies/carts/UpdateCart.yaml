@@ -16,3 +16,8 @@ content:
                   - type: integer
               quantity:
                 type: integer
+    examples:
+      ValuesWithIntId:
+        $ref: ../../examples/carts/body-request/ReqCartExamples.yaml#/BodyUpdateCart_IntegerID
+      ValuesWithMongoId:
+        $ref: ../../examples/carts/body-request/ReqCartExamples.yaml#/BodyUpdateCart_MongoID

@@ -1,19 +1,33 @@
 ProductID:
   name: pid
   in: path
+  description: Product ID
   schema:
     anyOf:
       - type: string
       - type: number
   required: true
-  description: Product ID
+  examples:
+    IntegerId:
+      summary: Integer Id
+      value: 520
+    ObjectId:
+      summary: Object Id
+      value: 668f8aee822c67e10cff4f7f
 
 CartID:
   name: cid
   in: path
+  description: Cart ID
   schema:
     anyOf:
       - type: string
       - type: number
   required: true
-  description: Cart ID
+  examples:
+    IntegerId:
+      summary: Integer Id
+      value: 56
+    ObjectId:
+      summary: Object Id
+      value: 635981f6e40f61599e000064

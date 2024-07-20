@@ -10,9 +10,9 @@ get:
   description: Get user cart by ID
   responses:
     '200':
-      $ref: ../../components/responses/SuccessfulOperation.yaml#/SuccessfulCartOperation
+      $ref: ../../components/responses/carts/SuccessOperationCart.yaml#/SuccessfulGetCart
     '404':
-      $ref: ../../components/responses/ResourseNotFound.yaml#/CartNotFound
+      $ref: ../../components/responses/carts/ErrorCartOperation.yaml#/CartNotFound
 
 ## UPDATE ##
 put:
@@ -22,12 +22,12 @@ put:
   summary: Update entire cart
   description: Update entire user cart, with products in body
   requestBody:
-    $ref: ../../components/requestBodies/UpdateCart.yaml
+    $ref: ../../components/requestBodies/carts/UpdateCart.yaml
   responses:
     '200':
-      $ref: ../../components/responses/SuccessfulOperation.yaml#/SuccessfulCartOperation
+      $ref: ../../components/responses/carts/SuccessOperationCart.yaml#/SuccessfulPutCart
     '404':
-      $ref: ../../components/responses/ResourseNotFound.yaml#/CartNotFound
+      $ref: ../../components/responses/carts/ErrorCartOperation.yaml#/CartNotFound
 
 ## DELETE ##
 delete:
@@ -38,6 +38,6 @@ delete:
   description: Clean all products from cart with a specific id
   responses:
     '200':
-      $ref: ../../components/responses/SuccessfulOperation.yaml#/SuccessfulCartOperation
+      $ref: ../../components/responses/carts/SuccessOperationCart.yaml#/SuccessfulPostOrDeleteCart
     '404':
-      $ref: ../../components/responses/ResourseNotFound.yaml#/CartNotFound
+      $ref: ../../components/responses/carts/ErrorCartOperation.yaml#/CartNotFound

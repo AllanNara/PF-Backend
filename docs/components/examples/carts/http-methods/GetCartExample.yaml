@@ -1,0 +1,81 @@
+GetCart:
+  description: Get user cart with specific id
+  summary: Get Cart
+  value:
+    id: 16
+    products:
+      [
+        {
+          product:
+            {
+              title: Scallops - 10/20,
+              description: Maecenas tristique  est et tempus semper  est quam pharetra magna  ac consequat metus sapien ut nunc. Vestibulum Nullam porttitor lacus at turpis.,
+              category: Technology,
+              code: 77-0114118,
+              price: 4925.3,
+              stock: 99,
+              status: true,
+              thumbnails: [thumbnails-1720136534154-809841615.jpg],
+              id: 133
+            },
+          quantity: 6
+        },
+        {
+          product:
+            {
+              title: Glucose,
+              description:
+                'Cum sociis natoque penatibus et magnis dis parturient montes,
+                nascetur ridiculus mus. Vivamus vestibulum sagittis sapien. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.\n\nEtiam vel augue. Vestibulum rutrum rutrum neque. Aenean auctor gravida sem.',
+              category: Health Care,
+              code: 52-3642584,
+              price: 1881.31,
+              stock: 23,
+              status: true,
+              thumbnails: [],
+              id: 41
+            },
+          quantity: 22
+        }
+      ]
+
+GetCartMongo:
+  description: Get user cart with specific id
+  summary: Get Cart (Object Id)
+  value:
+    id: 669581f6e40f61599e000771
+    products:
+      [
+        {
+          product:
+            {
+              title: Scallops - 10/20,
+              description: Maecenas tristique  est et tempus semper  est quam pharetra magna  ac consequat metus sapien ut nunc. Vestibulum Nullam porttitor lacus at turpis.,
+              category: Technology,
+              code: 77-0114118,
+              price: 4925.3,
+              stock: 99,
+              status: true,
+              thumbnails: [thumbnails-1720136534154-809841615.jpg],
+              id: 668f8aee828c67e10cff50f9
+            },
+          quantity: 6
+        },
+        {
+          product:
+            {
+              title: Glucose,
+              description:
+                'Cum sociis natoque penatibus et magnis dis parturient montes,
+                nascetur ridiculus mus. Vivamus vestibulum sagittis sapien. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.\n\nEtiam vel augue. Vestibulum rutrum rutrum neque. Aenean auctor gravida sem.',
+              category: Health Care,
+              code: 52-3642584,
+              price: 1881.31,
+              stock: 23,
+              status: true,
+              thumbnails: [],
+              id: 668f8aee828c67e10cff5033
+            },
+          quantity: 22
+        }
+      ]
