@@ -1,7 +1,6 @@
 import { Server } from "socket.io";
 import allRoutes from "./routes/index.js";
 import { createServer } from "http";
-import displayRoutes from "express-routemap";
 import { engine } from "express-handlebars";
 import errorHandler from "./middlewares/errorHandler.js";
 import express from "express";
@@ -42,7 +41,4 @@ app.use(errorHandler);
 
 websockets(io);
 
-httpServer.listen(8080, () => {
-	displayRoutes(app);
-	console.log("listening on port 8080"); // eslint-disable-line
-});
+export { app, httpServer };
