@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://myapi.com/schema/product.json",
+  "title": "Product Schema",
+  "description": "Schema for a single product from Database",
+  "allOf": [{ "$ref": "http://myapi.com/schema/productBase.json" }],
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": ["integer", "string"],
+      "description": "Unique identifier for the product, can be an integer or a string.",
+      "readOnly": true
+    }
+  },
+  "required": [
+    "title",
+    "description",
+    "code",
+    "price",
+    "stock",
+    "category",
+    "status",
+    "thumbnails"
+  ]
+}

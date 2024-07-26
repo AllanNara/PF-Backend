@@ -1,0 +1,67 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://myapi.com/schema/pagination.json",
+  "title": "Response GET /api/products",
+  "description": "Response with pagination of products and metadata",
+  "type": "object",
+  "properties": {
+    "status": {
+      "type": "string",
+      "enum": ["success", "error"],
+      "description": "Indicates the status of the API response."
+    },
+    "payload": {
+      "type": "array",
+      "items": {
+        "$ref": "http://myapi.com/schema/product.json"
+      },
+      "description": "List of products."
+    },
+    "totalPages": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Total number of pages available."
+    },
+    "page": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Current page number."
+    },
+    "hasPrevPage": {
+      "type": "boolean",
+      "description": "Indicates if there is a previous page."
+    },
+    "hasNextPage": {
+      "type": "boolean",
+      "description": "Indicates if there is a next page."
+    },
+    "prevPage": {
+      "type": ["integer", "null"],
+      "description": "Page number of the previous page, if available."
+    },
+    "nextPage": {
+      "type": ["integer", "null"],
+      "description": "Page number of the next page, if available."
+    },
+    "prevLink": {
+      "type": ["string", "null"],
+      "description": "URL to the previous page, if available."
+    },
+    "nextLink": {
+      "type": ["string", "null"],
+      "description": "URL to the next page, if available."
+    }
+  },
+  "required": [
+    "status",
+    "payload",
+    "totalPages",
+    "page",
+    "hasPrevPage",
+    "hasNextPage",
+    "prevPage",
+    "nextPage",
+    "prevLink",
+    "nextLink"
+  ]
+}

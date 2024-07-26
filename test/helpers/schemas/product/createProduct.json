@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://myapi.com/schema/createProduct.json",
+  "title": "Body Create New Product",
+  "description": "Key/values on body request for create product.",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "http://myapi.com/schema/productBase.json"
+    }
+  ],
+
+  "required": ["title", "description", "code", "price", "stock", "category"]
+}

@@ -1,0 +1,63 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://myapi.com/schema/productBase.json",
+  "title": "Product Schema Base",
+  "description": "Schema for a common properties on product.",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Title of the product."
+    },
+    "description": {
+      "type": "string",
+      "description": "Detailed description of the product."
+    },
+    "code": {
+      "type": "string",
+      "description": "Unique product code."
+    },
+    "price": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Price of the product."
+    },
+    "stock": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Available stock of the product."
+    },
+    "category": {
+      "type": "string",
+      "description": "Category to which the product belongs."
+    },
+    "status": {
+      "type": "boolean",
+      "description": "Availability status of the product."
+    },
+    "thumbnails": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "description": "Path of the product's thumbnail image."
+      },
+      "description": "List of paths to product thumbnails.",
+      "uniqueItems": true
+    }
+  },
+  "if": {
+    "properties": {
+      "stock": { "type": "integer", "const": 0 }
+    }
+  },
+  "then": {
+    "properties": {
+      "status": { "const": false }
+    }
+  },
+  "else": {
+    "properties": {
+      "status": { "const": true }
+    }
+  }
+}

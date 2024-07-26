@@ -18,6 +18,6 @@ export default [
 			"sort-imports": "warn"
 		}
 	},
-	pluginJs.configs.recommended,
-	eslintPluginPrettierRecommended
+	eslintPluginPrettierRecommended,
+	pluginJs.configs.recommended
 ];
