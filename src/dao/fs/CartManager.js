@@ -44,7 +44,7 @@ export async function addProductToCart(cid, pid) {
 	}
 
 	const productExists = carts[cartIndex].products.find(
-		(pr) => pr.product === pid
+		(pr) => pr.product === parseInt(pid)
 	);
 
 	if (!productExists) {
@@ -65,7 +65,13 @@ export async function updateEntireCart(cid, products) {
 		return null;
 	}
 
-	cart.products = [...products];
+	const newCartProducts = [...products];
+	for (let i = 0; i < newCartProducts.length; i++) {
+		const { product } = newCartProducts[i];
+		newCartProducts[i].product = parseInt(product);
+	}
+
+	cart.products = newCartProducts;
 	await saveCarts(carts);
 	return cart;
 }
@@ -102,7 +108,7 @@ export async function updateCartProduct(cid, pid, quantity) {
 	});
 
 	if (!success) {
-		carts[cartIndex].products.push({ product: pid, quantity });
+		carts[cartIndex].products.push({ product: parseInt(pid), quantity });
 	}
 
 	await saveCarts(carts);
@@ -119,7 +125,7 @@ export async function deleteCartProduct(cid, pid) {
 	}
 
 	const indexProduct = carts[cartIndex].products.findIndex(
-		(pr) => pr.product === pid
+		(pr) => pr.product === parseInt(pid)
 	);
 
 	carts[cartIndex].products.splice(indexProduct, 1);

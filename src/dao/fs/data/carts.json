@@ -108,5 +108,18 @@
   {
     "id": 22,
     "products": []
+  },
+  {
+    "id": 23,
+    "products": [
+      {
+        "product": 504,
+        "quantity": 1
+      },
+      {
+        "product": 7,
+        "quantity": 100
+      }
+    ]
   }
 ]

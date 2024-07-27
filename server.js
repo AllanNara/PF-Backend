@@ -1,5 +1,5 @@
-import displayRoutes from "express-routemap";
 import { app, httpServer } from "./src/app.js";
+import displayRoutes from "express-routemap";
 
 httpServer.listen(8080, () => {
 	displayRoutes(app);
