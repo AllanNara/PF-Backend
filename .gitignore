@@ -133,4 +133,4 @@ dist
 src/public/uploads/
 
 # files json (local database for prod)
-# src/dao/fs/data/
+src/dao/fs/data/
