@@ -14,7 +14,7 @@ const createStorage = (dir) => {
 
 			const uploadPath = path.resolve(
 				import.meta.dirname,
-				"...",
+				"..",
 				"public",
 				"uploads",
 				dir
