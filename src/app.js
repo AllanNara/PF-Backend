@@ -5,6 +5,7 @@ import { engine } from "express-handlebars";
 import errorHandler from "./middlewares/errorHandler.js";
 import express from "express";
 import httpLogger from "./middlewares/httpLogger.js";
+import logger from "./utils/winston.js";
 import path from "path";
 import swaggerSpec from "./config/swagger-config.js";
 import swaggerUi from "swagger-ui-express";
@@ -21,6 +22,12 @@ app.set("views", path.resolve(import.meta.dirname, "views"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.resolve(import.meta.dirname, "public")));
+
+// Add logger with winston
+app.use((req, res, next) => {
+	req.logger = logger;
+	next();
+});
 app.use(httpLogger);
 
 // OpenApi Documentation with Swagger UI

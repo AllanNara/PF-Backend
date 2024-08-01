@@ -1,14 +1,15 @@
 import { ProductManager } from "./dao/factory.js";
+import logger from "./utils/winston.js";
 
 export default (io) => {
 	io.on("connection", async (socket) => {
-		console.info(`New client connected: ${socket.id}`);
+		logger.info(`New client connected: ${socket.id}`);
 
 		try {
 			const products = await ProductManager.getProducts();
 			socket.emit("products", { products });
 		} catch (error) {
-			console.error(error);
+			logger.error("Error on socket", { info: error.message || error });
 			socket.emit("error", { error: true, message: "Something went wrong" });
 		}
 
@@ -24,7 +25,7 @@ export default (io) => {
 				const products = await ProductManager.getProducts();
 				io.emit("products", { products });
 			} catch (error) {
-				console.error(error);
+				logger.error("Error on socket", { info: error.message || error });
 				socket.emit("error", { error: true, message: "Something went wrong" });
 			}
 		});
@@ -38,7 +39,7 @@ export default (io) => {
 				const products = await ProductManager.getProducts();
 				io.emit("products", { products });
 			} catch (error) {
-				console.error(error);
+				logger.error("Error on socket", { info: error.message || error });
 				socket.emit("error", { error: true, message: "Something went wrong" });
 			}
 		});

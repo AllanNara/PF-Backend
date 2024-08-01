@@ -27,7 +27,7 @@ const productSchema = new mongoose.Schema(
 					});
 					return !result;
 				},
-				message: ({ value }) => `Code '${value}' is already in use`
+				message: ({ value }) => `Code '${value}' already in use`
 			}
 		},
 		price: {

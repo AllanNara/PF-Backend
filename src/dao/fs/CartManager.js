@@ -1,5 +1,6 @@
 import { readFile, writeFile } from "./ManagerFileSystem.js";
 import { getProductById } from "./ProductManager.js";
+import logger from "../../utils/winston.js";
 
 const FILE_NAME = "carts.json";
 
@@ -22,7 +23,7 @@ export async function getCartById(cid) {
 	const cartFound = carts.find((cart) => cart.id === parseInt(cid));
 
 	if (!cartFound) {
-		console.warn("Cart not found");
+		logger.warn("Cart '%s' not found", cid);
 		return null;
 	}
 
@@ -39,7 +40,7 @@ export async function addProductToCart(cid, pid) {
 	const cartIndex = carts.findIndex((cart) => cart.id === parseInt(cid));
 
 	if (cartIndex < 0) {
-		console.warn("Cart not found");
+		logger.warn("Cart '%s' not found", cid);
 		return null;
 	}
 
@@ -61,7 +62,7 @@ export async function updateEntireCart(cid, products) {
 	const cart = carts.find((cart) => cart.id === parseInt(cid));
 
 	if (!cart) {
-		console.warn("Cart not found");
+		logger.warn("Cart '%s' not found", cid);
 		return null;
 	}
 
@@ -81,7 +82,7 @@ export async function emptyCart(cid) {
 	const cart = carts.find((cart) => cart.id === parseInt(cid));
 
 	if (!cart) {
-		console.warn("Cart not found");
+		logger.warn("Cart '%s' not found", cid);
 		return null;
 	}
 
@@ -95,7 +96,7 @@ export async function updateCartProduct(cid, pid, quantity) {
 	const cartIndex = carts.findIndex((cart) => cart.id === parseInt(cid));
 
 	if (cartIndex === -1) {
-		console.warn("Cart not found");
+		logger.warn("Cart '%s' not found", cid);
 		return null;
 	}
 
@@ -120,7 +121,7 @@ export async function deleteCartProduct(cid, pid) {
 	const cartIndex = carts.findIndex((cart) => cart.id === parseInt(cid));
 
 	if (cartIndex === -1) {
-		console.warn("Cart not found");
+		logger.warn("Cart '%s' not found", cid);
 		return null;
 	}
 

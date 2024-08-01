@@ -1,4 +1,5 @@
 import fs from "fs/promises";
+import logger from "../../utils/winston.js";
 import { resolve } from "path";
 
 const PATH_BASE = resolve(import.meta.dirname, "data");
@@ -11,7 +12,9 @@ export function readFile(filename) {
 			const json = JSON.parse(data);
 			return json;
 		} catch (error) {
-			console.warn(error);
+			logger.warn(`Warning to read file ${filename}`, {
+				info: error.message || error
+			});
 			await fs.writeFile(path, "[]", "utf-8");
 			return [];
 		}
@@ -25,7 +28,10 @@ export function writeFile(filename) {
 			const json = JSON.stringify(doc, null, 2);
 			await fs.writeFile(path, json, "utf-8");
 		} catch (error) {
-			console.error(error);
+			logger.error(`Error to write file ${filename}`, {
+				info: error.message || error
+			});
+			throw error;
 		}
 	};
 }

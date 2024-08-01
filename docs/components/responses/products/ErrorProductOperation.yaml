@@ -16,7 +16,7 @@ CodeAlreadyInUse:
         $ref: ../../schemas/ErrorRequest.yaml
       example:
         status: error
-        message: Code alredy exists
+        message: Code already exists
 
 ProductNotFound:
   description: The specified product was not found

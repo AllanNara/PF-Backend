@@ -1,4 +1,5 @@
 import { readFile, writeFile } from "./ManagerFileSystem.js";
+import logger from "../../utils/winston.js";
 import paginateDocs from "./lib/paginate.js";
 
 const FILE_NAME = "products.json";
@@ -12,7 +13,7 @@ export async function checkCodeExists(code, data = []) {
 		products = await readProductsFile();
 	}
 	const findCode = products.find((pr) => pr.code === code);
-	if (findCode) console.error("Code already in use");
+	if (findCode) logger.warn("Code '%s' already in use", code);
 	return Boolean(findCode);
 }
 
@@ -25,24 +26,9 @@ export async function addProduct(product) {
 	const products = await readProductsFile();
 
 	const { title, description, code, price, stock, category } = product;
-	if (isNaN(parseInt(stock)) || isNaN(parseInt(price))) {
-		throw new Error("Invalid values");
-	}
 
 	const status = product.status || true;
 	const thumbnails = product.thumbnails || [];
-
-	if (
-		!title ||
-		!description ||
-		!code ||
-		!price ||
-		isNaN(Number(stock)) ||
-		!category
-	) {
-		console.error("Missing fields");
-		return null;
-	}
 
 	if (await checkCodeExists(code, products)) return null;
 	const id = products.length ? products[products.length - 1].id + 1 : 1;
@@ -69,7 +55,7 @@ export async function getProductById(pid) {
 	const productFound = products.find((pr) => pr.id === parseInt(pid));
 
 	if (!productFound) {
-		console.warn("Product not found");
+		logger.warn("Product '%s' not found", pid);
 		return null;
 	}
 
@@ -81,7 +67,7 @@ export async function updateProduct(pid, obj) {
 	const productIndex = products.findIndex((pr) => pr.id === parseInt(pid));
 
 	if (productIndex < 0) {
-		console.warn("Product not found");
+		logger.warn("Product '%s' not found", pid);
 		return null;
 	}
 
@@ -96,7 +82,7 @@ export async function deleteProduct(pid) {
 	const productIndex = products.findIndex((pr) => pr.id === parseInt(pid));
 
 	if (productIndex < 0) {
-		console.warn("Product not found");
+		logger.warn("Product '%s' not found", pid);
 		return null;
 	}
 
