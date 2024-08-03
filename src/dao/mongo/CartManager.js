@@ -1,5 +1,5 @@
 import { cartModel } from "./models/cart.model.js";
-import logger from "../../utils/winston.js";
+import logger from "../../../lib/winston.js";
 
 export async function addCart() {
 	const response = await cartModel.create({});
@@ -8,7 +8,7 @@ export async function addCart() {
 
 export async function getCartById(cid) {
 	const doc = await cartModel.findById(cid).lean();
-	if (!doc) logger.warn("Cart '%s' not found", cid);
+	if (!doc) logger.verbose("Cart '%s' not found", cid);
 	doc.id = doc._id;
 	delete doc._id;
 	delete doc.__v;
@@ -30,7 +30,7 @@ export async function addProductToCart(cid, pid) {
 		);
 
 		if (!cartWithProduct) {
-			logger.warn("Cart '%s' not found", cid);
+			logger.verbose("Cart '%s' not found", cid);
 			return null;
 		}
 	}
@@ -46,7 +46,7 @@ export async function updateEntireCart(cid, products) {
 	);
 
 	if (!updatedCart) {
-		logger.warn("Cart '%s' not found", cid);
+		logger.verbose("Cart '%s' not found", cid);
 		return null;
 	}
 
@@ -57,7 +57,7 @@ export async function emptyCart(cid) {
 	const cartDoc = await cartModel.findById(cid);
 
 	if (!cartDoc) {
-		logger.warn("Cart '%s' not found", cid);
+		logger.verbose("Cart '%s' not found", cid);
 		return null;
 	}
 
@@ -81,7 +81,7 @@ export async function updateCartProduct(cid, pid, quantity) {
 			{ new: true }
 		);
 
-		if (!cartWithProduct) logger.warn("Cart '%s' not found", cid);
+		if (!cartWithProduct) logger.verbose("Cart '%s' not found", cid);
 	}
 
 	return cartWithProduct;
@@ -94,6 +94,6 @@ export async function deleteCartProduct(cid, pid) {
 		{ new: true }
 	);
 
-	if (!cartWithProduct) logger.warn("Cart '%s' not found", cid);
+	if (!cartWithProduct) logger.verbose("Cart '%s' not found", cid);
 	return cartWithProduct;
 }

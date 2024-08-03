@@ -1,6 +1,6 @@
 import { readFile, writeFile } from "./ManagerFileSystem.js";
-import logger from "../../utils/winston.js";
-import paginateDocs from "./lib/paginate.js";
+import logger from "../../../lib/winston.js";
+import paginateDocs from "../../utils/paginate.js";
 
 const FILE_NAME = "products.json";
 
@@ -13,7 +13,7 @@ export async function checkCodeExists(code, data = []) {
 		products = await readProductsFile();
 	}
 	const findCode = products.find((pr) => pr.code === code);
-	if (findCode) logger.warn("Code '%s' already in use", code);
+	if (findCode) logger.verbose("Code '%s' already in use", code);
 	return Boolean(findCode);
 }
 
@@ -55,7 +55,7 @@ export async function getProductById(pid) {
 	const productFound = products.find((pr) => pr.id === parseInt(pid));
 
 	if (!productFound) {
-		logger.warn("Product '%s' not found", pid);
+		logger.verbose("Product '%s' not found", pid);
 		return null;
 	}
 
@@ -67,7 +67,7 @@ export async function updateProduct(pid, obj) {
 	const productIndex = products.findIndex((pr) => pr.id === parseInt(pid));
 
 	if (productIndex < 0) {
-		logger.warn("Product '%s' not found", pid);
+		logger.verbose("Product '%s' not found", pid);
 		return null;
 	}
 
@@ -82,7 +82,7 @@ export async function deleteProduct(pid) {
 	const productIndex = products.findIndex((pr) => pr.id === parseInt(pid));
 
 	if (productIndex < 0) {
-		logger.warn("Product '%s' not found", pid);
+		logger.verbose("Product '%s' not found", pid);
 		return null;
 	}
 

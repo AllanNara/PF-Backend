@@ -1,3 +1,4 @@
+import { HOST } from "../../../config/index.js";
 import { ProductManager } from "../../dao/factory.js";
 import { Router } from "express";
 import { productUpload } from "../../middlewares/multer.js";
@@ -12,8 +13,6 @@ const {
 	updateProduct
 } = ProductManager;
 
-const ROOT_PATH = "http://localhost:8080";
-
 router.get("/", async (req, res, next) => {
 	try {
 		const { query: options } = req;
@@ -23,7 +22,7 @@ router.get("/", async (req, res, next) => {
 		let response = await getProducts(options);
 
 		const buildLink = (page) => {
-			const url = new URL(`${ROOT_PATH}${req.originalUrl}`);
+			const url = new URL(`${HOST}${req.originalUrl}`);
 			url.searchParams.set("page", page);
 			return url.href;
 		};

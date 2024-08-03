@@ -1,17 +1,11 @@
 import fs from "fs/promises";
-import logger from "../utils/winston.js";
+import logger from "../lib/winston.js";
 import path from "path";
 
 let swaggerSpec;
 
 try {
-	const path_apidoc = path.resolve(
-		import.meta.dirname,
-		"..",
-		"..",
-		"docs",
-		"openapi.json"
-	);
+	const path_apidoc = path.resolve(process.cwd(), "docs", "openapi.json");
 	const json = await fs.readFile(path_apidoc, "utf-8");
 	swaggerSpec = JSON.parse(json);
 } catch (error) {

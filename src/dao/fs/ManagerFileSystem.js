@@ -1,5 +1,5 @@
 import fs from "fs/promises";
-import logger from "../../utils/winston.js";
+import logger from "../../../lib/winston.js";
 import { resolve } from "path";
 
 const PATH_BASE = resolve(import.meta.dirname, "data");

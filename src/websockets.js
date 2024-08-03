@@ -1,5 +1,5 @@
 import { ProductManager } from "./dao/factory.js";
-import logger from "./utils/winston.js";
+import logger from "../lib/winston.js";
 
 export default (io) => {
 	io.on("connection", async (socket) => {

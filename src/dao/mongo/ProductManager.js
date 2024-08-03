@@ -1,10 +1,10 @@
 import { PaginationParameters } from "mongoose-paginate-v2";
-import logger from "../../utils/winston.js";
+import logger from "../../../lib/winston.js";
 import { productModel } from "./models/product.model.js";
 
 export async function checkCodeExists(code) {
 	const doc = await productModel.findOne({ code });
-	if (doc) logger.warn("Code '%s' already in use", code);
+	if (doc) logger.verbose("Code '%s' already in use", code);
 	return Boolean(doc);
 }
 
@@ -26,7 +26,7 @@ export async function addProduct(product) {
 		return response;
 	} catch (error) {
 		const warning = error?.errors?.code.message || error.message;
-		logger.warn(warning);
+		logger.verbose(warning);
 		return null;
 	}
 }
@@ -37,7 +37,7 @@ export async function getProductById(pid) {
 		return doc;
 	} catch (error) {
 		if (error?.message.includes("Cast to ObjectId failed")) {
-			logger.warn("Product '%s' not found", pid);
+			logger.verbose("Product '%s' not found", pid);
 			return null;
 		}
 		throw error;
@@ -50,12 +50,12 @@ export async function updateProduct(pid, obj) {
 		{ $set: obj },
 		{ new: true }
 	);
-	if (!updated) logger.warn("Product '%s' not found", pid);
+	if (!updated) logger.verbose("Product '%s' not found", pid);
 	return updated;
 }
 
 export async function deleteProduct(pid) {
 	const deleted = await productModel.findByIdAndDelete(pid);
-	if (!deleted) logger.warn("Product '%s' not found", pid);
+	if (!deleted) logger.verbose("Product '%s' not found", pid);
 	return deleted;
 }

@@ -4,7 +4,7 @@ const validateProductFields = (req, res, next) => {
 	let stock = req.body.stock;
 
 	if (!title || !description || !code || !price || !stock || !category) {
-		req.logger.warn("Missing fields", {
+		req.logger.verbose("Missing fields", {
 			info: {
 				title: title || null,
 				description: description || null,

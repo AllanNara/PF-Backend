@@ -1,13 +1,15 @@
+import { NODE_ENV } from "../config/index.js";
 import { Server } from "socket.io";
 import allRoutes from "./routes/index.js";
 import { createServer } from "http";
+import displayRoutes from "express-routemap";
 import { engine } from "express-handlebars";
 import errorHandler from "./middlewares/errorHandler.js";
 import express from "express";
 import httpLogger from "./middlewares/httpLogger.js";
-import logger from "./utils/winston.js";
+import logger from "../lib/winston.js";
 import path from "path";
-import swaggerSpec from "./config/swagger-config.js";
+import swaggerSpec from "../config/swagger-config.js";
 import swaggerUi from "swagger-ui-express";
 import websockets from "./websockets.js";
 
@@ -50,4 +52,5 @@ app.use(errorHandler);
 
 websockets(io);
 
+NODE_ENV === "development" && displayRoutes(app);
 export { app, httpServer };
