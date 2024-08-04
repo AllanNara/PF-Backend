@@ -1,3 +1,31 @@
+# Changelog
+
+All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
+
+## [2.0.0](https://github.com/AllanNara/PF-Backend/compare/v1.4.0...v2.0.0) (2024-08-04)
+
+
+### ⚠ BREAKING CHANGES
+
+* **api:** not more handlebars for this moment
+* **api:** differents folders in proyect
+* **db:** now add NODE_ENV and script mongo for server
+
+### Features
+
+* **api:** add custom logger with winston ([de9e369](https://github.com/AllanNara/PF-Backend/commit/de9e369fe910e50b0180c788ea4c94a711688318))
+* **api:** add mongo persistence ([a2f67ac](https://github.com/AllanNara/PF-Backend/commit/a2f67acfc793753790f78b058a3aa05ef3a589de))
+* **api:** add pagination with mongoose and fs ([698a15b](https://github.com/AllanNara/PF-Backend/commit/698a15b16296255f18e70700a2a566cb53323c69))
+* **api:** add PUT and DELETE endpoints on /api/carts ([527fd96](https://github.com/AllanNara/PF-Backend/commit/527fd96976ebde81657414fc0a3e1e55b015cb4c))
+* **db:** add mongoose ([ee8ec2a](https://github.com/AllanNara/PF-Backend/commit/ee8ec2aced058fca2f9da079ec42fe57ce331666))
+* **docs:** finished documentatition ([f682b47](https://github.com/AllanNara/PF-Backend/commit/f682b47bff0576c77c1953b9c5a65577c4f094d6))
+
+
+### Bug Fixes
+
+* fix carrousel ([a4fcad1](https://github.com/AllanNara/PF-Backend/commit/a4fcad1de3fc26060d5d51d9fa10002ff864aa8f))
+* **fs:** fix CartManager functions with error on parseInt numbers ([7585d73](https://github.com/AllanNara/PF-Backend/commit/7585d735ae023eb256baad74d5df91cb4ab41823))
+
 ## [1.4.0](https://github.com/AllanNara/PF-Backend/compare/v1.2.1...v1.4.0) (2024-07-02)
 
 ### Features
