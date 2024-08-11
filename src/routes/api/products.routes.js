@@ -1,6 +1,6 @@
-import { HOST } from "../../../config/index.js";
 import { ProductManager } from "../../dao/factory.js";
 import { Router } from "express";
+import config from "../../../config/index.js";
 import { productUpload } from "../../middlewares/multer.js";
 import validateProductFields from "../../middlewares/validateProductFields.js";
 
@@ -22,7 +22,7 @@ router.get("/", async (req, res, next) => {
 		let response = await getProducts(options);
 
 		const buildLink = (page) => {
-			const url = new URL(`${HOST}${req.originalUrl}`);
+			const url = new URL(`${config.URL}${req.originalUrl}`);
 			url.searchParams.set("page", page);
 			return url.href;
 		};

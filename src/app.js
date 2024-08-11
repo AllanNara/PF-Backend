@@ -1,6 +1,7 @@
-import { NODE_ENV } from "../config/index.js";
 import { Server } from "socket.io";
 import allRoutes from "./routes/index.js";
+import config from "../config/index.js";
+import cookieParser from "cookie-parser";
 import { createServer } from "http";
 import displayRoutes from "express-routemap";
 import { engine } from "express-handlebars";
@@ -8,8 +9,10 @@ import errorHandler from "./middlewares/errorHandler.js";
 import express from "express";
 import httpLogger from "./middlewares/httpLogger.js";
 import logger from "../lib/winston.js";
+import optionSession from "./utils/sessions.js";
 import path from "path";
-import swaggerSpec from "../config/swagger-config.js";
+import session from "express-session";
+import swaggerSpec from "./utils/swagger-config.js";
 import swaggerUi from "swagger-ui-express";
 import websockets from "./websockets.js";
 
@@ -21,6 +24,8 @@ app.engine("handlebars", engine());
 app.set("view engine", "handlebars");
 app.set("views", path.resolve(import.meta.dirname, "views"));
 
+app.use(cookieParser());
+app.use(session(optionSession));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.resolve(import.meta.dirname, "public")));
@@ -52,5 +57,5 @@ app.use(errorHandler);
 
 websockets(io);
 
-NODE_ENV === "development" && displayRoutes(app);
+config.DISPLAY && displayRoutes(app);
 export { app, httpServer };

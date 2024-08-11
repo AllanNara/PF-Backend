@@ -134,3 +134,5 @@ src/public/uploads/
 
 # files json (local database for prod)
 src/dao/fs/data/
+
+src/sessions

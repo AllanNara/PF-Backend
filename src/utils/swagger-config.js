@@ -1,5 +1,5 @@
 import fs from "fs/promises";
-import logger from "../lib/winston.js";
+import logger from "../../lib/winston.js";
 import path from "path";
 
 let swaggerSpec;

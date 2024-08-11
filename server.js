@@ -1,11 +1,11 @@
-import { NODE_ENV, PORT } from "./config/index.js";
 import { closeMongoDB, connectMongoDB } from "./src/utils/mongoose.js";
+import config from "./config/index.js";
 import { httpServer } from "./src/app.js";
 import logger from "./lib/winston.js";
 
-httpServer.listen(PORT, async () => {
+httpServer.listen(config.PORT, async () => {
 	await connectMongoDB();
-	logger.info(`Listening on port %d in mode %s`, PORT, NODE_ENV);
+	logger.info(`Listening on port %d in mode %s`, config.PORT, config.NODE_ENV);
 });
 
 httpServer.on("close", () => {
@@ -16,13 +16,14 @@ process.on("SIGINT", () => {
 	console.info("\n");
 	httpServer.close();
 	closeMongoDB().then(() => {
-		NODE_ENV !== "production" && console.info("\nBye bye!\n");
+		config.NODE_ENV !== "production" && console.info("\nBye bye!\n");
 		process.exit(0);
 	});
 });
 
 process.on("uncaughtException", (error) => {
 	logger.error("FATAL: Uncaught Exception", { info: error.message });
+	logger.debug("Error stack", { stack: error.stack });
 	process.exit(1);
 });
 

@@ -1,18 +1,22 @@
-import { dao } from "./command-line.js";
-import dotenv from "dotenv";
-import { resolve } from "path";
+import "../lib/dotenv.js";
+import options from "./command-line.js";
+const { env } = process;
 
-dotenv.config({
-	path: resolve(
-		process.cwd(),
-		`.env.${process.env.NODE_ENV || "development"}.local`
-	)
-});
+const config = {
+	NODE_ENV: env.NODE_ENV,
+	MONGO_URI: env.MONGO_URI || "mongodb://127.0.0.1:27017/pf-backend",
+	PORT: env.PORT ? Number(env.PORT) : 8080,
+	HOST: env.HOST || "127.0.0.1",
+	PROTOCOL: env.PROTOCOL || "http",
+	DAO: options.dao,
+	DEBUG: options.debug,
+	SESSION: {
+		STORE: options.sstorage,
+		SECRET: env.SECRET_SESSION
+	},
+	DISPLAY: options.display
+};
 
-export const {
-	DB = dao,
-	MONGO_URI = "mongodb://127.0.0.1:27017/pf-backend",
-	PORT = 8080,
-	HOST = "http://localhost:8080",
-	NODE_ENV
-} = process.env;
+config.ORIGIN = `${config.PROTOCOL}://${config.HOST}:${config.PORT}`;
+
+export default config;

@@ -21,7 +21,10 @@ const httpLogger = (req, res, next) => {
 			body: req.body,
 			files: req.files?.length,
 			host: req.headers.host,
-			["content-type"]: req.headers["content-type"]?.split(";")[0]
+			["content-type"]: req.headers["content-type"]?.split(";")[0],
+			cookies: req.cookies,
+			signedCookies: req.signedCookies,
+			session: req.session
 		});
 	});
 

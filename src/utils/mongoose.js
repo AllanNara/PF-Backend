@@ -1,4 +1,4 @@
-import { MONGO_URI } from "../../config/index.js";
+import config from "../../config/index.js";
 import logger from "../../lib/winston.js";
 import mongoose from "mongoose";
 
@@ -15,7 +15,7 @@ export const connectMongoDB = async () => {
 		.on("disconnected", () => logger.info("MongoDB closed..."));
 
 	try {
-		const connection = await mongoose.connect(MONGO_URI);
+		const connection = await mongoose.connect(config.MONGO_URI);
 		cachedConnection = connection;
 		return connection;
 	} catch (error) {
