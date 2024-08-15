@@ -12,9 +12,16 @@ const config = {
 	DEBUG: options.debug,
 	SESSION: {
 		STORE: options.sstorage,
-		SECRET: env.SECRET_SESSION
+		SECRET: env.SECRET_SESSION || "S3cR3t$3z0n"
 	},
-	DISPLAY: options.display
+	DISPLAY: options.display,
+	JWT_SECRET: env.JWT_SECRET || "S3cR3tJWtT0k3n",
+	COOKIE_SECRET: env.COOKIE_SECRET || "S3cR3tC0okIe",
+	GITHUB: {
+		CLIENT_ID: env.GITHUB_CLIENT_ID,
+		CLIENT_SECRET: env.GITHUB_CLIENT_SECRET,
+		CALLBACK_URL: env.GITHUB_CALLBACK_URL
+	}
 };
 
 config.ORIGIN = `${config.PROTOCOL}://${config.HOST}:${config.PORT}`;

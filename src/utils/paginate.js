@@ -1,29 +1,30 @@
-export default function paginateDocs(data, options) {
-	const { page, limit, sort } = options;
+export default (data, { page, limit, sort, query }) => {
 	const offset = limit * (page - 1);
 	let payload, totalPages, hasPrevPage, hasNextPage, prevPage, nextPage;
 
-	if (options.query) {
-		const query = JSON.parse(options.query);
-		data = data.filter((doc) => {
-			return (
-				(typeof query.status !== "boolean" || query.status === doc.status) &&
-				(!query.category || query.category === doc.category)
-			);
-		});
+	if (query) {
+		const queryObj = JSON.parse(query);
+		data = data.filter(
+			(doc) =>
+				(typeof queryObj.status !== "boolean" ||
+					queryObj.status === doc.status) &&
+				(!queryObj.category || queryObj.category === doc.category)
+		);
 	}
 
 	payload = data.slice(offset, offset + limit);
 	if (sort) {
-		payload.sort((a, b) => {
-			if (sort === "asc") return a.price - b.price;
-			else if (sort === "desc") return b.price - a.price;
-			else return 0;
-		});
+		payload.sort((a, b) =>
+			sort === "asc"
+				? a.price - b.price
+				: sort === "desc"
+					? b.price - a.price
+					: 0
+		);
 	}
 	totalPages = Math.ceil(data.length / limit);
-	hasPrevPage = Boolean(page > 1);
-	hasNextPage = Boolean(page < totalPages);
+	hasPrevPage = page > 1;
+	hasNextPage = page < totalPages;
 	prevPage = hasPrevPage ? page - 1 : null;
 	nextPage = hasNextPage ? page + 1 : null;
 
@@ -36,4 +37,4 @@ export default function paginateDocs(data, options) {
 		prevPage,
 		nextPage
 	};
-}
+};

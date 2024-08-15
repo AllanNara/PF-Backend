@@ -5815,5 +5815,27 @@
     "thumbnails": [
       "/uploads/products/thumbnails-1722640023351-910628531.png"
     ]
+  },
+  {
+    "id": 545,
+    "title": "Intelligent Cotton Car v1",
+    "description": "Clovis Drainage of Lower Tooth with Drainage Device, Open Approach, All",
+    "code": "44.199.43.70",
+    "price": 514.26,
+    "stock": 17,
+    "category": "Granite",
+    "status": true,
+    "thumbnails": []
+  },
+  {
+    "id": 546,
+    "title": "Practical Wooden Pants v1",
+    "description": "North Twila Drainage of Lower Tooth with Drainage Device, Open Approach, All",
+    "code": "{{$randomIP} }",
+    "price": 71.34,
+    "stock": 115,
+    "category": "Plastic",
+    "status": true,
+    "thumbnails": []
   }
 ]

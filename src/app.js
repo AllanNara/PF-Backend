@@ -8,8 +8,10 @@ import { engine } from "express-handlebars";
 import errorHandler from "./middlewares/errorHandler.js";
 import express from "express";
 import httpLogger from "./middlewares/httpLogger.js";
-import logger from "../lib/winston.js";
+import initializePassport from "./passport/index.js";
+import { loggers } from "./middlewares/loggers.js";
 import optionSession from "./utils/sessions.js";
+import passport from "passport";
 import path from "path";
 import session from "express-session";
 import swaggerSpec from "./utils/swagger-config.js";
@@ -24,34 +26,23 @@ app.engine("handlebars", engine());
 app.set("view engine", "handlebars");
 app.set("views", path.resolve(import.meta.dirname, "views"));
 
-app.use(cookieParser());
-app.use(session(optionSession));
+app.use(express.static(path.resolve(import.meta.dirname, "public")));
+app.use(loggers);
+app.use(httpLogger);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.resolve(import.meta.dirname, "public")));
+app.use(cookieParser(config.COOKIE_SECRET));
+app.use(session(optionSession));
+initializePassport();
+app.use(passport.initialize());
+app.use(passport.session());
 
-// Add logger with winston
-app.use((req, res, next) => {
-	req.logger = logger;
-	next();
-});
-app.use(httpLogger);
-
-// OpenApi Documentation with Swagger UI
+// OpenApi Documentation with Swagger UI & Redoc
 app.use("/api", swaggerUi.serve);
 app.get("/api", swaggerUi.setup(swaggerSpec));
-
-// Documentation with Redocly
-app.get("/redoc", (req, res) => {
-	const redocFile = path.resolve(
-		import.meta.dirname,
-		"..",
-		"docs",
-		"redoc-static.html"
-	);
-	res.sendFile(redocFile);
-});
-
+app.get("/redoc", (req, res) =>
+	res.sendFile(path.resolve(process.cwd(), "docs", "redoc-static.html"))
+);
 app.use("/", allRoutes);
 app.use(errorHandler);
 

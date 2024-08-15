@@ -22,10 +22,10 @@ const productSchema = new mongoose.Schema(
 			required: true,
 			validate: {
 				validator: async function (value) {
-					const result = await mongoose.models.products.countDocuments({
+					const duplicated = await mongoose.models.products.countDocuments({
 						code: value
 					});
-					return !result;
+					return !duplicated;
 				},
 				message: ({ value }) => `Code '${value}' already in use`
 			}
@@ -53,6 +53,7 @@ const productSchema = new mongoose.Schema(
 			transform: function (doc, ret) {
 				ret.id = ret._id;
 				delete ret._id;
+				delete ret.__v;
 			}
 		}
 	}

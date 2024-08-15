@@ -2,7 +2,7 @@
 const errorHandler = (err, req, res, next) => {
 	const status = err.status || 500;
 	const message = err.message || err;
-	req.logger.error("Error on server", { info: message });
+	req.logger.error("Error on server", { info: message, stack: err.stack });
 	res.status(status).send({ status: "error", message });
 };
 

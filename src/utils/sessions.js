@@ -13,8 +13,8 @@ switch (config.SESSION.STORE) {
 		store = new FileStoreSession({
 			path: path.join(process.cwd(), "src", "sessions"),
 			retries: 2,
-			ttl: 10 * 60,
-			reapInterval: 5 * 60,
+			ttl: 5 * 60,
+			reapInterval: 10 * 60,
 			reapAsync: true,
 			logFn: (message) => {
 				logger.verbose(message);
