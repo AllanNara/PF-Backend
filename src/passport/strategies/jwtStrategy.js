@@ -13,7 +13,7 @@ export const jwtLogin = new JwtStrategy(
 			const user = await UserManager.getUserById(jwtPayload.data.uid);
 			if (!user) {
 				logger.verbose("User not found");
-				return done(null, false);
+				return done(null, false, { message: "User not found" });
 			}
 			done(null, user);
 		} catch (error) {

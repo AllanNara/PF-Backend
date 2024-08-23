@@ -1,40 +1,27 @@
 import { Router } from "express";
-import passport from "passport";
+import { passportCall } from "../../middlewares/passport.js";
 
 const router = Router();
 
-// Ruta current
 router.get(
-	"/current",
-	async (req, res, next) => {
-		const passportStrategy = passport.authenticate(
-			"jwt",
-			{ session: false },
-			(err, user, info) => {
-				if (err) return next(err);
-				if (!user) {
-					return res
-						.clearCookie("jwt")
-						.status(401)
-						.json({ error: info.messages ? info.messages : info.toString() });
-				}
-				req.user = user;
-				next();
-			}
-		);
-		passportStrategy(req, res, next);
-	},
-	(req, res) => {
-		res.json(req.user);
-	}
+	"/github/callback",
+	passportCall("github", { session: false }),
+	(req, res) => res.json(req.user)
+);
+
+router.get("/github", passportCall("github", { scope: ["user:email"] }));
+
+// Ruta current
+router.get("/current", passportCall("jwt", { session: false }), (req, res) =>
+	res.json(req.user)
 );
 
 // Ruta para Login
 router.post(
 	"/login",
-	passport.authenticate("login", {
+	passportCall("login", {
 		session: false,
-		failureRedirect: "/api/auth/failure" // Redirige a esta ruta si la autenticación falla
+		failureRedirect: "/api/auth/failure"
 	}),
 	(req, res) => {
 		res.cookie("token", req.user.token, {
@@ -49,10 +36,10 @@ router.post(
 // Ruta para Registro
 router.post(
 	"/register",
-	passport.authenticate("register", {
+	passportCall("register", {
 		session: false,
-		successRedirect: "/api/auth/success", // Redirige a esta ruta si el registro es exitoso
-		failureRedirect: "/api/auth/failure" // Redirige a esta ruta si el registro falla
+		successRedirect: "/api/auth/success",
+		failureRedirect: "/api/auth/failure"
 	})
 );
 

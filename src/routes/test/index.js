@@ -1,11 +1,13 @@
 import { Router } from "express";
 // import cookieRoutes from "./cookies.js";
+import processRoutes from "./process.js";
 import sessionRoutes from "./session.js";
 
 const router = Router();
 
 // router.use("/cookies", cookieRoutes);
 router.use("/session", sessionRoutes);
+router.use("/process", processRoutes);
 
 router.use("*", (req, res) => {
 	req.logger.verbose("Route " + req.originalUrl + " not found");

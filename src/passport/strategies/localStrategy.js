@@ -13,7 +13,7 @@ export const localRegister = new LocalStrategy(
 			const userExists = await UserManager.getUserByEmail(userEmail);
 			if (userExists) {
 				logger.verbose("Email '%s' is already in use", userEmail);
-				return done(null, false);
+				return done(null, false, { message: "Email already in use" });
 			}
 
 			const { first_name, last_name, email, age } = req.body;
@@ -45,7 +45,7 @@ export const localLogin = new LocalStrategy(
 			}
 
 			logger.verbose("Invalid credentials");
-			done(null, false);
+			done(null, false, { message: "Invalid credentials" });
 		} catch (error) {
 			logger.warn("Error login user", { info: error.message ?? error });
 			done(error);

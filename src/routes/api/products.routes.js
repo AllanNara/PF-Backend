@@ -22,7 +22,7 @@ router.get("/", async (req, res, next) => {
 		let response = await getProducts(options);
 
 		const buildLink = (page) => {
-			const url = new URL(`${config.URL}${req.originalUrl}`);
+			const url = new URL(`${config.ORIGIN}${req.originalUrl}`);
 			url.searchParams.set("page", page);
 			return url.href;
 		};

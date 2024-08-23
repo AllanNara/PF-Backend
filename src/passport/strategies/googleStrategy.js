@@ -1,3 +1,3 @@
-import { Strategy as GoogleStrategy } from "passport-google-oauth20";
+// import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 
-export const googleLogin = new GoogleStrategy();
+// export const googleLogin = new GoogleStrategy({})
