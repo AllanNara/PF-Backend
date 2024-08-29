@@ -1,15 +1,26 @@
 import { Router } from "express";
 import { passportCall } from "../../middlewares/passport.js";
+import { setCookie } from "../../middlewares/setCookie.js";
 
 const router = Router();
 
 router.get(
 	"/github/callback",
 	passportCall("github", { session: false }),
-	(req, res) => res.json(req.user)
+	setCookie,
+	(req, res) => res.json({ message: "Github login successful" })
 );
 
 router.get("/github", passportCall("github", { scope: ["user:email"] }));
+
+router.get(
+	"/google/callback",
+	passportCall("google", { session: false }),
+	setCookie,
+	(req, res) => res.json({ message: "Google login successful" })
+);
+
+router.get("/google", passportCall("google", { scope: ["profile", "email"] }));
 
 // Ruta current
 router.get("/current", passportCall("jwt", { session: false }), (req, res) =>
@@ -23,12 +34,8 @@ router.post(
 		session: false,
 		failureRedirect: "/api/auth/failure"
 	}),
+	setCookie,
 	(req, res) => {
-		res.cookie("token", req.user.token, {
-			httpOnly: true,
-			sameSite: "strict",
-			signed: true
-		});
 		res.json({ message: "Login successful" });
 	}
 );

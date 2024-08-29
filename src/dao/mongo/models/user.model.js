@@ -31,8 +31,7 @@ const userSchema = new mongoose.Schema(
 			type: Number
 		},
 		password: {
-			type: String,
-			required: true
+			type: String
 		},
 		cart: {
 			type: mongoose.Schema.Types.ObjectId,
@@ -54,6 +53,7 @@ const userSchema = new mongoose.Schema(
 				ret.id = ret._id;
 				delete ret._id;
 				delete ret.__v;
+				delete ret.password;
 			}
 		}
 	}

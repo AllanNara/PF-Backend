@@ -1,6 +1,6 @@
 import { addProduct } from "../dao/fs/ProductManager.js";
 import { cartModel } from "../dao/mongo/models/cart.model.js";
-import { connectMongoDB } from "../dao/mongo/mongoose.js";
+import { connectMongoDB } from "../utils/mongoose.js";
 import fs from "fs/promises";
 import { join } from "path";
 import mongoose from "mongoose";

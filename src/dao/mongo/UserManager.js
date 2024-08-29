@@ -6,7 +6,7 @@ export async function createUser(userData) {
 		const user = await userModel.create(userData);
 		return user;
 	} catch (error) {
-		const warning = error?.errors?.email.message || error.message;
+		const warning = error?.errors?.email?.message || error?.message || error;
 		logger.verbose(warning);
 		return null;
 	}

@@ -1,22 +1,25 @@
+import logger from "../../lib/winston.js";
 import passport from "passport";
 
 export const passportCall = (strategy, options = {}) => {
 	return async (req, res, next) => {
 		passport.authenticate(strategy, options, (err, user, info, status) => {
-			if (!err) {
-				if (!user) {
-					return res
-						.clearCookie("token")
-						.status(status ?? 401)
-						.json({ error: info.messages ? info.messages : info.toString() });
-				}
-				req.user = user;
-				if (options.successRedirect)
-					return res.redirect(options.successRedirect);
-				return next();
+			if (err) return next({ ...err, status });
+
+			if (!user) {
+				logger.warn(info.message ?? "User not found", {
+					info: info.toString()
+				});
+				return res
+					.clearCookie("token")
+					.status(status ?? 401)
+					.json({ error: info.message ? info.message : info.toString() });
 			}
-			if (status) err.status = status;
-			next(err);
+
+			req.user = user;
+			return options.successRedirect
+				? res.redirect(options.successRedirect)
+				: next();
 		})(req, res, next);
 	};
 };
