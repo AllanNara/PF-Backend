@@ -1,10 +1,10 @@
-import { closeMongoDB, connectMongoDB } from "./src/utils/mongoose.js";
+import MongoSingleton from "./src/utils/mongoose.js";
 import config from "./config/index.js";
 import { httpServer } from "./src/app.js";
 import logger from "./lib/winston.js";
 
 httpServer.listen(config.PORT, async () => {
-	await connectMongoDB();
+	await MongoSingleton.connect();
 	logger.info(`Listening on port %d in mode %s`, config.PORT, config.NODE_ENV);
 });
 
@@ -15,7 +15,7 @@ httpServer.on("close", () => {
 process.on("SIGINT", () => {
 	console.info("\n");
 	httpServer.close();
-	closeMongoDB().then(() => {
+	MongoSingleton.close().then(() => {
 		config.NODE_ENV !== "production" && console.info("\nBye bye!\n");
 		process.exit(0);
 	});

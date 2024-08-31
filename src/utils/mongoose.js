@@ -2,33 +2,42 @@ import config from "../../config/index.js";
 import logger from "../../lib/winston.js";
 import mongoose from "mongoose";
 
-// Variable para almacenar la conexión singleton;
-let cachedConnection = null;
-
-export const connectMongoDB = async () => {
-	if (cachedConnection) {
-		return cachedConnection;
+class MongoSingleton {
+	constructor() {
+		if (!MongoSingleton.instance) {
+			MongoSingleton.instance = this;
+			this.cachedConnection = null;
+		}
+		return MongoSingleton.instance;
 	}
 
-	mongoose.connection
-		.on("connected", () => logger.info("MongoDB connected successfully"))
-		.on("disconnected", () => logger.info("MongoDB closed..."));
+	async connect() {
+		if (this.cachedConnection) {
+			return this.cachedConnection;
+		}
 
-	try {
-		const connection = await mongoose.connect(config.MONGO_URI);
-		cachedConnection = connection;
-		return connection;
-	} catch (error) {
-		logger.error("Error connecting to MongoDB", {
-			info: error.message || error
-		});
-		throw error;
-	}
-};
+		mongoose.connection
+			.on("connected", () => logger.info("MongoDB connected successfully"))
+			.on("disconnected", () => logger.info("MongoDB closed..."));
 
-export const closeMongoDB = async () => {
-	if (cachedConnection) {
-		await mongoose.disconnect();
-		cachedConnection = null;
+		try {
+			const connection = await mongoose.connect(config.MONGO_URI);
+			this.cachedConnection = connection;
+			return connection;
+		} catch (error) {
+			logger.error("Error connecting to MongoDB", {
+				info: error.message || error
+			});
+			throw error;
+		}
 	}
-};
+
+	async close() {
+		if (this.cachedConnection) {
+			await mongoose.disconnect();
+			this.cachedConnection = null;
+		}
+	}
+}
+
+export default new MongoSingleton();
