@@ -1,5 +1,7 @@
 import { ProductManager } from "../dao/factory.js";
 import config from "../../config/index.js";
+import { productUpload } from "../middlewares/multer.js";
+import validateProductFields from "../middlewares/validateProductFields.js";
 
 const {
 	addProduct,
@@ -9,7 +11,7 @@ const {
 	updateProduct
 } = ProductManager;
 
-export const getAllProducts = async (req, res, next) => {
+export const getAllProductsController = async (req, res, next) => {
 	try {
 		const { query: options } = req;
 		options.page = options.page ? parseInt(options.page) : 1;
@@ -36,33 +38,37 @@ export const getAllProducts = async (req, res, next) => {
 	}
 };
 
-export const createProduct = async (req, res, next) => {
-	try {
-		const newProduct = {
-			title: req.body.title,
-			description: req.body.description,
-			code: req.body.code,
-			price: req.body.price,
-			stock: req.body.stock,
-			category: req.body.category,
-			status: req.body.status,
-			thumbnails: req.files
-				? req.files.map((file) => `/uploads/products/${file.filename}`)
-				: []
-		};
+export const createProductController = [
+	productUpload.array("thumbnails"),
+	validateProductFields,
+	async (req, res, next) => {
+		try {
+			const newProduct = {
+				title: req.body.title,
+				description: req.body.description,
+				code: req.body.code,
+				price: req.body.price,
+				stock: req.body.stock,
+				category: req.body.category,
+				status: req.body.status,
+				thumbnails: req.files
+					? req.files.map((file) => `/uploads/products/${file.filename}`)
+					: []
+			};
 
-		const response = await addProduct(newProduct);
+			const response = await addProduct(newProduct);
 
-		if (!response) {
-			return res
-				.status(409)
-				.json({ status: "error", message: "Code already exists" });
+			if (!response) {
+				return res
+					.status(409)
+					.json({ status: "error", message: "Code already exists" });
+			}
+			res.json({ status: "success", payload: response });
+		} catch (error) {
+			next(error);
 		}
-		res.json({ status: "success", payload: response });
-	} catch (error) {
-		next(error);
 	}
-};
+];
 
 export const getProductByIdController = async (req, res, next) => {
 	try {
