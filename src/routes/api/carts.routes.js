@@ -1,132 +1,34 @@
 import {
+	addProductToCartController,
+	createCartController,
+	deleteCartController,
+	deleteCartProductController,
+	getCartByIdController,
+	updateCartEntireController,
+	updateCartProductController
+} from "../../controllers/carts.controllers.js";
+import {
 	checkMultiProducts,
 	checkProductExists
 } from "../../middlewares/checkProductExists.js";
-import { CartManager } from "../../dao/factory.js";
 import { Router } from "express";
 
 const router = Router();
-const {
-	addCart,
-	getCartById,
-	addProductToCart,
-	emptyCart,
-	updateEntireCart,
-	deleteCartProduct,
-	updateCartProduct
-} = CartManager;
 
-router.post("/", async (req, res, next) => {
-	try {
-		const newCart = await addCart();
-		res.json({ status: "success", payload: newCart });
-	} catch (error) {
-		next(error);
-	}
-});
+router.post("/", createCartController);
 
-router.get("/:cid", async (req, res, next) => {
-	try {
-		const cid = req.params.cid;
-		const cart = await getCartById(cid);
+router.get("/:cid", getCartByIdController);
 
-		if (!cart) {
-			return res.status(404).json({
-				status: "error",
-				message: `Cart with id '${cid}' not found`
-			});
-		}
-		res.json({ status: "success", payload: cart });
-	} catch (error) {
-		next(error);
-	}
-});
+router.put("/:cid", checkMultiProducts, updateCartEntireController);
 
-router.put("/:cid", checkMultiProducts, async (req, res, next) => {
-	try {
-		const cid = req.params.cid;
-		const products = req.body.products;
-		const result = await updateEntireCart(cid, products);
-		if (!result) {
-			return res.status(404).json({
-				status: "error",
-				message: `Cart with id '${cid}' not found`
-			});
-		}
-		res.json({ status: "success", payload: result });
-	} catch (error) {
-		next(error);
-	}
-});
-
-router.delete("/:cid", async (req, res, next) => {
-	try {
-		const cid = req.params.cid;
-		const result = await emptyCart(cid);
-		if (!result) {
-			return res.status(404).json({
-				status: "error",
-				message: `Cart with id '${cid}' not found`
-			});
-		}
-		res.json({ status: "success", payload: result });
-	} catch (error) {
-		next(error);
-	}
-});
+router.delete("/:cid", deleteCartController);
 
 router.use("/:cid/product/:pid", checkProductExists);
 
-router.post("/:cid/product/:pid", async (req, res, next) => {
-	try {
-		const { cid, pid } = req.params;
-		const response = await addProductToCart(cid, pid);
+router.post("/:cid/product/:pid", addProductToCartController);
 
-		if (!response) {
-			return res.status(404).json({
-				status: "error",
-				message: `Cart with id '${cid}' not found`
-			});
-		}
-		res.json({ status: "success", payload: response });
-	} catch (error) {
-		next(error);
-	}
-});
+router.put("/:cid/product/:pid", updateCartProductController);
 
-router.put("/:cid/product/:pid", async (req, res, next) => {
-	try {
-		const { cid, pid } = req.params;
-		const quantity = req.body.quantity;
-		const result = await updateCartProduct(cid, pid, quantity);
-
-		if (!result) {
-			return res.status(404).json({
-				status: "error",
-				message: `Cart with id '${cid}' not found`
-			});
-		}
-		res.json({ status: "success", payload: result });
-	} catch (error) {
-		next(error);
-	}
-});
-
-router.delete("/:cid/product/:pid", async (req, res, next) => {
-	try {
-		const { cid, pid } = req.params;
-		const result = await deleteCartProduct(cid, pid);
-
-		if (!result) {
-			return res.status(404).json({
-				status: "error",
-				message: `Cart with id '${cid}' not found`
-			});
-		}
-		res.json({ status: "success", payload: result });
-	} catch (error) {
-		next(error);
-	}
-});
+router.delete("/:cid/product/:pid", deleteCartProductController);
 
 export default router;
