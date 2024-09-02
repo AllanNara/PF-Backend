@@ -1,19 +1,28 @@
-import * as CartManagerFS from "./fs/CartManager.js";
-import * as CartManagerMongo from "./mongo/CartManager.js";
-import * as ProductManagerFS from "./fs/ProductManager.js";
-import * as ProductManagerMongo from "./mongo/ProductManager.js";
-import * as UserManagerMongo from "./mongo/UserManager.js";
 import config from "../../config/index.js";
+import { join } from "path";
+import logger from "../../lib/winston.js";
 
-let CartManager, ProductManager, UserManager;
+const Managers = {};
+const getManager = (entity) => Managers[entity];
 
-UserManager = UserManagerMongo;
-if (config.DAO === "mongo") {
-	CartManager = CartManagerMongo;
-	ProductManager = ProductManagerMongo;
-} else {
-	CartManager = CartManagerFS;
-	ProductManager = ProductManagerFS;
-}
+const importManager = async (entity) => {
+	try {
+		const path = join(import.meta.dirname, config.DAO, `${entity}Manager.js`);
+		const module = await import(path);
+		return module;
+	} catch (error) {
+		logger.error(`Error importing ${entity}Manager:`, {
+			error: error.message || error
+		});
+		throw error;
+	}
+};
+const loadManagers = async () => (
+	(Managers["Cart"] = await importManager("Cart")),
+	(Managers["Product"] = await importManager("Product")),
+	(Managers["User"] = await importManager("User"))
+);
 
-export { CartManager, ProductManager, UserManager };
+await loadManagers();
+
+export default getManager;
