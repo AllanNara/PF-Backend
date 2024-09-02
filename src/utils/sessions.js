@@ -31,11 +31,12 @@ switch (config.SESSION.STORE) {
 		});
 		break;
 	case "redis":
-		logger.warn("Redis store for sessions is not implemented yet");
+		logger.warn(
+			"Redis store for sessions is not implemented yet, please use a different store"
+		);
 		process.exit();
 	// eslint-disable-next-line
 	default: {
-		logger.warn("Session Storage not defined, MemoryStore initialized");
 		store = new MemoryStore();
 	}
 }

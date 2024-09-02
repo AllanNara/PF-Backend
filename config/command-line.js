@@ -9,11 +9,15 @@ program
 	.description("CLI to define project settings")
 	.version("1.0.0");
 
-const persistence = ["mongo", "fs"];
-const sessionStorage = ["redis", "mongo", "fs"];
+const persistence = ["mongo", "fs", "memory"];
+const sessionStorage = ["redis", "mongo", "fs", "memory"];
 program
-	.option("--dao <dao>", "DAO selected " + persistence, "fs")
-	.option("--sstorage <sstorage>", "Session storage selected " + sessionStorage)
+	.option("--dao <dao>", "DAO selected " + persistence, "memory")
+	.option(
+		"--sstorage <sstorage>",
+		"Session storage selected " + sessionStorage,
+		"memory"
+	)
 	.option("--debug", "Debug mode", false)
 	.option("--display", "Display Routes", false)
 	.action(actionCb)
@@ -29,8 +33,11 @@ function actionCb({ dao, debug, sstorage }) {
 		);
 		process.exit(1);
 	}
-	logger.verbose("DAO selected: %s", dao);
-	logger.verbose("Store selected: %s", sstorage || "none");
+	logger.verbose(`DAO selected: %s${dao === "memory" ? "(default)" : ""}`, dao);
+	logger.verbose(
+		`Store selected: %s${sstorage === "memory" ? "(default)" : ""}`,
+		sstorage
+	);
 
 	if (debug) {
 		logger.clear();
