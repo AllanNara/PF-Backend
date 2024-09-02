@@ -1,7 +1,9 @@
 import { Strategy as LocalStrategy } from "passport-local";
-import { UserManager } from "../../dao/factory.js";
 import { generateJwt } from "../../utils/jwt.js";
+import getManager from "../../dao/factory.js";
 import logger from "../../../lib/winston.js";
+
+const UserManager = getManager("User");
 
 export const localRegister = new LocalStrategy(
 	{

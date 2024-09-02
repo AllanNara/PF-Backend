@@ -1,7 +1,8 @@
-import { ProductManager } from "../dao/factory.js";
+import getManager from "../dao/factory.js";
 import multer from "multer";
 import path from "path";
 
+const ProductManager = getManager("Product");
 const createStorage = (dir) => {
 	return multer.diskStorage({
 		destination: async function (req, file, cb) {

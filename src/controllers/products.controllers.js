@@ -1,5 +1,5 @@
-import { ProductManager } from "../dao/factory.js";
 import config from "../../config/index.js";
+import getManager from "../dao/factory.js";
 import { productUpload } from "../middlewares/multer.js";
 import validateProductFields from "../middlewares/validateProductFields.js";
 
@@ -9,7 +9,7 @@ const {
 	getProductById,
 	getProducts,
 	updateProduct
-} = ProductManager;
+} = getManager("Product");
 
 export const getAllProductsController = async (req, res, next) => {
 	try {

@@ -1,7 +1,9 @@
 import { ExtractJwt, Strategy as JwtStrategy } from "passport-jwt";
-import { UserManager } from "../../dao/factory.js";
 import config from "../../../config/index.js";
+import getManager from "../../dao/factory.js";
 import logger from "../../../lib/winston.js";
+
+const UserManager = getManager("User");
 
 export const jwtLogin = new JwtStrategy(
 	{

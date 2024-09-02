@@ -1,4 +1,5 @@
-import { ProductManager } from "../dao/factory.js";
+import getManager from "../dao/factory.js";
+const ProductManager = getManager("Product");
 
 export const checkProductExists = async (req, res, next) => {
 	try {

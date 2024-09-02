@@ -1,6 +1,7 @@
-import { ProductManager } from "./dao/factory.js";
+import getManager from "./dao/factory.js";
 import logger from "../lib/winston.js";
 
+const ProductManager = getManager("Product");
 export default (io) => {
 	io.on("connection", async (socket) => {
 		logger.info(`New client connected: ${socket.id}`);

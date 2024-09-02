@@ -1,8 +1,10 @@
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
-import { UserManager } from "../../dao/factory.js";
 import config from "../../../config/index.js";
 import { generateJwt } from "../../utils/jwt.js";
+import getManager from "../../dao/factory.js";
 import logger from "../../../lib/winston.js";
+
+const UserManager = getManager("User");
 
 export const googleLogin = new GoogleStrategy(
 	{
