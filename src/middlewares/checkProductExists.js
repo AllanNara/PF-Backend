@@ -1,10 +1,10 @@
-import getManager from "../dao/factory.js";
-const ProductManager = getManager("Product");
+import getDAO from "../daos/factory.js";
+const ProductDAO = getDAO("Product");
 
 export const checkProductExists = async (req, res, next) => {
 	try {
 		const pid = req.params.pid;
-		const productFound = await ProductManager.getProductById(pid);
+		const productFound = await ProductDAO.getProductById(pid);
 
 		if (!productFound) {
 			return res.status(404).json({
@@ -25,7 +25,7 @@ export const checkMultiProducts = async (req, res, next) => {
 		const allProductIds = products.map((pr) => pr.product);
 
 		for (const identifier of allProductIds) {
-			const productFound = await ProductManager.getProductById(identifier);
+			const productFound = await ProductDAO.getProductById(identifier);
 			if (!productFound) {
 				return res.status(404).json({
 					status: "error",

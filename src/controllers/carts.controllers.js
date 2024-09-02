@@ -1,4 +1,4 @@
-import getManager from "../dao/factory.js";
+import getDAO from "../daos/factory.js";
 
 const {
 	addCart,
@@ -8,7 +8,7 @@ const {
 	updateEntireCart,
 	deleteCartProduct,
 	updateCartProduct
-} = getManager("Cart");
+} = getDAO("Cart");
 
 export const createCartController = async (req, res, next) => {
 	try {

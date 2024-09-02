@@ -1,14 +1,14 @@
-import getManager from "../dao/factory.js";
+import getDAO from "../daos/factory.js";
 import multer from "multer";
 import path from "path";
 
-const ProductManager = getManager("Product");
+const ProductDAO = getDAO("Product");
 const createStorage = (dir) => {
 	return multer.diskStorage({
 		destination: async function (req, file, cb) {
 			if (dir === "products") {
 				const productCode = req.body.code;
-				const codeRepeat = await ProductManager.checkCodeExists(productCode);
+				const codeRepeat = await ProductDAO.checkCodeExists(productCode);
 				if (codeRepeat)
 					return cb({ message: `Code ${productCode} already exists` });
 			}

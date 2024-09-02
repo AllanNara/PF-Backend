@@ -1,5 +1,5 @@
 import { readFile, writeFile } from "./ManagerFileSystem.js";
-import { getProductById } from "./ProductManager.js";
+import { getProductById } from "./product.dao.fs.js";
 import logger from "../../../lib/winston.js";
 
 const FILE_NAME = "carts.json";

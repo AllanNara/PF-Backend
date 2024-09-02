@@ -1,11 +1,11 @@
-import { addProduct } from "../dao/fs/ProductManager.js";
-import { cartModel } from "../dao/mongo/models/cart.model.js";
+import { addProduct } from "../daos/fs/ProductDAO.js";
+import { cartModel } from "../daos/mongo/models/cart.model.js";
 import { connectMongoDB } from "../utils/mongoose.js";
 import fs from "fs/promises";
 import { join } from "path";
 import mongoose from "mongoose";
-import { productModel } from "../dao/mongo/models/product.model.js";
-import { writeFile } from "../dao/fs/ManagerFileSystem.js";
+import { productModel } from "../daos/mongo/models/product.model.js";
+import { writeFile } from "../daos/fs/DAOFileSystem.js";
 
 const writeFileProducts = writeFile("products.json");
 

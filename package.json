@@ -81,7 +81,7 @@
   "nodemonConfig": {
     "ext": "js, json, yaml, handlebars, html, css",
     "ignore": [
-      "src/dao/**/*.json",
+      "src/daos/**/*.json",
       "src/sessions/*.json"
     ]
   },

@@ -1,10 +1,10 @@
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import config from "../../../config/index.js";
 import { generateJwt } from "../../utils/jwt.js";
-import getManager from "../../dao/factory.js";
+import getDAO from "../../daos/factory.js";
 import logger from "../../../lib/winston.js";
 
-const UserManager = getManager("User");
+const UserDAO = getDAO("User");
 
 export const googleLogin = new GoogleStrategy(
 	{
@@ -16,10 +16,10 @@ export const googleLogin = new GoogleStrategy(
 		try {
 			let token;
 			const email = profile._json.email;
-			const user = await UserManager.getUserByEmail(email);
+			const user = await UserDAO.getUserByEmail(email);
 			if (!user) {
 				const [first_name, last_name] = profile._json.name.split(" ");
-				const newUser = await UserManager.createUser({
+				const newUser = await UserDAO.createUser({
 					first_name,
 					last_name,
 					email,

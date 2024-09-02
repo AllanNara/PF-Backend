@@ -1,4 +1,4 @@
-import { getProductById } from "./ProductManager.js";
+import { getProductById } from "./product.dao.memory.js";
 import logger from "../../../lib/winston.js";
 
 const carts = [];
