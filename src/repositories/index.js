@@ -10,12 +10,3 @@ Repositories["User"] = UserRepository;
 Repositories["Product"] = ProductRepository;
 
 export default getRepository;
-
-// ProductRepository
-// .fetchProducts(queryParams);
-// .createProduct(obj);
-// .getProduct(pid);
-// .getProductsById(ids);
-// .updateProduct(pid, value);
-// .deleteProduct(pid);
-// .findProductByCode(obj.code);
