@@ -1,32 +1,16 @@
+import { ProductDTO } from "../dtos/product.dto.js";
+
 const validateProductFields = (req, res, next) => {
-	const { title, description, code, category } = req.body;
-	let price = req.body.price;
-	let stock = req.body.stock;
-
-	if (!title || !description || !code || !price || !stock || !category) {
-		req.logger.verbose("Missing fields", {
-			info: {
-				title: title || null,
-				description: description || null,
-				code: code || null,
-				price: price || null,
-				stock: stock || null,
-				category: category || null
-			}
-		});
-		return res.status(400).json({ status: "error", message: "Missing fields" });
+	try {
+		const thumbnails = req.files
+			? req.files.map((file) => `/uploads/products/${file.filename}`)
+			: [];
+		const formatterData = ProductDTO.generate({ ...req.body, thumbnails });
+		req.product = formatterData;
+		next();
+	} catch (error) {
+		next(error);
 	}
-
-	price = Number(price);
-	stock = Number(stock);
-
-	if (isNaN(stock) || isNaN(price)) {
-		req.logger.error("Invalid values 'stock' or 'price'");
-		return;
-	}
-
-	if (!req.body.status) req.body.status = true;
-	next();
 };
 
 export default validateProductFields;
