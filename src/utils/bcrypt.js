@@ -1,5 +1,6 @@
 import bcrypt from "bcrypt";
 import logger from "../../lib/winston.js";
+
 export const createHash = async (password) => {
 	try {
 		return await bcrypt.hash(password, 10);
