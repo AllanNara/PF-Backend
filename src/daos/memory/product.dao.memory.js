@@ -1,64 +1,36 @@
-import logger from "../../../lib/winston.js";
-import paginateDocs from "../../utils/paginate.js";
-
 const products = [];
 let currentId = 0;
 
-const checkCodeExists = (code) => products.some((pr) => pr.code === code);
-export function getProducts(options) {
-	return paginateDocs(products, options);
+export function readProducts() {
+	return products;
 }
 
-export function addProduct(product) {
-	const { title, description, code, price, stock, category } = product;
+export function readMultipleById(arrayIds) {
+	return products.filter((pr) => arrayIds.includes(pr.id));
+}
 
-	const status = product.status || true;
-	const thumbnails = product.thumbnails || [];
+export function readById(pid) {
+	return products.find((pr) => pr.id === pid);
+}
 
-	if (checkCodeExists(code, products)) return null;
-	const id = ++currentId;
+export function readByCode(code) {
+	return products.find((pr) => pr.code === code);
+}
 
+export function create(obj) {
 	const newProduct = {
-		id,
-		title,
-		description,
-		code,
-		price,
-		stock,
-		category,
-		status,
-		thumbnails
+		...obj,
+		id: ++currentId
 	};
-
 	products.push(newProduct);
 	return newProduct;
 }
 
-export function getProductById(pid) {
-	const productFound = products.find((pr) => pr.id === parseInt(pid));
-	if (!productFound) {
-		logger.verbose("Product '%s' not found", pid);
-		return null;
-	}
-	return productFound;
+export function updateById(pid, obj) {
+	return products.some((pr) => pr.id === pid && Object.assign(pr, obj));
 }
 
-export function updateProduct(pid, obj) {
-	const productIndex = products.findIndex((pr) => pr.id === parseInt(pid));
-	if (productIndex < 0) {
-		logger.verbose("Product '%s' not found", pid);
-		return null;
-	}
-	products[productIndex] = { ...products[productIndex], ...obj };
-	return true;
-}
-
-export function deleteProduct(pid) {
-	const productIndex = products.findIndex((pr) => pr.id === parseInt(pid));
-	if (productIndex < 0) {
-		logger.verbose("Product '%s' not found", pid);
-		return null;
-	}
-	products.splice(productIndex, 1);
-	return true;
+export function deleteById(pid) {
+	const index = products.findIndex((p) => p.id === pid);
+	return index !== -1 ? Boolean(products.splice(index, 1)) : false;
 }

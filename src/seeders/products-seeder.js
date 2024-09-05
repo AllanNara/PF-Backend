@@ -1,13 +1,14 @@
-import { addProduct } from "../daos/fs/ProductDAO.js";
+import MongoSingleton from "../utils/mongoose.js";
 import { cartModel } from "../daos/mongo/models/cart.model.js";
-import { connectMongoDB } from "../utils/mongoose.js";
 import fs from "fs/promises";
+import getDAO from "../daos/factory.js";
 import { join } from "path";
 import mongoose from "mongoose";
 import { productModel } from "../daos/mongo/models/product.model.js";
-import { writeFile } from "../daos/fs/DAOFileSystem.js";
+import { writeFile } from "../daos/fs/ManagerFileSystem.js";
 
 const writeFileProducts = writeFile("products.json");
+const { addProduct } = getDAO("Product");
 
 const readMockFile = async () => {
 	try {
@@ -39,7 +40,7 @@ export const seedProductsFile = async () => {
 export const seedProductsMongo = async () => {
 	console.info("Running seeders in mongo...");
 	try {
-		const conn = await connectMongoDB();
+		await MongoSingleton.connect();
 		// Limpiar la colección de productos y carritos
 		await productModel.deleteMany({});
 		await cartModel.deleteMany({});
@@ -48,7 +49,7 @@ export const seedProductsMongo = async () => {
 		await productModel.create(data);
 
 		console.info("MONGOOSE: Products seeding comlpeted!");
-		conn.close();
+		await MongoSingleton.close();
 	} catch (err) {
 		console.error("MONGOOSE: Seeding products failed\n", err);
 		mongoose.connection.close();
