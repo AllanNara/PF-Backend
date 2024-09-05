@@ -43,20 +43,7 @@ export const createProductController = [
 	validateProductFields,
 	async (req, res, next) => {
 		try {
-			const newProduct = {
-				title: req.body.title,
-				description: req.body.description,
-				code: req.body.code,
-				price: req.body.price,
-				stock: req.body.stock,
-				category: req.body.category,
-				status: req.body.status,
-				thumbnails: req.files
-					? req.files.map((file) => `/uploads/products/${file.filename}`)
-					: []
-			};
-
-			const response = await addProduct(newProduct);
+			const response = await addProduct(req.product);
 
 			if (!response) {
 				return res
