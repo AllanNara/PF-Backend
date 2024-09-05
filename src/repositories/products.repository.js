@@ -10,11 +10,11 @@ export async function fetchProducts(queryParams) {
 }
 
 export async function createProduct(obj) {
-	return await ProductDAO.create(obj);
+	return await ProductDAO.createProduct(obj);
 }
 
 export async function getProduct(pid) {
-	return await ProductDAO.readById(pid);
+	return await ProductDAO.readProduct(pid);
 }
 
 export async function getProductsById(ids) {
@@ -22,13 +22,13 @@ export async function getProductsById(ids) {
 }
 
 export async function updateProduct(pid, obj) {
-	return await ProductDAO.updateById(pid, obj);
+	return await ProductDAO.updateProduct(pid, obj);
 }
 
 export async function deleteProduct(pid) {
-	return await ProductDAO.deleteById(pid);
+	return await ProductDAO.deleteProduct(pid);
 }
 
 export async function findProductByCode(code) {
-	return Boolean(await ProductDAO.readByCode(code));
+	return Boolean(await ProductDAO.readProductByCode(code));
 }

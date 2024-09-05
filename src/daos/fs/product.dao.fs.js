@@ -16,19 +16,19 @@ export async function readMultipleById(arrayIds) {
 	return productsByIds;
 }
 
-export async function readById(pid) {
+export async function readProduct(pid) {
 	const products = await readProductsFile();
 	const found = products.find((pr) => pr.id === pid);
 	return found;
 }
 
-export async function readByCode(code) {
+export async function readProductByCode(code) {
 	const products = await readProductsFile();
 	const found = products.find((pr) => pr.code === code);
 	return found;
 }
 
-export async function create(obj) {
+export async function createProduct(obj) {
 	const products = await readProductsFile();
 	const newProduct = {
 		...obj,
@@ -39,17 +39,17 @@ export async function create(obj) {
 	return newProduct;
 }
 
-export async function updateById(pid, obj) {
+export async function updateProduct(pid, obj) {
 	const products = await readProductsFile();
 	const result = products.some((pr) => pr.id === pid && Object.assign(pr, obj));
-	await saveProducts(products);
+	result && (await saveProducts(products));
 	return result;
 }
 
-export async function deleteById(pid) {
+export async function deleteProduct(pid) {
 	const products = await readProductsFile();
 	const index = products.findIndex((p) => p.id === pid);
 	const result = index !== -1 ? Boolean(products.splice(index, 1)) : false;
-	await saveProducts(products);
+	index !== -1 && (await saveProducts(products));
 	return result;
 }
