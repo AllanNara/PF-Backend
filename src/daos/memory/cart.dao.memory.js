@@ -19,6 +19,6 @@ export function updateCartById(cid, obj) {
 }
 
 export function deleteCartById(cid) {
-	const index = carts.findIndex((c) => c.id === parseInt(cid));
+	const index = carts.findIndex((c) => c.id === cid);
 	return index !== -1 ? Boolean(carts.splice(index, 1)) : false;
 }

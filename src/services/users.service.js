@@ -16,11 +16,11 @@ export async function register(userData) {
 	}
 
 	const user = { ...userData, password: createHash(userData.password) };
-	return await UserRepository.createUser(user);
+	return await UserRepository.addUser(user);
 }
 
 export async function login(userData) {
-	const user = await UserRepository.getUserByEmail(userData.email);
+	const user = await UserRepository.searchUserByEmail(userData.email);
 	if (!user) {
 		logger.verbose("User '%s' not found", userData.email);
 		return null;
@@ -31,6 +31,10 @@ export async function login(userData) {
 		return null;
 	}
 	return user;
+}
+
+export async function getUser(uid) {
+	return await UserRepository.getUserById(uid);
 }
 
 export async function bringAllUsers() {
