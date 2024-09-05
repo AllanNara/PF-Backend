@@ -27,8 +27,8 @@ export async function fetchCart(cid) {
 	return cart;
 }
 
-export async function createCart(cart) {
-	return await CartDAO.create(cart);
+export async function createCart() {
+	return await CartDAO.create();
 }
 
 export async function replaceCartProducts(cid, productsIds) {
