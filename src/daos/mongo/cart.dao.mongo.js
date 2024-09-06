@@ -1,99 +1,38 @@
 import { cartModel } from "./models/cart.model.js";
-import logger from "../../../lib/winston.js";
 
-export async function addCart() {
-	const response = await cartModel.create({});
-	return response;
+export async function readCart(cid) {
+	return await cartModel.findById(cid);
 }
 
-export async function getCartById(cid) {
-	const doc = await cartModel.findById(cid).lean();
-	if (!doc) logger.verbose("Cart '%s' not found", cid);
-	doc.id = doc._id;
-	delete doc._id;
-	delete doc.__v;
-	return doc;
+export async function create() {
+	return await cartModel.create({});
 }
 
-export async function addProductToCart(cid, pid) {
-	let cartWithProduct = await cartModel.findOneAndUpdate(
-		{ _id: cid, "products.product": pid },
-		{ $inc: { "products.$.quantity": 1 } },
-		{ new: true }
+export async function updateCart(cid, obj) {
+	const updated = await cartModel.findByIdAndUpdate(cid, {
+		$set: { products: obj.products }
+	});
+	return Boolean(updated);
+}
+
+export async function deleteCart(cid) {
+	const deleted = await cartModel.findByIdAndDelete(cid);
+	return Boolean(deleted);
+}
+
+export async function updateItemCart(cid, pid, quantity) {
+	const updated = await cartModel.updateOne(
+		{ _id: cid, "products._id": pid },
+		{ $set: { "products.$.quantity": quantity } }
 	);
-
-	if (!cartWithProduct) {
-		cartWithProduct = await cartModel.findOneAndUpdate(
-			{ _id: cid },
-			{ $push: { products: { product: pid } } },
-			{ new: true }
-		);
-
-		if (!cartWithProduct) {
-			logger.verbose("Cart '%s' not found", cid);
-			return null;
-		}
-	}
-
-	return cartWithProduct;
+	return Boolean(updated);
 }
 
-export async function updateEntireCart(cid, products) {
-	const updatedCart = await cartModel.findByIdAndUpdate(
-		cid,
-		{ $set: { products } },
-		{ new: true }
-	);
-
-	if (!updatedCart) {
-		logger.verbose("Cart '%s' not found", cid);
-		return null;
-	}
-
-	return updatedCart;
-}
-
-export async function emptyCart(cid) {
-	const cartDoc = await cartModel.findById(cid);
-
-	if (!cartDoc) {
-		logger.verbose("Cart '%s' not found", cid);
-		return null;
-	}
-
-	cartDoc.products = [];
-	cartDoc.save();
-
-	return cartDoc;
-}
-
-export async function updateCartProduct(cid, pid, quantity) {
-	let cartWithProduct = await cartModel.findOneAndUpdate(
-		{ _id: cid, "products.product": pid },
-		{ $set: { "products.$.quantity": quantity } },
-		{ new: true }
-	);
-
-	if (!cartWithProduct) {
-		cartWithProduct = await cartModel.findOneAndUpdate(
-			{ _id: cid },
-			{ $addToSet: { products: { product: pid, quantity } } },
-			{ new: true }
-		);
-
-		if (!cartWithProduct) logger.verbose("Cart '%s' not found", cid);
-	}
-
-	return cartWithProduct;
-}
-
-export async function deleteCartProduct(cid, pid) {
-	const cartWithProduct = await cartModel.findOneAndUpdate(
+export async function deleteItemCart(cid, pid) {
+	const updated = await cartModel.updateOne(
 		{ _id: cid },
-		{ $pull: { products: { product: pid } } },
+		{ $pull: { products: { _id: pid } } },
 		{ new: true }
 	);
-
-	if (!cartWithProduct) logger.verbose("Cart '%s' not found", cid);
-	return cartWithProduct;
+	return Boolean(updated);
 }

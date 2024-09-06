@@ -3,61 +3,40 @@ import mongoosePaginate from "mongoose-paginate-v2";
 
 const productCollection = "products";
 
-const productSchema = new mongoose.Schema(
-	{
-		title: {
-			type: String,
-			required: true
-		},
-		description: {
-			type: String,
-			required: true
-		},
-		category: {
-			type: String,
-			required: true
-		},
-		code: {
-			type: String,
-			required: true,
-			validate: {
-				validator: async function (value) {
-					const duplicated = await mongoose.models.products.countDocuments({
-						code: value
-					});
-					return !duplicated;
-				},
-				message: ({ value }) => `Code '${value}' already in use`
-			}
-		},
-		price: {
-			type: Number,
-			required: true
-		},
-		stock: {
-			type: Number,
-			required: true
-		},
-		status: {
-			type: Boolean,
-			default: true
-		},
-		thumbnails: {
-			type: Array,
-			default: []
-		}
+const productSchema = new mongoose.Schema({
+	title: {
+		type: String,
+		required: true
 	},
-	{
-		toJSON: {
-			versionKey: false,
-			transform: function (doc, ret) {
-				ret.id = ret._id;
-				delete ret._id;
-				delete ret.__v;
-			}
-		}
+	description: {
+		type: String,
+		required: true
+	},
+	category: {
+		type: String,
+		required: true
+	},
+	code: {
+		type: String,
+		required: true
+	},
+	price: {
+		type: Number,
+		required: true
+	},
+	stock: {
+		type: Number,
+		required: true
+	},
+	status: {
+		type: Boolean,
+		default: true
+	},
+	thumbnails: {
+		type: Array,
+		default: []
 	}
-);
+});
 
 mongoosePaginate.paginate.options = {
 	customLabels: {

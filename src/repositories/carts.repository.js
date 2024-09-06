@@ -31,8 +31,8 @@ export async function createCart() {
 	return await CartDAO.create();
 }
 
-export async function replaceCartProducts(cid, productsIds) {
-	return await CartDAO.updateCartById(cid, { products: productsIds });
+export async function replaceCartProducts(cid, listProducts) {
+	return await CartDAO.updateCart(cid, { products: listProducts });
 }
 
 export async function addProductToCart(cid, pid) {
@@ -44,27 +44,13 @@ export async function addProductToCart(cid, pid) {
 	} else {
 		productExists.quantity++;
 	}
-	await CartDAO.updateCartById(cid, { products: cart.products });
+	await CartDAO.updateCart(cid, { products: cart.products });
 }
 
 export async function updateProductQuantity(cid, pid, quantity) {
-	const cart = await CartDAO.readCart(cid);
-	if (!cart) return null;
-	const productCart = cart.products.find((pr) => pr.product === pid);
-	if (!productCart) {
-		logger.warn("Product not found in cart", {
-			info: { pid }
-		});
-		return null;
-	}
-	productCart.quantity = quantity;
-	return await CartDAO.updateCartById(cid, { products: cart.products });
+	return await CartDAO.updateItemCart(cid, pid, quantity);
 }
 
 export async function deleteCartProduct(cid, pid) {
-	const cart = await CartDAO.readCart(cid);
-	if (!cart) return null;
-	return await CartDAO.updateCartById(cid, {
-		products: cart.products.filter((pr) => pr.product !== pid)
-	});
+	return await CartDAO.deleteItemCart(cid, pid);
 }

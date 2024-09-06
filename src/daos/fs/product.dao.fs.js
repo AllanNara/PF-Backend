@@ -1,92 +1,55 @@
 import { readFile, writeFile } from "./ManagerFileSystem.js";
-import logger from "../../../lib/winston.js";
-import paginateDocs from "../../utils/paginate.js";
 
 const FILE_NAME = "products.json";
 
 const readProductsFile = readFile(FILE_NAME);
 const saveProducts = writeFile(FILE_NAME);
 
-export async function checkCodeExists(code, data = []) {
-	let products = data;
-	if (!products.length) {
-		products = await readProductsFile();
-	}
-	const findCode = products.find((pr) => pr.code === code);
-	if (findCode) logger.verbose("Code '%s' already in use", code);
-	return Boolean(findCode);
+export async function readProducts() {
+	const products = await readProductsFile();
+	return products;
 }
 
-export async function getProducts(options) {
+export async function readMultipleById(arrayIds) {
 	const products = await readProductsFile();
-	return paginateDocs(products, options);
+	const productsByIds = products.map((pr) => arrayIds.includes(pr.id));
+	return productsByIds;
 }
 
-export async function addProduct(product) {
+export async function readProduct(pid) {
 	const products = await readProductsFile();
+	const found = products.find((pr) => pr.id === pid);
+	return found;
+}
 
-	const { title, description, code, price, stock, category } = product;
+export async function readProductByCode(code) {
+	const products = await readProductsFile();
+	const found = products.find((pr) => pr.code === code);
+	return found;
+}
 
-	const status = product.status || true;
-	const thumbnails = product.thumbnails || [];
-
-	if (await checkCodeExists(code, products)) return null;
-	const id = products.length ? products[products.length - 1].id + 1 : 1;
-
+export async function createProduct(obj) {
+	const products = await readProductsFile();
 	const newProduct = {
-		id,
-		title,
-		description,
-		code,
-		price,
-		stock,
-		category,
-		status,
-		thumbnails
+		...obj,
+		id: products.length ? products[products.length - 1].id + 1 : 1
 	};
-
 	products.push(newProduct);
 	await saveProducts(products);
 	return newProduct;
 }
 
-export async function getProductById(pid) {
-	const products = await readProductsFile();
-	const productFound = products.find((pr) => pr.id === parseInt(pid));
-
-	if (!productFound) {
-		logger.verbose("Product '%s' not found", pid);
-		return null;
-	}
-
-	return productFound;
-}
-
 export async function updateProduct(pid, obj) {
 	const products = await readProductsFile();
-	const productIndex = products.findIndex((pr) => pr.id === parseInt(pid));
-
-	if (productIndex < 0) {
-		logger.verbose("Product '%s' not found", pid);
-		return null;
-	}
-
-	if (obj.id) delete obj.id;
-	products[productIndex] = { ...products[productIndex], ...obj };
-	await saveProducts(products);
-	return products[productIndex];
+	const result = products.some((pr) => pr.id === pid && Object.assign(pr, obj));
+	result && (await saveProducts(products));
+	return result;
 }
 
 export async function deleteProduct(pid) {
 	const products = await readProductsFile();
-	const productIndex = products.findIndex((pr) => pr.id === parseInt(pid));
-
-	if (productIndex < 0) {
-		logger.verbose("Product '%s' not found", pid);
-		return null;
-	}
-
-	products.splice(productIndex, 1);
-	await saveProducts(products);
-	return true;
+	const index = products.findIndex((p) => p.id === pid);
+	const result = index !== -1 ? Boolean(products.splice(index, 1)) : false;
+	index !== -1 && (await saveProducts(products));
+	return result;
 }

@@ -9,15 +9,15 @@ export function readMultipleById(arrayIds) {
 	return products.filter((pr) => arrayIds.includes(pr.id));
 }
 
-export function readById(pid) {
+export function readProduct(pid) {
 	return products.find((pr) => pr.id === pid);
 }
 
-export function readByCode(code) {
+export function readProductByCode(code) {
 	return products.find((pr) => pr.code === code);
 }
 
-export function create(obj) {
+export function createProduct(obj) {
 	const newProduct = {
 		...obj,
 		id: ++currentId
@@ -26,11 +26,11 @@ export function create(obj) {
 	return newProduct;
 }
 
-export function updateById(pid, obj) {
+export function updateProduct(pid, obj) {
 	return products.some((pr) => pr.id === pid && Object.assign(pr, obj));
 }
 
-export function deleteById(pid) {
+export function deleteProduct(pid) {
 	const index = products.findIndex((p) => p.id === pid);
 	return index !== -1 ? Boolean(products.splice(index, 1)) : false;
 }

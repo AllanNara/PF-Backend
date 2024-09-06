@@ -2,33 +2,21 @@ import mongoose from "mongoose";
 
 const cartCollection = "carts";
 
-const cartSchema = new mongoose.Schema(
-	{
-		products: [
-			{
-				product: {
-					type: mongoose.Schema.Types.ObjectId,
-					ref: "products"
-				},
-				quantity: {
-					type: Number,
-					default: 1
-				},
-				_id: false
-			}
-		]
-	},
-	{
-		toJSON: {
-			versionKey: false,
-			transform: function (doc, ret) {
-				ret.id = ret._id;
-				delete ret._id;
-				delete ret.__v;
-			}
+const cartSchema = new mongoose.Schema({
+	products: [
+		{
+			product: {
+				type: mongoose.Schema.Types.ObjectId,
+				ref: "products"
+			},
+			quantity: {
+				type: Number,
+				default: 1
+			},
+			_id: false
 		}
-	}
-);
+	]
+});
 
 cartSchema.pre("findOne", function (next) {
 	this.populate("products.product");

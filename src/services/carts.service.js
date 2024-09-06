@@ -51,7 +51,6 @@ export async function addProductToCart(cid, pid) {
 		logger.verbose("Product to add to the cart '%s' does not exist", pid);
 		return null;
 	}
-
 	const updated = await CartRepository.addProductToCart(cid, pid);
 	if (!updated) logger.verbose("Cart '%s' not found", cid);
 	return updated;
@@ -59,12 +58,23 @@ export async function addProductToCart(cid, pid) {
 
 export async function modifyProductQuantity(cid, pid, q) {
 	const updated = await CartRepository.updateProductQuantity(cid, pid, q);
-	if (!updated) logger.verbose("Cart '%s' not found", cid);
+	if (!updated) {
+		logger.verbose(
+			"Cart '%s' not found or product '%s' not exists in cart",
+			cid,
+			pid
+		);
+	}
 	return updated;
 }
 
 export async function removeProductFromCart(cid, pid) {
-	const updated = await CartRepository.deleteCartProduct(cid, pid);
-	if (!updated) logger.verbose("Cart '%s' not found", cid);
-	return updated;
+	const removed = await CartRepository.deleteCartProduct(cid, pid);
+	if (!removed)
+		logger.verbose(
+			"Cart '%s' not found or product '%s' not exists in cart",
+			cid,
+			pid
+		);
+	return removed;
 }
