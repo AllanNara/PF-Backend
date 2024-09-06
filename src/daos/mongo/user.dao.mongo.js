@@ -1,35 +1,27 @@
-import logger from "../../../lib/winston.js";
 import { userModel } from "./models/user.model.js";
 
+export async function readUsers() {
+	return await userModel.find({});
+}
+
+export async function readByEmail(email) {
+	return await userModel.findOne({ email });
+}
+
+export async function readUserById(uid) {
+	return await userModel.findById(uid);
+}
+
 export async function createUser(userData) {
-	try {
-		const user = await userModel.create(userData);
-		return user;
-	} catch (error) {
-		const warning = error?.errors?.email?.message || error?.message || error;
-		logger.verbose(warning);
-		return null;
-	}
+	return (await userModel.create(userData)).id;
 }
 
-export async function getUserById(uid) {
-	try {
-		const user = await userModel.findById(uid);
-		return user;
-	} catch (error) {
-		if (error?.message.includes("Cast to ObjectId failed")) {
-			logger.verbose("User with ID'%s' not found", uid);
-			return null;
-		}
-		throw error;
-	}
-}
+// For next implementation (PUT, DELETE)
 
-export async function getUserByEmail(email) {
-	const user = await userModel.findOne({ email });
-	if (!user) {
-		logger.verbose("User '%s' not found", email);
-		return null;
-	}
-	return user;
-}
+// export async function updateUser(uid, data) {
+//	return await userModel.findByIdAndUpdate(uid, data, { new: true });
+// }
+
+// export async function deleteUser(uid) {
+//	return await userModel.findByIdAndDelete(uid);
+// }
