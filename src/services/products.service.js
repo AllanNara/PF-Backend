@@ -16,7 +16,7 @@ export async function generateProductPagination(queryParams, currentUrl) {
 	if (Object.prototype.hasOwnProperty.call(result, "payload")) {
 		Object.assign(pagination, result);
 	} else {
-		const { page, limit, sort, query } = queryParams;
+		const { page = 1, limit = 10, sort, query } = queryParams;
 		const offset = limit * (page - 1);
 		const processedData = filterAndSortProducts(result, { sort, query }).slice(
 			offset,

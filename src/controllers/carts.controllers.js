@@ -1,14 +1,14 @@
-import getDAO from "../daos/factory.js";
+import getService from "../services/index.js";
 
 const {
+	findCartDetails,
 	addCart,
-	getCartById,
-	addProductToCart,
+	modifiCart,
 	emptyCart,
-	updateEntireCart,
-	deleteCartProduct,
-	updateCartProduct
-} = getDAO("Cart");
+	addProductToCart,
+	modifiProductQuantity,
+	removeProductFromCart
+} = getService("Cart");
 
 export const createCartController = async (req, res, next) => {
 	try {
@@ -22,7 +22,7 @@ export const createCartController = async (req, res, next) => {
 export const getCartByIdController = async (req, res, next) => {
 	try {
 		const cid = req.params.cid;
-		const cart = await getCartById(cid);
+		const cart = await findCartDetails(cid);
 
 		if (!cart) {
 			return res.status(404).json({
@@ -40,7 +40,7 @@ export const updateCartEntireController = async (req, res, next) => {
 	try {
 		const cid = req.params.cid;
 		const products = req.body.products;
-		const result = await updateEntireCart(cid, products);
+		const result = await modifiCart(cid, products);
 		if (!result) {
 			return res.status(404).json({
 				status: "error",
@@ -90,7 +90,7 @@ export const updateCartProductController = async (req, res, next) => {
 	try {
 		const { cid, pid } = req.params;
 		const quantity = req.body.quantity;
-		const result = await updateCartProduct(cid, pid, quantity);
+		const result = await modifiProductQuantity(cid, pid, quantity);
 
 		if (!result) {
 			return res.status(404).json({
@@ -107,7 +107,7 @@ export const updateCartProductController = async (req, res, next) => {
 export const deleteCartProductController = async (req, res, next) => {
 	try {
 		const { cid, pid } = req.params;
-		const result = await deleteCartProduct(cid, pid);
+		const result = await removeProductFromCart(cid, pid);
 
 		if (!result) {
 			return res.status(404).json({
