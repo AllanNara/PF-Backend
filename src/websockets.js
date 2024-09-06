@@ -1,13 +1,14 @@
-import getDAO from "./daos/factory.js";
+import { ProductDTO } from "./dtos/product.dto.js";
+import getService from "./services/index.js";
 import logger from "../lib/winston.js";
 
-const ProductDAO = getDAO("Product");
+const ProductService = getService("Product");
 export default (io) => {
 	io.on("connection", async (socket) => {
 		logger.info(`New client connected: ${socket.id}`);
 
 		try {
-			const products = await ProductDAO.getProducts();
+			const products = await ProductService.bringProducts();
 			socket.emit("products", { products });
 		} catch (error) {
 			logger.error("Error on socket", { info: error.message || error });
@@ -16,14 +17,15 @@ export default (io) => {
 
 		socket.on("new-product", async (data) => {
 			try {
-				const result = await ProductDAO.addProduct(data.product);
+				const formatterData = ProductDTO.generate(data.product);
+				const result = await ProductService.addProduct(formatterData);
 				if (!result) {
 					socket.emit("error", {
 						error: true,
 						message: "Missing fields or code already in use"
 					});
 				}
-				const products = await ProductDAO.getProducts();
+				const products = await ProductService.bringProducts();
 				io.emit("products", { products });
 			} catch (error) {
 				logger.error("Error on socket", { info: error.message || error });
@@ -33,11 +35,11 @@ export default (io) => {
 
 		socket.on("delete-product", async (data) => {
 			try {
-				const result = await ProductDAO.deleteProduct(data.id);
+				const result = await ProductService.removeProduct(data.id);
 				if (!result) {
 					socket.emit("error", { error: true, message: "Product not found" });
 				}
-				const products = await ProductDAO.getProducts();
+				const products = await ProductService.bringProducts();
 				io.emit("products", { products });
 			} catch (error) {
 				logger.error("Error on socket", { info: error.message || error });
