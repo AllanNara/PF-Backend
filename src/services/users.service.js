@@ -37,6 +37,10 @@ export async function getUser(uid) {
 	return await UserRepository.getUserById(uid);
 }
 
+export async function checkEmailAvailable(email) {
+	return !(await UserRepository.searchUserByEmail(email));
+}
+
 export async function bringAllUsers() {
 	return await UserRepository.getAllUsers();
 }
