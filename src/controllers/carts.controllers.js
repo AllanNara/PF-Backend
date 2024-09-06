@@ -20,8 +20,9 @@ export const createCartController = async (req, res, next) => {
 };
 
 export const getCartByIdController = async (req, res, next) => {
+	const cid = req.params.cid;
+
 	try {
-		const cid = req.params.cid;
 		const cart = await findCartDetails(cid);
 
 		if (!cart) {
@@ -37,9 +38,10 @@ export const getCartByIdController = async (req, res, next) => {
 };
 
 export const updateCartEntireController = async (req, res, next) => {
+	const cid = req.params.cid;
+	const products = req.body.products;
+
 	try {
-		const cid = req.params.cid;
-		const products = req.body.products;
 		const result = await modifiCart(cid, products);
 		if (!result) {
 			return res.status(404).json({
@@ -54,8 +56,9 @@ export const updateCartEntireController = async (req, res, next) => {
 };
 
 export const deleteCartController = async (req, res, next) => {
+	const cid = req.params.cid;
+
 	try {
-		const cid = req.params.cid;
 		const result = await emptyCart(cid);
 		if (!result) {
 			return res.status(404).json({
@@ -70,8 +73,9 @@ export const deleteCartController = async (req, res, next) => {
 };
 
 export const addProductToCartController = async (req, res, next) => {
+	const { cid, pid } = req.params;
+
 	try {
-		const { cid, pid } = req.params;
 		const response = await addProductToCart(cid, pid);
 
 		if (!response) {
@@ -87,9 +91,10 @@ export const addProductToCartController = async (req, res, next) => {
 };
 
 export const updateCartProductController = async (req, res, next) => {
+	const { cid, pid } = req.params;
+	const quantity = req.body.quantity;
+
 	try {
-		const { cid, pid } = req.params;
-		const quantity = req.body.quantity;
 		const result = await modifiProductQuantity(cid, pid, quantity);
 
 		if (!result) {
@@ -105,8 +110,9 @@ export const updateCartProductController = async (req, res, next) => {
 };
 
 export const deleteCartProductController = async (req, res, next) => {
+	const { cid, pid } = req.params;
+
 	try {
-		const { cid, pid } = req.params;
 		const result = await removeProductFromCart(cid, pid);
 
 		if (!result) {

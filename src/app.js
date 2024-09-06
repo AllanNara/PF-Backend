@@ -9,7 +9,7 @@ import errorHandler from "./middlewares/errorHandler.js";
 import express from "express";
 import httpLogger from "./middlewares/httpLogger.js";
 import initializePassport from "./passport/index.js";
-import { loggers } from "./middlewares/loggers.js";
+import logger from "../lib/winston.js";
 import optionSession from "./utils/sessions.js";
 import passport from "passport";
 import path from "path";
@@ -27,7 +27,7 @@ app.set("view engine", "handlebars");
 app.set("views", path.resolve(import.meta.dirname, "views"));
 
 app.use(express.static(path.resolve(import.meta.dirname, "public")));
-app.use(loggers);
+app.use((req, res, next) => (req.logger = logger && next()));
 app.use(httpLogger);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

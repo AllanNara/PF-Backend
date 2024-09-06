@@ -11,9 +11,10 @@ const {
 } = getService("Product");
 
 export const getAllProductsController = async (req, res, next) => {
+	const options = req.query;
+	const currentUrl = req.originalUrl;
+
 	try {
-		const options = req.query;
-		const currentUrl = req.originalUrl;
 		const pagination = await generateProductPagination(options, currentUrl);
 		res.json({ status: "success", ...pagination });
 	} catch (error) {
@@ -22,12 +23,16 @@ export const getAllProductsController = async (req, res, next) => {
 };
 
 export const createProductController = [
-	productUpload.array("thumbnails"),
 	validateProductFields,
+	productUpload.array("thumbnails"),
 	async (req, res, next) => {
-		try {
-			const response = await addProduct(req.product);
+		const { product } = req;
+		product.thumbnails = req.files
+			? req.files.map((file) => `/uploads/products/${file.filename}`)
+			: [];
 
+		try {
+			const response = await addProduct(product);
 			if (!response) {
 				return res
 					.status(409)
@@ -41,8 +46,9 @@ export const createProductController = [
 ];
 
 export const getProductByIdController = async (req, res, next) => {
+	const pid = req.params.pid;
+
 	try {
-		const pid = req.params.pid;
 		const product = await findProduct(pid);
 		if (!product) {
 			return res.status(404).json({
@@ -57,8 +63,9 @@ export const getProductByIdController = async (req, res, next) => {
 };
 
 export const updateProductController = async (req, res, next) => {
+	const pid = req.params.pid;
+
 	try {
-		const pid = req.params.pid;
 		const updated = await modifyProduct(pid, req.body);
 
 		if (!updated) {
@@ -74,8 +81,9 @@ export const updateProductController = async (req, res, next) => {
 };
 
 export const deleteProductController = async (req, res, next) => {
+	const pid = req.params.pid;
+
 	try {
-		const pid = req.params.pid;
 		const deleted = await removeProduct(pid);
 
 		if (!deleted) {
