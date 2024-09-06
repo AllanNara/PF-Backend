@@ -37,3 +37,23 @@ export async function deleteCart(cid) {
 	index !== -1 && (await saveCarts(carts));
 	return result;
 }
+
+export async function updateItemCart(cid, pid, quantity) {
+	const carts = await readCartFile();
+	const cart = carts.find((cart) => cart.id === cid);
+	const product = cart.products.find((p) => p.id === pid);
+	if (!cart || !product) return false;
+	product.quantity = quantity;
+	await saveCarts(carts);
+	return true;
+}
+
+export async function deleteItemCart(cid, pid) {
+	const carts = await readCartFile();
+	const cart = carts.find((cart) => cart.id === cid);
+	const index = cart.products.findIndex((p) => p.id === pid);
+	if (index === -1) return false;
+	cart.products.splice(index, 1);
+	await saveCarts(carts);
+	return true;
+}
