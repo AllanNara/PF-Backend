@@ -1,3 +1,4 @@
+import { CartDTO } from "../dtos/cart.dto.js";
 import { ProductDatabaseDTO } from "../dtos/productDatabase.js";
 import getRepository from "../repositories/index.js";
 import logger from "../../lib/winston.js";
@@ -13,7 +14,7 @@ export async function findCartDetails(cid) {
 	}
 	if (cart.products.length)
 		cart.products = cart.products.map((product) => ProductDatabaseDTO(product));
-	return cart;
+	return CartDTO.generate(cart);
 }
 
 export async function addCart() {

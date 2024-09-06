@@ -7,16 +7,24 @@ import logger from "../../lib/winston.js";
 
 const ProductRepository = getRepository("Product");
 
-export async function generateProductPagination(queryParams, currentUrl) {
+export async function bringProducts() {
+	return await ProductRepository.fetchProducts();
+}
+
+export async function generateProductPagination(
+	paginate,
+	queryParams,
+	currentUrl
+) {
 	queryParams.sort = queryParams.sort && { price: queryParams.sort };
 	const pagination = {};
 
-	const result = await ProductRepository.fetchProducts(queryParams);
+	const result = await ProductRepository.fetchProducts(paginate, queryParams);
 
 	if (Object.prototype.hasOwnProperty.call(result, "payload")) {
 		Object.assign(pagination, result);
 	} else {
-		const { page, limit, sort, query } = queryParams;
+		const { page = 1, limit = 10, sort, query } = queryParams;
 		const offset = limit * (page - 1);
 		const processedData = filterAndSortProducts(result, { sort, query }).slice(
 			offset,
@@ -97,6 +105,10 @@ export async function removeProduct(pid) {
 		return null;
 	}
 	return removed;
+}
+
+export async function checkCodeAvailable(code) {
+	return !(await ProductRepository.findProductByCode(code));
 }
 
 function filterAndSortProducts(products, { sort, query }) {

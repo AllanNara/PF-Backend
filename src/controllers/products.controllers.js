@@ -1,50 +1,38 @@
-import config from "../../config/index.js";
-import getDAO from "../daos/factory.js";
+import getService from "../services/index.js";
 import { productUpload } from "../middlewares/multer.js";
 import validateProductFields from "../middlewares/validateProductFields.js";
 
 const {
+	generateProductPagination,
 	addProduct,
-	deleteProduct,
-	getProductById,
-	getProducts,
-	updateProduct
-} = getDAO("Product");
+	findProduct,
+	modifyProduct,
+	removeProduct
+} = getService("Product");
 
 export const getAllProductsController = async (req, res, next) => {
+	const options = req.query;
+	const currentUrl = req.originalUrl;
+
 	try {
-		const { query: options } = req;
-		options.page = options.page ? parseInt(options.page) : 1;
-		options.limit = options.limit ? parseInt(options.limit) : 10;
-
-		let response = await getProducts(options);
-
-		const buildLink = (page) => {
-			const url = new URL(`${config.ORIGIN}${req.originalUrl}`);
-			url.searchParams.set("page", page);
-			return url.href;
-		};
-
-		response.prevLink = response.hasPrevPage
-			? buildLink(response.prevPage)
-			: null;
-		response.nextLink = response.hasNextPage
-			? buildLink(response.nextPage)
-			: null;
-
-		res.json({ status: "success", ...response });
+		const pagination = await generateProductPagination(options, currentUrl);
+		res.json({ status: "success", ...pagination });
 	} catch (error) {
 		next(error);
 	}
 };
 
 export const createProductController = [
-	productUpload.array("thumbnails"),
 	validateProductFields,
+	productUpload.array("thumbnails"),
 	async (req, res, next) => {
-		try {
-			const response = await addProduct(req.product);
+		const { product } = req;
+		product.thumbnails = req.files
+			? req.files.map((file) => `/uploads/products/${file.filename}`)
+			: [];
 
+		try {
+			const response = await addProduct(product);
 			if (!response) {
 				return res
 					.status(409)
@@ -58,9 +46,10 @@ export const createProductController = [
 ];
 
 export const getProductByIdController = async (req, res, next) => {
+	const pid = req.params.pid;
+
 	try {
-		const pid = req.params.pid;
-		const product = await getProductById(pid);
+		const product = await findProduct(pid);
 		if (!product) {
 			return res.status(404).json({
 				status: "error",
@@ -74,9 +63,10 @@ export const getProductByIdController = async (req, res, next) => {
 };
 
 export const updateProductController = async (req, res, next) => {
+	const pid = req.params.pid;
+
 	try {
-		const pid = req.params.pid;
-		const updated = await updateProduct(pid, req.body);
+		const updated = await modifyProduct(pid, req.body);
 
 		if (!updated) {
 			return res.status(404).json({
@@ -91,9 +81,10 @@ export const updateProductController = async (req, res, next) => {
 };
 
 export const deleteProductController = async (req, res, next) => {
+	const pid = req.params.pid;
+
 	try {
-		const pid = req.params.pid;
-		const deleted = await deleteProduct(pid);
+		const deleted = await removeProduct(pid);
 
 		if (!deleted) {
 			return res.status(404).json({
