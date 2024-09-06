@@ -1,4 +1,5 @@
 import { Strategy as LocalStrategy } from "passport-local";
+import { UserDTO } from "../../dtos/user.dto.js";
 import { generateJwt } from "../../utils/jwt.js";
 import getService from "../../services/index.js";
 import logger from "../../../lib/winston.js";
@@ -15,11 +16,13 @@ export const localRegister = new LocalStrategy(
 			const { first_name, last_name, email, age } = req.body;
 
 			const user = await UserService.register({
-				first_name,
-				last_name,
-				email,
-				password,
-				age
+				...UserDTO.generate({
+					first_name,
+					last_name,
+					email,
+					age
+				}),
+				password
 			});
 
 			done(null, user);

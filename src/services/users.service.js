@@ -1,4 +1,5 @@
 import { createHash, isValidPassword } from "../utils/bcrypt.js";
+import { UserDTO } from "../dtos/user.dto.js";
 import getRepository from "../repositories/index.js";
 import logger from "../../lib/winston.js";
 
@@ -30,11 +31,11 @@ export async function login(userData) {
 		logger.verbose("Invalid credentials");
 		return null;
 	}
-	return user;
+	return UserDTO.generate(user);
 }
 
 export async function getUser(uid) {
-	return await UserRepository.getUserById(uid);
+	return UserDTO.generate(await UserRepository.getUserById(uid));
 }
 
 export async function checkEmailAvailable(email) {
@@ -42,5 +43,6 @@ export async function checkEmailAvailable(email) {
 }
 
 export async function bringAllUsers() {
-	return await UserRepository.getAllUsers();
+	const allUsers = await UserRepository.getAllUsers();
+	return allUsers.map((user) => UserDTO.generate(user));
 }

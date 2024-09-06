@@ -19,6 +19,7 @@ export const githubLogin = new GithubStrategy(
 			const user = await UserService.checkEmailAvailable(email);
 			if (!user) {
 				const [first_name, last_name] = profile._json.name.split(" ");
+
 				const newUser = await UserService.register({
 					first_name,
 					last_name,
@@ -26,6 +27,7 @@ export const githubLogin = new GithubStrategy(
 					age: null,
 					password: null
 				});
+
 				token = await generateJwt(newUser);
 			} else {
 				token = await generateJwt(user);
