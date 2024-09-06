@@ -1,9 +1,9 @@
 import { ExtractJwt, Strategy as JwtStrategy } from "passport-jwt";
 import config from "../../../config/index.js";
-import getDAO from "../../daos/factory.js";
+import getService from "../../services/index.js";
 import logger from "../../../lib/winston.js";
 
-const UserDAO = getDAO("User");
+const UserService = getService("User");
 
 export const jwtLogin = new JwtStrategy(
 	{
@@ -12,7 +12,7 @@ export const jwtLogin = new JwtStrategy(
 	},
 	async (jwtPayload, done) => {
 		try {
-			const user = await UserDAO.getUserById(jwtPayload.data.uid);
+			const user = await UserService.getUser(jwtPayload.data.uid);
 			if (!user) {
 				logger.verbose("User not found");
 				return done(null, false, { message: "User not found" });
