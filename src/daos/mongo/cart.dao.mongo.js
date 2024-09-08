@@ -1,5 +1,13 @@
 import { cartModel } from "./models/cart.model.js";
 
+export async function readAndPopulateCart(cid) {
+	const cartDetail = await cartModel
+		.findById(cid)
+		.populate("products.product")
+		.lean();
+	return cartDetail.toObject();
+}
+
 export async function readCart(cid) {
 	return await cartModel.findById(cid);
 }
@@ -21,18 +29,17 @@ export async function deleteCart(cid) {
 }
 
 export async function updateItemCart(cid, pid, quantity) {
-	const updated = await cartModel.updateOne(
-		{ _id: cid, "products._id": pid },
+	const updated = await cartModel.findOneAndUpdate(
+		{ _id: cid, "products.product": pid },
 		{ $set: { "products.$.quantity": quantity } }
 	);
 	return Boolean(updated);
 }
 
 export async function deleteItemCart(cid, pid) {
-	const updated = await cartModel.updateOne(
-		{ _id: cid },
-		{ $pull: { products: { _id: pid } } },
-		{ new: true }
+	const updated = await cartModel.findOneAndUpdate(
+		{ _id: cid, "products.product": pid },
+		{ $pull: { products: { product: pid } } }
 	);
 	return Boolean(updated);
 }

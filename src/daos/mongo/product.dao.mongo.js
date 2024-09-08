@@ -11,19 +11,22 @@ export async function readProducts() {
 }
 
 export async function readMultipleById(arrayIds) {
-	return await productModel.find({ id: { $in: arrayIds } });
+	return await productModel.find({ _id: { $in: arrayIds } });
 }
 
 export async function readProduct(pid) {
-	return await productModel.findById(pid);
+	const result = await productModel.findById(pid);
+	return result ? result.toObject() : result;
 }
 
 export async function readProductByCode(code) {
-	return await productModel.findOne({ where: { code } });
+	const produce = await productModel.findOne({ code });
+	return produce;
 }
 
 export async function createProduct(obj) {
-	return await productModel.create(obj);
+	const newProduct = (await productModel.create(obj)).toObject();
+	return newProduct;
 }
 
 export async function updateProduct(pid, obj) {
