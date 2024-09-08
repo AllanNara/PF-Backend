@@ -39,10 +39,10 @@ export const localLogin = new LocalStrategy(
 		try {
 			const user = await UserService.login({ email: userEmail, password });
 
-			if (!user) done(null, false, { message: "Invalid credentials" });
+			if (!user) return done(null, false, { message: "Invalid credentials" });
 
 			const token = await generateJwt(user);
-			return done(null, { token });
+			done(null, { token });
 		} catch (error) {
 			logger.warn("Error login user", { info: error.message ?? error });
 			done(error);

@@ -16,7 +16,7 @@ export const googleLogin = new GoogleStrategy(
 		try {
 			let token;
 			const email = profile._json.email;
-			const user = await UserService.checkEmailAvailable(email);
+			const user = await UserService.logWithOAuth(email);
 			if (!user) {
 				const [first_name, last_name] = profile._json.name.split(" ");
 				const newUser = await UserService.register({
