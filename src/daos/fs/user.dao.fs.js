@@ -17,7 +17,7 @@ export async function readByEmail(email) {
 
 export async function readUserById(uid) {
 	const users = await readUsersFile();
-	return users.find((user) => user.uid === uid);
+	return users.find((user) => user.id === uid);
 }
 
 export async function createUser(userData) {

@@ -11,8 +11,11 @@ export async function readProducts() {
 }
 
 export async function readMultipleById(arrayIds) {
+	const arrayType = typeof arrayIds[0];
 	const products = await readProductsFile();
-	const productsByIds = products.map((pr) => arrayIds.includes(pr.id));
+	const productsByIds = products.filter((pr) => {
+		return arrayIds.includes(arrayType === "string" ? pr.id.toString() : pr.id);
+	});
 	return productsByIds;
 }
 

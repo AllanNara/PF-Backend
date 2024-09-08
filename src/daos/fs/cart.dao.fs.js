@@ -10,7 +10,7 @@ export async function readCart(cid) {
 	return carts.find((cart) => cart.id === cid);
 }
 
-export async function createCart() {
+export async function create() {
 	const carts = await readCartFile();
 	const newCart = {
 		id: carts.length ? carts[carts.length - 1].id + 1 : 1,
@@ -22,6 +22,7 @@ export async function createCart() {
 }
 
 export async function updateCart(cid, obj) {
+	obj.products.forEach((p) => (p.product = parseInt(p.product)));
 	const carts = await readCartFile();
 	const result = carts.some(
 		(cart) => cart.id === cid && Object.assign(cart, obj)
@@ -41,7 +42,7 @@ export async function deleteCart(cid) {
 export async function updateItemCart(cid, pid, quantity) {
 	const carts = await readCartFile();
 	const cart = carts.find((cart) => cart.id === cid);
-	const product = cart.products.find((p) => p.id === pid);
+	const product = cart.products.find((p) => p.product === pid);
 	if (!cart || !product) return false;
 	product.quantity = quantity;
 	await saveCarts(carts);
@@ -51,7 +52,7 @@ export async function updateItemCart(cid, pid, quantity) {
 export async function deleteItemCart(cid, pid) {
 	const carts = await readCartFile();
 	const cart = carts.find((cart) => cart.id === cid);
-	const index = cart.products.findIndex((p) => p.id === pid);
+	const index = cart.products.findIndex((p) => p.product === pid);
 	if (index === -1) return false;
 	cart.products.splice(index, 1);
 	await saveCarts(carts);
