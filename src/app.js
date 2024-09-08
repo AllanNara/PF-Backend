@@ -27,7 +27,10 @@ app.set("view engine", "handlebars");
 app.set("views", path.resolve(import.meta.dirname, "views"));
 
 app.use(express.static(path.resolve(import.meta.dirname, "public")));
-app.use((req, res, next) => (req.logger = logger && next()));
+app.use((req, res, next) => {
+	req.logger = logger;
+	next();
+});
 app.use(httpLogger);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -43,6 +46,7 @@ app.get("/api", swaggerUi.setup(swaggerSpec));
 app.get("/redoc", (req, res) =>
 	res.sendFile(path.resolve(process.cwd(), "docs", "redoc-static.html"))
 );
+
 app.use("/", allRoutes);
 app.use(errorHandler);
 
