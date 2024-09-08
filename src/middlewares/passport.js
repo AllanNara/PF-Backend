@@ -5,10 +5,9 @@ export const passportCall = (strategy, options = {}) => {
 	return async (req, res, next) => {
 		passport.authenticate(strategy, options, (err, user, info, status) => {
 			if (err) return next({ ...err, status });
-
 			if (!user) {
 				logger.warn(info.message ?? "User not found", {
-					info: info.toString()
+					info: JSON.stringify(info)
 				});
 				return res
 					.clearCookie("token")
