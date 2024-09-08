@@ -6,7 +6,11 @@ export function readProducts() {
 }
 
 export function readMultipleById(arrayIds) {
-	return products.filter((pr) => arrayIds.includes(pr.id));
+	const arrayType = typeof arrayIds[0];
+	const productsByIds = products.filter((pr) => {
+		return arrayIds.includes(arrayType === "string" ? pr.id.toString() : pr.id);
+	});
+	return productsByIds;
 }
 
 export function readProduct(pid) {

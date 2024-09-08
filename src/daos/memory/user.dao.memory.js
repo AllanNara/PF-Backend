@@ -10,7 +10,7 @@ export function readByEmail(email) {
 }
 
 export function readUserById(uid) {
-	return users.find((user) => user.uid === uid);
+	return users.find((user) => user.id === uid);
 }
 
 export function createUser(userData) {
