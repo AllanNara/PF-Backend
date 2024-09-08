@@ -50,5 +50,7 @@ mongoosePaginate.paginate.options = {
 };
 
 productSchema.plugin(mongoosePaginate);
+productSchema.set("toObject", { virtuals: true });
+productSchema.set("toJSON", { virtuals: true });
 
 export const productModel = mongoose.model(productCollection, productSchema);

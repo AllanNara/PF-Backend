@@ -26,9 +26,11 @@ const userSchema = new mongoose.Schema({
 		ref: "carts"
 	},
 	role: {
-		type: String,
-		default: "USER"
+		type: String
 	}
 });
+
+userSchema.set("toObject", { virtuals: true });
+userSchema.set("toJSON", { virtuals: true });
 
 export const userModel = mongoose.model(userCollection, userSchema);
