@@ -4,8 +4,8 @@ const schemaProduct = Joi.object({
 	title: Joi.string().min(1).required(),
 	description: Joi.string().min(1).required(),
 	code: Joi.string().min(1).required(),
-	price: Joi.number().greater(0).required(),
-	stock: Joi.number().greater(0).required(),
+	price: Joi.number().greater(1).required(),
+	stock: Joi.number().positive().allow(0).required(),
 	category: Joi.string().min(1).required(),
 	status: Joi.boolean().default(true),
 	thumbnails: Joi.array().items(Joi.string())
@@ -27,7 +27,9 @@ export class ProductDTO {
 		const { error, value } = schemaProduct.validate(data, {
 			stripUnknown: true
 		});
-		if (error) throw new Error(`ProductDTO Validation error: ${error.message}`);
+		if (error) {
+			throw new Error(`ProductDTO Validation error: ${error.message}`);
+		}
 		return new ProductDTO(value);
 	}
 }

@@ -12,11 +12,6 @@ export class ProductDatabaseDTO {
 	}
 
 	static generate(data) {
-		if (data._id) {
-			data.id = data._id;
-			delete data._id;
-		}
-
 		const { id, ...product } = data;
 		const productDTO = ProductDTO.generate(product);
 

@@ -12,12 +12,9 @@ export class CartDTO {
 	}
 
 	static generate(data) {
-		if (data._id) {
-			data.id = data._id;
-			delete data._id;
-		}
-
-		const { error, value } = schemaCart.validate(data, { stripUnknown: true });
+		const { error, value } = schemaCart.validate(data, {
+			stripUnknown: true
+		});
 		if (error) {
 			throw new Error(`CartDTO Validation error: ${error.message}`);
 		}

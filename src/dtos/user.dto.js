@@ -7,7 +7,7 @@ const schemaUser = Joi.object({
 	email: Joi.string().email().required(),
 	age: Joi.number().positive().allow(null),
 	cart: Joi.alternatives()
-		.try(Joi.number().integer().positive(), Joi.string())
+		.try(Joi.number().integer().positive(), Joi.string(), Joi.object())
 		.when("id", {
 			is: Joi.exist(),
 			then: Joi.required()
@@ -20,6 +20,7 @@ const schemaUser = Joi.object({
 
 export class UserDTO {
 	constructor(value) {
+		this.id = value.id;
 		this.first_name = value.first_name;
 		this.last_name = value.last_name;
 		this.email = value.email;
@@ -29,11 +30,6 @@ export class UserDTO {
 	}
 
 	static generate(data) {
-		if (data._id) {
-			data.id = data._id;
-			delete data._id;
-		}
-
 		const { error, value } = schemaUser.validate(data, { stripUnknown: true });
 		if (error) {
 			throw new Error(`UserDTO Validation error: ${error.message}`);
