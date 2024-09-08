@@ -11,20 +11,19 @@ export async function bringProducts() {
 	return await ProductRepository.fetchProducts();
 }
 
-export async function generateProductPagination(
-	paginate,
-	queryParams,
-	currentUrl
-) {
+export async function generateProductPagination(queryParams, currentUrl) {
 	queryParams.sort = queryParams.sort && { price: queryParams.sort };
 	const pagination = {};
 
-	const result = await ProductRepository.fetchProducts(paginate, queryParams);
+	const result = await ProductRepository.fetchProducts(true, queryParams);
 
 	if (Object.prototype.hasOwnProperty.call(result, "payload")) {
 		Object.assign(pagination, result);
 	} else {
-		const { page = 1, limit = 10, sort, query } = queryParams;
+		let { page, limit, sort, query } = queryParams;
+		page = page ? parseInt(page) : 1;
+		limit = limit ? parseInt(limit) : 10;
+
 		const offset = limit * (page - 1);
 		const processedData = filterAndSortProducts(result, { sort, query }).slice(
 			offset,
@@ -32,13 +31,15 @@ export async function generateProductPagination(
 		);
 
 		pagination.payload = processedData;
-		pagination.totalPages = Math.ceil(pagination.payload.length / limit);
+		pagination.page = page;
+		pagination.totalPages = result.length
+			? Math.ceil(result.length / limit)
+			: 1;
 		pagination.hasPrevPage = page > 1;
 		pagination.hasNextPage = page < pagination.totalPages;
 		pagination.prevPage = pagination.hasPrevPage ? page - 1 : null;
 		pagination.nextPage = pagination.hasNextPage ? page + 1 : null;
 	}
-
 	const buildLink = (page) => {
 		if (page === null) return page;
 		const url = new URL(`${config.ORIGIN}${currentUrl}`);
@@ -48,7 +49,9 @@ export async function generateProductPagination(
 
 	pagination.prevLink = buildLink(pagination.prevPage);
 	pagination.nextLink = buildLink(pagination.nextPage);
-
+	pagination.payload = pagination.payload.map((product) =>
+		ProductDatabaseDTO.generate(product)
+	);
 	return PaginationDTO.generate(pagination);
 }
 
@@ -78,7 +81,7 @@ export async function modifyProduct(pid, product) {
 		title: Joi.string().min(2),
 		description: Joi.string(),
 		price: Joi.number().greater(0),
-		stock: Joi.integer().positive().allow(0),
+		stock: Joi.number().integer().positive().allow(0),
 		category: Joi.string().min(1),
 		status: Joi.boolean(),
 		thumbnails: Joi.array().items(Joi.string())
@@ -124,7 +127,7 @@ function filterAndSortProducts(products, { sort, query }) {
 	}
 
 	if (sort) {
-		filtered.payload.sort((a, b) =>
+		filtered.sort((a, b) =>
 			sort.price === "asc"
 				? a.price - b.price
 				: sort.price === "desc"

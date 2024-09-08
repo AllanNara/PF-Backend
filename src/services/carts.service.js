@@ -1,5 +1,5 @@
 import { CartDTO } from "../dtos/cart.dto.js";
-import { ProductDatabaseDTO } from "../dtos/productDatabase.js";
+import { ProductDatabaseDTO } from "../dtos/productDatabase.dto.js";
 import getRepository from "../repositories/index.js";
 import logger from "../../lib/winston.js";
 
@@ -8,26 +8,38 @@ const ProductRepository = getRepository("Product");
 
 export async function findCartDetails(cid) {
 	const cart = await CartRepository.fetchCart(cid);
+
 	if (!cart) {
 		logger.verbose("Cart '%s' not found", cid);
 		return null;
 	}
-	if (cart.products.length)
-		cart.products = cart.products.map((product) => ProductDatabaseDTO(product));
+	if (cart.products.length) {
+		cart.products = cart.products.map((item) => {
+			return {
+				quantity: item.quantity,
+				product: ProductDatabaseDTO.generate(item.product)
+			};
+		});
+	}
+
 	return CartDTO.generate(cart);
 }
 
 export async function addCart() {
-	return await CartRepository.createCart();
+	return CartDTO.generate(await CartRepository.createCart());
 }
 
 export async function modifyCart(cid, list) {
 	const searchProducts = await ProductRepository.getProductsById(
 		list.map((item) => item.product)
 	);
-	const productSet = new Set(searchProducts.map((pr) => pr.id));
-	const products = list.map((item) => {
-		if (productSet.has(item.product)) return item;
+	const productSet = new Set(searchProducts.map((pr) => pr.id.toString()));
+
+	const products = list.filter((item) => {
+		if (productSet.has(item.product)) {
+			productSet.delete(item.product);
+			return item;
+		}
 		logger.warn("The cart to add contains a non-existing product", {
 			info: { pid: item.product }
 		});
@@ -47,7 +59,7 @@ export async function emptyCart(cid) {
 }
 
 export async function addProductToCart(cid, pid) {
-	const productExists = await ProductRepository.getProductById(pid);
+	const productExists = await ProductRepository.getProduct(pid);
 	if (!productExists) {
 		logger.verbose("Product to add to the cart '%s' does not exist", pid);
 		return null;
