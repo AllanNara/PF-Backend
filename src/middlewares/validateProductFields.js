@@ -1,4 +1,5 @@
 import { ProductDTO } from "../dtos/product.dto.js";
+import deleteFilesByPath from "../utils/deleteFiles.js";
 
 const validateProductFields = (req, res, next) => {
 	try {
@@ -6,7 +7,10 @@ const validateProductFields = (req, res, next) => {
 		req.product = formatterData;
 		next();
 	} catch (error) {
-		next(error);
+		if (req.files) {
+			deleteFilesByPath(req.files, "products");
+		}
+		next({ ...error, status: 400, message: error.message });
 	}
 };
 

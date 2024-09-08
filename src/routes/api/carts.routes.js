@@ -8,9 +8,12 @@ import {
 	updateCartProductController
 } from "../../controllers/carts.controllers.js";
 import { Router } from "express";
+import { parseParams } from "../../middlewares/parseParams.js";
 
 const router = Router();
 
+router.param("cid", parseParams);
+router.param("pid", parseParams);
 router.post("/", createCartController);
 router.get("/:cid", getCartByIdController);
 router.put("/:cid", updateCartEntireController);

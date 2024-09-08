@@ -1,14 +1,12 @@
-export const parseParams = (req, res, next) => {
-	const paramsToCheck = ["uid", "cid", "pid"];
+import mongoose from "mongoose";
 
-	paramsToCheck.forEach((param) => {
-		if (req.params[param]) {
-			const parsedValue = parseInt(req.params[param], 10);
-			if (!isNaN(parsedValue)) {
-				req.params[param] = parsedValue;
-			}
-		}
-	});
-
-	next();
+export const parseParams = (req, res, next, value, name) => {
+	if (/^\d+$/.test(value)) {
+		const parsedValue = parseInt(value, 10);
+		req.params[name] = parsedValue;
+		return next();
+	} else if (mongoose.Types.ObjectId.isValid(value)) {
+		return next();
+	}
+	res.status(400).send({ error: "Invalid ID format", param: name, value });
 };

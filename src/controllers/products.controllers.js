@@ -1,3 +1,4 @@
+import deleteFilesByPath from "../utils/deleteFiles.js";
 import getService from "../services/index.js";
 import { productUpload } from "../middlewares/multer.js";
 import validateProductFields from "../middlewares/validateProductFields.js";
@@ -16,15 +17,15 @@ export const getAllProductsController = async (req, res, next) => {
 
 	try {
 		const pagination = await generateProductPagination(options, currentUrl);
-		res.json({ status: "success", ...pagination });
+		res.json({ status: "success", pagination });
 	} catch (error) {
 		next(error);
 	}
 };
 
 export const createProductController = [
-	validateProductFields,
 	productUpload.array("thumbnails"),
+	validateProductFields,
 	async (req, res, next) => {
 		const { product } = req;
 		product.thumbnails = req.files
@@ -34,12 +35,14 @@ export const createProductController = [
 		try {
 			const response = await addProduct(product);
 			if (!response) {
+				deleteFilesByPath(req.files, "products");
 				return res
 					.status(409)
 					.json({ status: "error", message: "Code already exists" });
 			}
 			res.json({ status: "success", payload: response });
 		} catch (error) {
+			deleteFilesByPath(req.files, "products");
 			next(error);
 		}
 	}
