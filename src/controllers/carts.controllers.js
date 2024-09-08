@@ -3,10 +3,10 @@ import getService from "../services/index.js";
 const {
 	findCartDetails,
 	addCart,
-	modifiCart,
+	modifyCart,
 	emptyCart,
 	addProductToCart,
-	modifiProductQuantity,
+	modifyProductQuantity,
 	removeProductFromCart
 } = getService("Cart");
 
@@ -42,7 +42,7 @@ export const updateCartEntireController = async (req, res, next) => {
 	const products = req.body.products;
 
 	try {
-		const result = await modifiCart(cid, products);
+		const result = await modifyCart(cid, products);
 		if (!result) {
 			return res.status(404).json({
 				status: "error",
@@ -81,7 +81,7 @@ export const addProductToCartController = async (req, res, next) => {
 		if (!response) {
 			return res.status(404).json({
 				status: "error",
-				message: `Cart with id '${cid}' not found`
+				message: `Cart '${cid}' or product '${pid}' not found`
 			});
 		}
 		res.json({ status: "success", payload: response });
@@ -95,12 +95,12 @@ export const updateCartProductController = async (req, res, next) => {
 	const quantity = req.body.quantity;
 
 	try {
-		const result = await modifiProductQuantity(cid, pid, quantity);
+		const result = await modifyProductQuantity(cid, pid, quantity);
 
 		if (!result) {
 			return res.status(404).json({
 				status: "error",
-				message: `Cart with id '${cid}' not found`
+				message: `Cart ${cid} not found or product ${pid} not exists in cart`
 			});
 		}
 		res.json({ status: "success", payload: result });
@@ -118,7 +118,7 @@ export const deleteCartProductController = async (req, res, next) => {
 		if (!result) {
 			return res.status(404).json({
 				status: "error",
-				message: `Cart with id '${cid}' not found`
+				message: `Cart ${cid} not found or product ${pid} not exists in cart`
 			});
 		}
 		res.json({ status: "success", payload: result });

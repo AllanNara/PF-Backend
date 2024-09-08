@@ -9,11 +9,12 @@ export async function fetchCart(cid) {
 		return await CartDAO.readAndPopulateCart(cid);
 	}
 	const cart = await CartDAO.readCart(cid);
-	if (Boolean(cart) && !cart.products.length) {
-		const productIds = cart.products.map((pr) => pr.product);
-		const products = await ProductDAO.getProductsByIds(productIds);
+	if (Boolean(cart) && cart.products.length) {
+		const products = await ProductDAO.readMultipleById(
+			cart.products.map((pr) => pr.product)
+		);
 		const productMap = new Map(products.map((p) => [p.id, p]));
-		cart.products = cart.products.map((productCart) => {
+		cart.products = cart.products.filter((productCart) => {
 			const productFound = productMap.get(productCart.product);
 			if (productFound) {
 				productCart.product = productFound;
@@ -37,14 +38,19 @@ export async function replaceCartProducts(cid, listProducts) {
 
 export async function addProductToCart(cid, pid) {
 	const cart = await CartDAO.readCart(cid);
+
 	if (!cart) return null;
-	const productExists = cart.products.find((pr) => pr.product === pid);
+	let productExists = cart.products.find((pr) => {
+		return pr.product.toString() === pid.toString();
+	});
 	if (!productExists) {
-		cart.products.push({ product: pid, quantity: 1 });
+		productExists = { product: pid, quantity: 1 };
+		cart.products.push(productExists);
 	} else {
 		productExists.quantity++;
 	}
 	await CartDAO.updateCart(cid, { products: cart.products });
+	return productExists;
 }
 
 export async function updateProductQuantity(cid, pid, quantity) {
