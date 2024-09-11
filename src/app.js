@@ -2,9 +2,10 @@ import { Server } from "socket.io";
 import allRoutes from "./routes/index.js";
 import config from "../config/index.js";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 import { createServer } from "http";
 import displayRoutes from "express-routemap";
-import { engine } from "express-handlebars";
+import exphbs from "express-handlebars";
 import errorHandler from "./middlewares/errorHandler.js";
 import express from "express";
 import httpLogger from "./middlewares/httpLogger.js";
@@ -21,19 +22,25 @@ import websockets from "./websockets.js";
 const app = express();
 const httpServer = createServer(app);
 const io = new Server(httpServer);
+const hbs = exphbs.create({
+	extname: ".hbs",
+	defaultLayout: "main",
+	layoutsDir: path.resolve(import.meta.dirname, "views", "layouts")
+});
 
-app.engine("handlebars", engine());
-app.set("view engine", "handlebars");
+app.engine("hbs", hbs.engine);
+app.set("view engine", "hbs");
 app.set("views", path.resolve(import.meta.dirname, "views"));
 
+app.use(cors()); // :: Configurar correctamente cors
 app.use(express.static(path.resolve(import.meta.dirname, "public")));
 app.use((req, res, next) => {
 	req.logger = logger;
 	next();
 });
 app.use(httpLogger);
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: "10kb" }));
+app.use(express.urlencoded({ extended: true, limit: "10kb" }));
 app.use(cookieParser(config.COOKIE_SECRET));
 app.use(session(optionSession));
 initializePassport();
