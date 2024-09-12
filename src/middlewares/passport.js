@@ -23,12 +23,33 @@ export const passportCall = (strategy, options = {}) => {
 	};
 };
 
-export const authorization = (role) => {
-	return async (req, res, next) => {
+export const authorization = (roles) => {
+	if (!Array.isArray(roles)) roles = [roles];
+
+	return (req, res, next) => {
 		const { user } = req;
-		if (!user) return res.status(401).json({ error: "Unauthorized" });
-		if (!role.includes(user.role)) {
-			return res.status(403).json({ error: "Forbidden" });
+		if (!user)
+			return res.status(401).json({ message: "User not authenticated" });
+
+		if (!roles.includes(user.role)) {
+			logger.verbose("User role not allowed in this route", {
+				info: { allowedRoles: roles, userRole: user.role }
+			});
+			return res.status(403).json({ message: "User role not allowed" });
+		}
+
+		if (roles.includes("OWN")) {
+			if (user.id !== req.params.pid || user.cart !== req.params.cid) {
+				logger.verbose("User ID or Cart ID not match with params", {
+					uid: user.id,
+					cid: user.cart,
+					params_uid: req.params.uid,
+					params_cid: req.params.cid
+				});
+				return res
+					.status(400)
+					.json({ message: "User ID or Cart ID does not match" });
+			}
 		}
 		next();
 	};
