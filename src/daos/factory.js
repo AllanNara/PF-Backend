@@ -24,7 +24,8 @@ const importDAO = async (entity) => {
 const loadDAOS = async () => (
 	(DAOS["Cart"] = await importDAO("cart")),
 	(DAOS["Product"] = await importDAO("product")),
-	(DAOS["User"] = await importDAO("user"))
+	(DAOS["User"] = await importDAO("user")),
+	(DAOS["Ticket"] = await importDAO("ticket"))
 );
 
 await loadDAOS();
