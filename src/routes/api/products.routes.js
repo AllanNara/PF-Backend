@@ -1,3 +1,4 @@
+import { authorization, passportCall } from "../../middlewares/passport.js";
 import {
 	createProductController,
 	deleteProductController,
@@ -6,12 +7,12 @@ import {
 	updateProductController
 } from "../../controllers/products.controllers.js";
 import { Router } from "express";
-import { authorization } from "../../middlewares/passport.js";
 import { parseParams } from "../../middlewares/parseParams.js";
 
 const router = Router();
 
 router.param("pid", parseParams);
+router.use(passportCall("jwt", { session: false }));
 
 router.get("/", getAllProductsController);
 router.post("/", authorization("ADMIN"), [...createProductController]);

@@ -4,17 +4,19 @@ import {
 	deleteCartController,
 	deleteCartProductController,
 	getCartByIdController,
+	purchaseCartController,
 	updateCartEntireController,
 	updateCartProductController
 } from "../../controllers/carts.controllers.js";
+import { authorization, passportCall } from "../../middlewares/passport.js";
 import { Router } from "express";
-import { authorization } from "../../middlewares/passport.js";
 import { parseParams } from "../../middlewares/parseParams.js";
 
 const router = Router();
 
 router.param("cid", parseParams);
 router.param("pid", parseParams);
+router.use(passportCall("jwt", { session: false }));
 
 router.post("/", createCartController);
 router.get("/:cid", authorization(["USER", "OWN"]), getCartByIdController);
@@ -35,6 +37,12 @@ router.delete(
 	"/:cid/product/:pid",
 	authorization(["USER", "OWN"]),
 	deleteCartProductController
+);
+
+router.post(
+	"/:cid/purchase",
+	authorization(["USER", "OWN"]),
+	purchaseCartController
 );
 
 export default router;

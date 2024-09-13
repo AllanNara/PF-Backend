@@ -7,7 +7,8 @@ const {
 	emptyCart,
 	addProductToCart,
 	modifyProductQuantity,
-	removeProductFromCart
+	removeProductFromCart,
+	purchase
 } = getService("Cart");
 
 export const createCartController = async (req, res, next) => {
@@ -122,6 +123,25 @@ export const deleteCartProductController = async (req, res, next) => {
 			});
 		}
 		res.json({ status: "success", payload: result });
+	} catch (error) {
+		next(error);
+	}
+};
+
+export const purchaseCartController = async (req, res, next) => {
+	const { cid } = req.params;
+	const { email } = req.user;
+
+	try {
+		const result = await purchase(cid, email);
+		if (!result) {
+			return res.status(404).json({
+				status: "error",
+				message: "User cart is empty"
+			});
+		}
+
+		res.json({ status: "success", ...result });
 	} catch (error) {
 		next(error);
 	}
