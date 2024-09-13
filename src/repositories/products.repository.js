@@ -2,11 +2,11 @@ import getDAO from "../daos/factory.js";
 
 const ProductDAO = getDAO("Product");
 
-export async function fetchProducts(paginate, queryParams) {
-	if (!paginate) return await ProductDAO.readProducts();
+export async function fetchProducts(options = {}) {
+	if (!options.pagination) return await ProductDAO.readProducts();
 
 	if (Object.prototype.hasOwnProperty.call(ProductDAO, "getPaginateProducts")) {
-		return await ProductDAO.getPaginateProducts(queryParams);
+		return await ProductDAO.getPaginateProducts(options.queries);
 	} else return await ProductDAO.readProducts();
 }
 

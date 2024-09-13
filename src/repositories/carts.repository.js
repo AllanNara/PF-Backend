@@ -4,7 +4,9 @@ import logger from "../../lib/winston.js";
 const CartDAO = getDAO("Cart");
 const ProductDAO = getDAO("Product");
 
-export async function fetchCart(cid) {
+export async function fetchCart(cid, options = {}) {
+	if (!options.populate) return await CartDAO.readCart(cid);
+
 	if (Object.prototype.hasOwnProperty.call(CartDAO, "readAndPopulateCart")) {
 		return await CartDAO.readAndPopulateCart(cid);
 	}
