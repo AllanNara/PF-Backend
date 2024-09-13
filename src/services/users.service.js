@@ -47,7 +47,9 @@ export async function login(userData) {
 }
 
 export async function getUser(uid) {
-	return UserDTO.generate(await UserRepository.getUserById(uid));
+	const userDatabase = await UserRepository.getUserById(uid);
+	if (!userDatabase) return null;
+	return UserDTO.generate(userDatabase);
 }
 
 export async function logWithOAuth(email) {

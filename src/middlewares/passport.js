@@ -39,16 +39,13 @@ export const authorization = (roles) => {
 		}
 
 		if (roles.includes("OWN")) {
-			if (user.id !== req.params.pid || user.cart !== req.params.cid) {
-				logger.verbose("User ID or Cart ID not match with params", {
+			if (user.cart !== req.params.cid) {
+				logger.verbose("Cart ID not match with User", {
 					uid: user.id,
 					cid: user.cart,
-					params_uid: req.params.uid,
 					params_cid: req.params.cid
 				});
-				return res
-					.status(400)
-					.json({ message: "User ID or Cart ID does not match" });
+				return res.status(400).json({ message: "Cart not match with User" });
 			}
 		}
 		next();

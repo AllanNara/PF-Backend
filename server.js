@@ -4,7 +4,9 @@ import { httpServer } from "./src/app.js";
 import logger from "./lib/winston.js";
 
 httpServer.listen(config.PORT, async () => {
-	await MongoSingleton.connect();
+	if (config.DAO === "mongo" || config.SESSION.STORE === "mongo") {
+		await MongoSingleton.connect();
+	}
 	logger.info(`Listening on port %d in mode %s`, config.PORT, config.NODE_ENV);
 });
 

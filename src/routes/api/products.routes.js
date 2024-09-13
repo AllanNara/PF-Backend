@@ -12,11 +12,12 @@ import { parseParams } from "../../middlewares/parseParams.js";
 const router = Router();
 
 router.param("pid", parseParams);
-router.use(passportCall("jwt", { session: false }));
 
 router.get("/", getAllProductsController);
-router.post("/", authorization("ADMIN"), [...createProductController]);
 router.get("/:pid", getProductByIdController);
+
+router.use(passportCall("jwt", { session: false }));
+router.post("/", authorization("ADMIN"), [...createProductController]);
 router.put("/:pid", authorization("ADMIN"), updateProductController);
 router.delete("/:pid", authorization("ADMIN"), deleteProductController);
 

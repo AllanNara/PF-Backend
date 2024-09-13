@@ -6,8 +6,8 @@ const ProductRepository = getRepository("Product");
 
 export async function generateTicket(userEmail, products) {
 	let amount = 0;
-	for (const item in products) {
-		const productPrice = await ProductRepository.getProduct(item.id);
+	for (const item of products) {
+		const productPrice = await ProductRepository.getProduct(item.product);
 		amount += productPrice.price * item.quantity;
 	}
 

@@ -10,12 +10,12 @@ program
 	.version("1.0.0");
 
 const persistence = ["mongo", "fs", "memory"];
-const sessionStorage = ["redis", "mongo", "fs", "memory"];
+const sessionStore = ["redis", "mongo", "fs", "memory"];
 program
 	.option("--dao <dao>", "DAO selected " + persistence, "memory")
 	.option(
-		"--sstorage <sstorage>",
-		"Session storage selected " + sessionStorage,
+		"--sstore <sstore>",
+		"Session store selected " + sessionStore,
 		"memory"
 	)
 	.option("--debug", "Debug mode", false)
@@ -25,7 +25,7 @@ program
 
 export default program.opts();
 
-function actionCb({ dao, debug, sstorage }) {
+function actionCb({ dao, debug, sstore }) {
 	if (!persistence.includes(dao)) {
 		logger.warn(
 			`DAO "%s" not supported. Choose between: [${persistence}]`,
@@ -35,8 +35,8 @@ function actionCb({ dao, debug, sstorage }) {
 	}
 	logger.verbose(`DAO selected: %s${dao === "memory" ? "(default)" : ""}`, dao);
 	logger.verbose(
-		`Store selected: %s${sstorage === "memory" ? "(default)" : ""}`,
-		sstorage
+		`Store selected: %s${sstore === "memory" ? "(default)" : ""}`,
+		sstore
 	);
 
 	if (debug) {

@@ -1,4 +1,5 @@
 import getService from "../services/index.js";
+import { processPurchase } from "../useCases/processPurchase.useCase.js";
 
 const {
 	findCartDetails,
@@ -7,8 +8,7 @@ const {
 	emptyCart,
 	addProductToCart,
 	modifyProductQuantity,
-	removeProductFromCart,
-	purchase
+	removeProductFromCart
 } = getService("Cart");
 
 export const createCartController = async (req, res, next) => {
@@ -133,11 +133,11 @@ export const purchaseCartController = async (req, res, next) => {
 	const { email } = req.user;
 
 	try {
-		const result = await purchase(cid, email);
+		const result = await processPurchase(cid, email);
 		if (!result) {
-			return res.status(404).json({
+			return res.status(400).json({
 				status: "error",
-				message: "User cart is empty"
+				message: "Cart is empty or contains products that are not available"
 			});
 		}
 

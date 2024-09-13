@@ -147,12 +147,11 @@ function filterAndSortProducts(products, { sort, query }) {
 }
 
 export async function availableForPurchase(pid, quantity) {
-	const product = await ProductRepository.readProduct(pid);
+	const product = await ProductRepository.getProduct(pid);
 	if (!product) return null;
 	const response = {
 		isAvailable: product.stock >= quantity,
-		remainingStock: product.stock - quantity,
-		pricePerQuantity: product.price * quantity
+		remainingStock: product.stock - quantity
 	};
 	return response;
 }
