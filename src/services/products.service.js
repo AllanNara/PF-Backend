@@ -11,11 +11,18 @@ export async function bringProducts() {
 	return await ProductRepository.fetchProducts();
 }
 
-export async function generateProductPagination(queryParams, currentUrl) {
-	queryParams.sort = queryParams.sort && { price: queryParams.sort };
+export async function generateProductPagination(queries, currentUrl) {
+	const queryParams = {
+		...queries,
+		sort: queries.sort && { price: queries.sort }
+	};
+
 	const pagination = {};
 
-	const result = await ProductRepository.fetchProducts(true, queryParams);
+	const result = await ProductRepository.fetchProducts({
+		pagination: true,
+		queries: queryParams
+	});
 
 	if (Object.prototype.hasOwnProperty.call(result, "payload")) {
 		Object.assign(pagination, result);
@@ -137,4 +144,15 @@ function filterAndSortProducts(products, { sort, query }) {
 	}
 
 	return filtered;
+}
+
+export async function availableForPurchase(pid, quantity) {
+	const product = await ProductRepository.readProduct(pid);
+	if (!product) return null;
+	const response = {
+		isAvailable: product.stock >= quantity,
+		remainingStock: product.stock - quantity,
+		pricePerQuantity: product.price * quantity
+	};
+	return response;
 }

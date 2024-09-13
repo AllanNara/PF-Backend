@@ -18,16 +18,16 @@ export async function register(userData) {
 		return null;
 	}
 
-	const usersCart = CartDTO.generate(await CartRepository.createCart());
+	const userCart = CartDTO.generate(await CartRepository.createCart());
 	const hashedPassword = userData.password
 		? await createHash(userData.password)
 		: null;
 
 	const user = {
 		...userData,
-		role: userData.role || "USER",
+		role: userData.role,
 		password: hashedPassword,
-		cart: usersCart.id
+		cart: userCart.id
 	};
 
 	return await UserRepository.addUser(user);

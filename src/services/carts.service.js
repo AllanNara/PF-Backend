@@ -1,13 +1,17 @@
 import { CartDTO } from "../dtos/cart.dto.js";
 import { ProductDatabaseDTO } from "../dtos/productDatabase.dto.js";
 import getRepository from "../repositories/index.js";
+import getService from "./index.js";
 import logger from "../../lib/winston.js";
 
 const CartRepository = getRepository("Cart");
 const ProductRepository = getRepository("Product");
 
+const ProductService = getService("Product");
+const TicketService = getService("Ticket");
+
 export async function findCartDetails(cid) {
-	const cart = await CartRepository.fetchCart(cid);
+	const cart = await CartRepository.fetchCart(cid, { populate: true });
 
 	if (!cart) {
 		logger.verbose("Cart '%s' not found", cid);
@@ -21,7 +25,6 @@ export async function findCartDetails(cid) {
 			};
 		});
 	}
-
 	return CartDTO.generate(cart);
 }
 
@@ -90,4 +93,51 @@ export async function removeProductFromCart(cid, pid) {
 			pid
 		);
 	return removed;
+}
+
+export async function purchase(cid, userEmail) {
+	const cart = await CartRepository.fetchCart(cid);
+	if (!cart.products.length) {
+		logger.warn("Cart '%s' is empty", cid);
+		return null;
+	}
+
+	const itemsAvailable = [];
+	const itemsNotAvailable = [];
+
+	for (const item of cart.products) {
+		const remainingStock = await ProductService.availableForPurchase(
+			item.product,
+			item.quantity
+		);
+		if (remainingStock === null) {
+			logger.warn("Cart contains a non-existing product", {
+				info: { pid: item.product }
+			});
+			continue;
+		}
+
+		if (remainingStock >= 0) {
+			await ProductRepository.updateProduct(item.product, {
+				stock: remainingStock
+			});
+			itemsAvailable.push(item);
+		} else {
+			itemsNotAvailable.push(item);
+		}
+	}
+
+	await CartRepository.replaceCartProducts(cid, itemsNotAvailable);
+
+	const purchaseTicket = await TicketService.generateTicket(
+		userEmail,
+		itemsAvailable
+	);
+
+	return {
+		ticket: purchaseTicket,
+		purchased_products: itemsAvailable,
+		not_available: Boolean(itemsNotAvailable.length),
+		products_not_available: itemsNotAvailable
+	};
 }
