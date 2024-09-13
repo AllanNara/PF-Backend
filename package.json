@@ -17,7 +17,7 @@
     "commit": "cz",
     "version": "conventional-changelog -p conventionalcommits -i CHANGELOG.md -s --config .versionrc.json",
     "release": "commit-and-tag-version",
-    "seeders": "node src/seeders",
+    "seed": "node src/seed",
     "oas:bundle": "scripts/generate-oa-docs.sh"
   },
   "engines": {
