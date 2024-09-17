@@ -1,25 +1,57 @@
 import MongoSingleton from "./src/utils/mongoose.js";
+import { availableParallelism } from "os";
+import cluster from "cluster";
 import config from "./config/index.js";
 import { httpServer } from "./src/app.js";
 import logger from "./lib/winston.js";
 
-httpServer.listen(config.PORT, async () => {
-	if (config.DAO === "mongo" || config.SESSION.STORE === "mongo") {
-		await MongoSingleton.connect();
-	}
-	logger.info(`Listening on port %d in mode %s`, config.PORT, config.NODE_ENV);
-});
+const numCPUs = availableParallelism();
 
-httpServer.on("close", () => {
-	logger.info("Server HTTP closed...");
-});
+// :: Controlar errores: reinicio de servidor descontrolado al entrar en un blucle de forks
+// :: Visualizar de otra forma los mensajes en consola
+// :: Verificación de puerto en uso y alternativas
+// :: Mensaje despedida cierre de cluster
+
+if (cluster.isPrimary) {
+	logger.info(`Primary ${process.pid} is running`);
+	logger.verbose(`Environment: %s`, config.NODE_ENV);
+}
+
+if (cluster.isPrimary && config.CLUSTER) {
+	// Fork workers
+	for (let i = 0; i < numCPUs; i++) {
+		cluster.fork();
+	}
+
+	cluster.on("exit", (worker, code, signal) => {
+		logger.info(`worker ${worker.process.pid} died`, { code, signal });
+		cluster.fork();
+	});
+} else {
+	httpServer.listen(config.PORT, async () => {
+		if (config.DAO === "mongo" || config.SESSION.STORE === "mongo") {
+			await MongoSingleton.connect();
+		}
+
+		logger.info(
+			"PID %d - Server HTTP started on port %d...",
+			process.pid,
+			config.PORT
+		);
+	});
+
+	httpServer.on("close", () => {
+		logger.info("PID %d - Server HTTP closed...", process.pid);
+	});
+}
 
 process.on("SIGINT", () => {
 	console.info("\n");
-	httpServer.close();
-	MongoSingleton.close().then(() => {
-		config.NODE_ENV !== "production" && console.info("\nBye bye!\n");
-		process.exit(0);
+	cluster.isPrimary && console.info("\nBye bye!\n");
+	httpServer.close(() => {
+		MongoSingleton.close().then(() => {
+			process.exit(0);
+		});
 	});
 });
 

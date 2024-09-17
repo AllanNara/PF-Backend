@@ -36,6 +36,7 @@ class MongoSingleton {
 		if (this.cachedConnection) {
 			await mongoose.disconnect();
 			this.cachedConnection = null;
+			return true;
 		}
 	}
 }

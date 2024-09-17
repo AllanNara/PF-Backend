@@ -10,6 +10,7 @@ const config = {
 	PROTOCOL: env.PROTOCOL || "http",
 	DAO: options.dao,
 	DEBUG: options.debug,
+	CLUSTER: options.cluster,
 	SESSION: {
 		STORE: options.sstorage,
 		SECRET: env.SECRET_SESSION || "S3cR3t$3z0n"
