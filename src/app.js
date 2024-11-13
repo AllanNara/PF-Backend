@@ -18,6 +18,7 @@ import session from "express-session";
 import swaggerSpec from "./utils/swagger-config.js";
 import swaggerUi from "swagger-ui-express";
 import websockets from "./websockets.js";
+import compression from "compression";
 
 const app = express();
 const httpServer = createServer(app);
@@ -32,6 +33,7 @@ app.engine("hbs", hbs.engine);
 app.set("view engine", "hbs");
 app.set("views", path.resolve(import.meta.dirname, "views"));
 
+app.use(compression());
 app.use(cors()); // :: Configurar correctamente cors
 app.use(express.static(path.resolve(import.meta.dirname, "public")));
 app.use((req, res, next) => {
