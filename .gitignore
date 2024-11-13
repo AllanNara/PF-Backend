@@ -136,3 +136,6 @@ src/public/uploads/
 src/daos/fs/data/
 
 src/sessions
+
+# volume docker (mongo)
+data/
