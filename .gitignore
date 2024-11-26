@@ -136,3 +136,5 @@ src/public/uploads/
 src/daos/fs/data/
 
 src/sessions
+
+/data/
