@@ -7,14 +7,14 @@ import logger from "./lib/winston.js";
 
 const numCPUs = availableParallelism();
 
-// :: Controlar errores: reinicio de servidor descontrolado al entrar en un blucle de forks
+// :: Controlar errores: reinicio de servidor descontrolado al entrar en un bucle de forks
 // :: Visualizar de otra forma los mensajes en consola
 // :: Verificación de puerto en uso y alternativas
 // :: Mensaje despedida cierre de cluster
 
 if (cluster.isPrimary) {
-	logger.info(`Primary ${process.pid} is running`);
 	logger.verbose(`Environment: %s`, config.NODE_ENV);
+	logger.info(`Primary ${process.pid} is running`);
 }
 
 if (cluster.isPrimary && config.CLUSTER) {

@@ -29,9 +29,6 @@ coverage
 # Grunt intermediate storage (https://gruntjs.com/creating-plugins#storing-task-files)
 .grunt
 
-# Bower dependency directory (https://bower.io/)
-bower_components
-
 # node-waf configuration
 .lock-wscript
 
@@ -137,4 +134,9 @@ src/daos/fs/data/
 
 src/sessions
 
+<<<<<<< HEAD
 /data/
+=======
+# volume docker (mongo)
+data/
+>>>>>>> 1cf2739d409c83c78cb573c462685ad7fb516d41
